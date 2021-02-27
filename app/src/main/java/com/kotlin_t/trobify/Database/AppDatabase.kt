@@ -1,7 +1,8 @@
-package com.kotlin_t.trobify.Logica
+package com.kotlin_t.trobify.Database
 
 import android.content.Context
 import androidx.room.*
+import com.kotlin_t.trobify.Logica.Inmueble
 import com.kotlin_t.trobify.Persistencia.InmuebleDAO
 
 @Database(entities = [Inmueble::class], version = 0)

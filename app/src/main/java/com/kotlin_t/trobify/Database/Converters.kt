@@ -1,4 +1,4 @@
-package com.kotlin_t.trobify.Logica
+package com.kotlin_t.trobify.Database
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
