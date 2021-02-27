@@ -5,7 +5,6 @@ import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 
 @Entity(
-    tableName = "clientesInmobiliaria",
     primaryKeys = arrayOf("inmobiliariaId", "dni"),
     foreignKeys = arrayOf(
         ForeignKey(
@@ -24,7 +23,7 @@ import androidx.room.ForeignKey.CASCADE
         )
     )
 )
-data class esCliente(
+data class clientesInmobiliarias(
     val inmobiliariaId: Int,
     val dni: String
 )

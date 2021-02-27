@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.kotlin_t.trobify.Database.AppDatabase
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.databinding.FragmentHomeBinding
 
