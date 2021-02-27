@@ -2,11 +2,23 @@ package com.kotlin_t.trobify.Logica
 
 import android.graphics.Bitmap
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "Inmuebles")
+@Entity(
+    tableName = "Inmuebles",
+    foreignKeys = arrayOf(
+        ForeignKey(
+            entity = Usuario::class,
+            parentColumns = arrayOf("dni"),
+            childColumns = arrayOf("dni"),
+        )
+    )
+
+)
 data class Inmueble(
     @PrimaryKey(autoGenerate = true) val inmuebleId: Int?,
+    var dni: String,
     var direccion: String?,
     var nuevoDesarrollo: Boolean?,
     var miniatura: Bitmap?,
