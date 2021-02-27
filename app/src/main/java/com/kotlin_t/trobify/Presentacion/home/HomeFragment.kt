@@ -1,19 +1,15 @@
-package com.kotlin_t.trobify.ui.gallery
+package com.kotlin_t.trobify.Presentacion.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.kotlin_t.trobify.R
-import com.kotlin_t.trobify.databinding.FragmentGalleryBinding
 import com.kotlin_t.trobify.databinding.FragmentHomeBinding
 
-class GalleryFragment : Fragment() {
-    private var _binding: FragmentGalleryBinding? = null
+class HomeFragment : Fragment() {
+    private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,16 +21,17 @@ class GalleryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentGalleryBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.textGallery.text = getText(R.string.text_gallery)
+        binding.textHome.text = getText(R.string.text_home)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
     }
+
 }
