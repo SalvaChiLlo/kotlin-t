@@ -24,8 +24,11 @@ import androidx.room.PrimaryKey
             onDelete = CASCADE
         )
     ),
-    indices = arrayOf(Index("dni", unique = true))
+    indices = arrayOf(Index("dni", unique = true)),
+    tableName = "Favoritos",
+    primaryKeys = ["inmuebleId", "dni"]
 )
 data class Favorito(
-    @PrimaryKey val inmuebleId: Int,
-    val dni: String)
+    val inmuebleId: Int,
+    val dni: String
+)

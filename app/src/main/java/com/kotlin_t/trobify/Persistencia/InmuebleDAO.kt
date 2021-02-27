@@ -5,13 +5,13 @@ import com.kotlin_t.trobify.Logica.Inmueble
 
 @Dao
 interface InmuebleDAO {
-    @Query("SELECT * FROM inmueble")
+    @Query("SELECT * FROM Inmuebles")
     fun getAll(): List<Inmueble>
 
-    @Query("SELECT * FROM inmueble WHERE id IN (:ids)")
+    @Query("SELECT * FROM Inmuebles WHERE inmuebleId IN (:ids)")
     fun loadAllByIds(ids: Set<Int>): List<Inmueble>
 
-    @Query("SELECT * FROM inmueble WHERE id like :id")
+    @Query("SELECT * FROM Inmuebles WHERE inmuebleId like :id")
     fun findById(id: String): Inmueble
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
@@ -20,12 +20,12 @@ interface InmuebleDAO {
     @Delete
     fun delete(inmueble: Inmueble)
 
-    @Query("DELETE FROM inmueble")
+    @Query("DELETE FROM Inmuebles")
     fun deleteAll()
 
     @Update
     fun update(inmueble: Inmueble)
 
-    @Query("DELETE FROM inmueble WHERE id = :id")
+    @Query("DELETE FROM Inmuebles WHERE inmuebleId = :id")
     fun deleteById(id: String)
 }

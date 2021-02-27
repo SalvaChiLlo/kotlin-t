@@ -32,6 +32,5 @@ data class Inmueble(
     var titulo: String?,
     var subtitulo: String,
     var descripcion: String?
-
-    )
+)
 
