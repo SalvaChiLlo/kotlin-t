@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -13,6 +14,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
+import com.kotlin_t.trobify.Database.AppDatabase
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +41,19 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+        testDB()
+    }
+
+    private fun testDB() {
+        val database: AppDatabase = AppDatabase.getDatabase(this)!!
+        Log.d("Contratos", database.contratoDAO()!!.getAll().toString())
+        Log.d("esCliente", database.esClienteDAO()!!.getAll().toString())
+        Log.d("Favoritos", database.favoritoDAO()!!.getAll().toString())
+        Log.d("Fotos", database.fotoDAO()!!.getAll().toString())
+        Log.d("Inmobiliarias", database.inmobiliariaDAO()!!.getAll().toString())
+        Log.d("Inmuebles", database.inmuebleDAO()!!.getAll().toString())
+        Log.d("Usuarios", database.usuarioDAO()!!.getAll().toString())
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

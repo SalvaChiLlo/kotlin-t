@@ -11,8 +11,8 @@ interface InmuebleDAO {
     @Query("SELECT * FROM Inmuebles WHERE inmuebleId IN (:ids)")
     fun loadAllByIds(ids: Set<Int>): List<Inmueble>
 
-    @Query("SELECT * FROM Inmuebles WHERE inmuebleId like :id")
-    fun findById(id: String): Inmueble
+    @Query("SELECT * FROM Inmuebles WHERE inmuebleId like :inmuebleId")
+    fun findById(inmuebleId: String): Inmueble
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(vararg inmuebles: Inmueble)
@@ -26,6 +26,6 @@ interface InmuebleDAO {
     @Update
     fun update(inmueble: Inmueble)
 
-    @Query("DELETE FROM Inmuebles WHERE inmuebleId = :id")
-    fun deleteById(id: String)
+    @Query("DELETE FROM Inmuebles WHERE inmuebleId = :inmuebleId")
+    fun deleteById(inmuebleId: String)
 }
