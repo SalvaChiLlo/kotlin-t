@@ -8,13 +8,14 @@ import androidx.room.PrimaryKey
 data class Usuario(
     @PrimaryKey var dni: String,
     var username: String,
-    var contraseña: String,
+    var contrasena: String,
     var nombre: String,
     var apellidos: String,
-    var telefono: Double,
+    var telefono: String,
     var iban: String,
-    var fotoPerfil: Bitmap,
-    var baneado: Boolean,
-    var esGerente: Boolean,
-    var esTecnico: Boolean
-)
+    var fotoPerfil: Bitmap?
+) {
+    var baneado: Boolean = false
+    var esGerente: Boolean = false
+    var esTecnico: Boolean = false
+}

@@ -1,10 +1,7 @@
 package com.kotlin_t.trobify.Logica
 
-import androidx.room.Entity
-import androidx.room.ForeignKey
+import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
-import androidx.room.Index
-import androidx.room.PrimaryKey
 
 @Entity(
     tableName = "Inmobiliarias",
@@ -20,7 +17,8 @@ import androidx.room.PrimaryKey
     )
 )
 data class Inmobiliaria(
-    @PrimaryKey(autoGenerate = true) val inmobiliariaId: Int,
-    var dni : String,
-    var verificado: Boolean
-)
+    @PrimaryKey(autoGenerate = true) val inmobiliariaId: Int?,
+    @ColumnInfo()var dni : String
+) {
+    var verificado: Boolean = false
+}

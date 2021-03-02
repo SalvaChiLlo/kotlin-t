@@ -15,17 +15,17 @@ import com.kotlin_t.trobify.Persistencia.*
         Inmueble::class,
         Usuario::class
     ],
-    version = 1
+    version = 4
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun contratoDAO(): ContratoDAO?
-    abstract fun esClienteDAO(): esClienteDAO?
-    abstract fun favoritoDAO(): FavoritoDAO?
-    abstract fun fotoDAO(): FotoDAO?
-    abstract fun inmobiliariaDAO(): InmobiliariaDAO?
-    abstract fun inmuebleDAO(): InmuebleDAO?
-    abstract fun usuarioDAO(): UsuarioDAO?
+    abstract fun contratoDAO(): ContratoDAO
+    abstract fun esClienteDAO(): esClienteDAO
+    abstract fun favoritoDAO(): FavoritoDAO
+    abstract fun fotoDAO(): FotoDAO
+    abstract fun inmobiliariaDAO(): InmobiliariaDAO
+    abstract fun inmuebleDAO(): InmuebleDAO
+    abstract fun usuarioDAO(): UsuarioDAO
 
     companion object {
         private var INSTANCE: AppDatabase? = null

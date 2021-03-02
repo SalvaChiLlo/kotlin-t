@@ -11,6 +11,9 @@ interface InmuebleDAO {
     @Query("SELECT * FROM Inmuebles WHERE inmuebleId IN (:ids)")
     fun loadAllByIds(ids: Set<Int>): List<Inmueble>
 
+    @Query("SELECT * FROM Inmuebles WHERE dniPropietario = :dni")
+    fun loadAllByPropietario(dni: String): List<Inmueble>
+
     @Query("SELECT * FROM Inmuebles WHERE inmuebleId like :inmuebleId")
     fun findById(inmuebleId: String): Inmueble
 
