@@ -1,7 +1,6 @@
 package com.kotlin_t.trobify.Presentacion.home
 
 import android.os.Bundle
-import android.renderscript.ScriptGroup
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,15 +12,12 @@ import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.databinding.FragmentHomeBinding
 
 
+
+
 class HomeFragment : Fragment() {
     private var _binding:FragmentHomeBinding ? = null
     private val binding get() = _binding!!
 
-    private lateinit var homeViewModel: HomeViewModel
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,16 +25,17 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        _binding  = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
 
         val application = requireNotNull(this.activity).application
         val datasource = AppDatabase.getDatabase(application)?.inmuebleDAO()
         val viewModelFactory = HomeViewModelFactory(datasource!!, application)
-        homeViewModel =ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
-        binding.homeViewModel = homeViewModel
-        binding.lifecycleOwner = this
+        val homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+        binding.apply {
+            viewModel = homeViewModel
+            lifecycleOwner = viewLifecycleOwner
+        }
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
