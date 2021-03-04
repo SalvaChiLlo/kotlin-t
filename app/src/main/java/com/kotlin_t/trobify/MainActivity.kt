@@ -14,11 +14,11 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
-import com.kotlin_t.trobify.Database.AppDatabase
-import com.kotlin_t.trobify.Logica.Favorito
-import com.kotlin_t.trobify.Logica.Inmobiliaria
-import com.kotlin_t.trobify.Logica.Inmueble
-import com.kotlin_t.trobify.Logica.Usuario
+import com.kotlin_t.trobify.database.AppDatabase
+import com.kotlin_t.trobify.logica.Favorito
+import com.kotlin_t.trobify.logica.Inmobiliaria
+import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.logica.Usuario
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,18 +1,19 @@
-package com.kotlin_t.trobify.Logica
+package com.kotlin_t.trobify.logica
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
-import androidx.room.PrimaryKey
+import androidx.room.Index
 
-@Entity(tableName = "Contratos",
+@Entity(
     foreignKeys = arrayOf(
         ForeignKey(
             entity = Inmueble::class,
             parentColumns = arrayOf("inmuebleId"),
             childColumns = arrayOf("inmuebleId"),
-            onDelete = CASCADE,
-            onUpdate = CASCADE
+            onUpdate = CASCADE,
+            onDelete = CASCADE
+
         ),
         ForeignKey(
             entity = Usuario::class,
@@ -21,12 +22,12 @@ import androidx.room.PrimaryKey
             onUpdate = CASCADE,
             onDelete = CASCADE
         )
-    )
+    ),
+    indices = arrayOf(Index("dni", unique = true)),
+    tableName = "Favoritos",
+    primaryKeys = ["inmuebleId", "dni"]
 )
-data class Contrato(
-    @PrimaryKey val inmuebleId: Int,
-    var dni: String,
-    var fecha: String,
-    var tipo: String,
-    var precio: Double
+data class Favorito(
+    val inmuebleId: Int,
+    val dni: String
 )

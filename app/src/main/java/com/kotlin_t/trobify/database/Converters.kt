@@ -1,4 +1,4 @@
-package com.kotlin_t.trobify.Database
+package com.kotlin_t.trobify.database
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

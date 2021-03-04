@@ -1,4 +1,4 @@
-package com.kotlin_t.trobify.Presentacion.home
+package com.kotlin_t.trobify.presentacion.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.kotlin_t.trobify.Database.AppDatabase
+import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.databinding.FragmentHomeBinding
 

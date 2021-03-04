@@ -1,7 +1,6 @@
-package com.kotlin_t.trobify.Logica
+package com.kotlin_t.trobify.logica
 
 import android.graphics.Bitmap
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE

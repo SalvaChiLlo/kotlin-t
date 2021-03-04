@@ -1,4 +1,4 @@
-package com.kotlin_t.trobify.Logica
+package com.kotlin_t.trobify.logica
 
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE

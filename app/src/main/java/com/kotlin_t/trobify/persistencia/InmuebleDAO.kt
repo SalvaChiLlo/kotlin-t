@@ -1,7 +1,7 @@
-package com.kotlin_t.trobify.Persistencia
+package com.kotlin_t.trobify.persistencia
 
 import androidx.room.*
-import com.kotlin_t.trobify.Logica.Inmueble
+import com.kotlin_t.trobify.logica.Inmueble
 
 @Dao
 interface InmuebleDAO {

@@ -1,9 +1,9 @@
-package com.kotlin_t.trobify.Database
+package com.kotlin_t.trobify.database
 
 import android.content.Context
 import androidx.room.*
-import com.kotlin_t.trobify.Logica.*
-import com.kotlin_t.trobify.Persistencia.*
+import com.kotlin_t.trobify.logica.*
+import com.kotlin_t.trobify.persistencia.*
 
 
 @Database(
