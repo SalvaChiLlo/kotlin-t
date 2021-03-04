@@ -5,12 +5,24 @@ import com.kotlin_t.trobify.Logica.*
 
 @Dao
 interface clientesInmobiliariasDAO{
-    @Query("SELECT inmobiliariaId FROM clientesInmobiliarias WHERE dni IN (:dni)")
-    fun getInmobiliarias(dni: Set<Int>): List<Inmobiliaria>
-
-    @Query("SELECT dni FROM clientesInmobiliarias WHERE inmobiliariaId IN (:ids)")
-    fun loadAllByIds(ids: Set<Int>): List<Usuario>
-
     @Query("SELECT * FROM clientesInmobiliarias")
     fun getAll(): List<clientesInmobiliarias>
+
+    @Query("SELECT * FROM clientesInmobiliarias WHERE inmobiliariaId like :inmobiliariaId")
+    fun findByInmobiliaria(inmobiliariaId: Int): clientesInmobiliarias
+
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insertAll(vararg inmuebles: clientesInmobiliarias)
+
+    @Delete
+    fun delete(cliente: clientesInmobiliarias)
+
+    @Query("DELETE FROM clientesInmobiliarias")
+    fun deleteAll()
+
+    @Update
+    fun update(cliente: clientesInmobiliarias)
+
+    @Query("DELETE FROM clientesInmobiliarias WHERE dni = :dni")
+    fun deleteById(dni: String)
 }
