@@ -118,7 +118,7 @@ class MainActivity : AppCompatActivity() {
 //        database.contratoDAO().insertAll()
 
         Log.d("Contratos", database.contratoDAO().getAll().toString())
-        Log.d("esCliente", database.esClienteDAO().getAll().toString())
+        Log.d("esCliente", database.clientesInmboliriasDAO().getAll().toString())
         Log.d("Favoritos", database.favoritoDAO().getAll().toString())
         Log.d("Fotos", database.fotoDAO().getAll().toString())
         Log.d("Inmuebles", database.inmuebleDAO().getAll().toString())
