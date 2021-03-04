@@ -1,15 +1,9 @@
 package com.kotlin_t.trobify.Persistencia
 
-<<<<<<< HEAD
-import androidx.room.Dao
-
-@Dao
-interface ContratoDAO {
-=======
 import androidx.room.*
+
 import com.kotlin_t.trobify.Logica.Contrato
-import com.kotlin_t.trobify.Logica.Favorito
-import com.kotlin_t.trobify.Logica.Inmueble
+
 
 @Dao
 interface ContratoDAO {
@@ -36,5 +30,5 @@ interface ContratoDAO {
 
     @Query("DELETE FROM Contratos WHERE inmuebleId = :inmuebleId")
     fun deleteById(inmuebleId: String)
->>>>>>> origin/master
+
 }
