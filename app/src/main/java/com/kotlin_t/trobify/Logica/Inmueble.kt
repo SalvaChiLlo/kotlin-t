@@ -11,14 +11,13 @@ import androidx.room.PrimaryKey
         ForeignKey(
             entity = Usuario::class,
             parentColumns = arrayOf("dni"),
-            childColumns = arrayOf("dni"),
+            childColumns = arrayOf("dniPropietario"),
         )
     )
 
 )
 data class Inmueble(
-    @PrimaryKey(autoGenerate = true) val inmuebleId: Int?,
-    var dni: String,
+    var dniPropietario: String,
     var direccion: String?,
     var nuevoDesarrollo: Boolean?,
     var miniatura: Bitmap?,
@@ -27,15 +26,14 @@ data class Inmueble(
     var precio: Int?,
     var tipoDeInmueble: String?,
     var operacion: String?,
-    var tamaño: Int?,
+    var tamano: Int?,
     var exterior: Boolean?,
     var habitaciones: Int?,
-    var baños: Int?,
+    var banos: Int?,
     var provincia: String?,
     var municipio: String?,
     var barrio: String?,
     var pais: String?,
-    var zona: String?,
     var latitud: Double?,
     var longitud: Double?,
     var estado: String?,
@@ -44,5 +42,7 @@ data class Inmueble(
     var titulo: String?,
     var subtitulo: String,
     var descripcion: String?
-)
+) {
+    @PrimaryKey(autoGenerate = true) var inmuebleId: Int = 0
+}
 

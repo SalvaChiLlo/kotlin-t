@@ -11,8 +11,8 @@ interface FotoDAO {
     @Query("SELECT * FROM Fotos WHERE fotoId IN (:ids)")
     fun loadAllByIds(ids: Set<Int>): List<Foto>
 
-    @Query("SELECT * FROM Fotos WHERE fotoId like :id")
-    fun findById(id: String): Foto
+    @Query("SELECT * FROM Fotos WHERE fotoId like :fotoId")
+    fun findById(fotoId: String): Foto
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(vararg inmuebles: Foto)
@@ -26,6 +26,6 @@ interface FotoDAO {
     @Update
     fun update(foto: Foto)
 
-    @Query("DELETE FROM Fotos WHERE fotoId = :id")
-    fun deleteById(id: String)
+    @Query("DELETE FROM Fotos WHERE fotoId = :fotoId")
+    fun deleteById(fotoId: String)
 }

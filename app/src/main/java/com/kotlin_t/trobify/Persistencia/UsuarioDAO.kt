@@ -9,11 +9,11 @@ interface UsuarioDAO {
     @Query("SELECT * FROM Usuarios")
     fun getAll(): List<Usuario>
 
-    @Query("SELECT * FROM Usuarios WHERE dni IN (:ids)")
-    fun loadAllByIds(ids: Set<Int>): List<Usuario>
+    @Query("SELECT * FROM Usuarios WHERE dni IN (:dnis)")
+    fun loadAllByIds(dnis: Set<Int>): List<Usuario>
 
-    @Query("SELECT * FROM Usuarios WHERE dni like :id")
-    fun findById(id: String): Usuario
+    @Query("SELECT * FROM Usuarios WHERE dni like :dni")
+    fun findById(dni: String): Usuario
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(vararg usuarios: Usuario)
@@ -27,6 +27,6 @@ interface UsuarioDAO {
     @Update
     fun update(usuario: Usuario)
 
-    @Query("DELETE FROM Usuarios WHERE dni = :id")
-    fun deleteById(id: String)
+    @Query("DELETE FROM Usuarios WHERE dni = :dni")
+    fun deleteById(dni: String)
 }

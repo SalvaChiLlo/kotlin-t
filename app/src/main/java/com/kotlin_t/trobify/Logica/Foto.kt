@@ -1,13 +1,14 @@
 package com.kotlin_t.trobify.Logica
 
 import android.graphics.Bitmap
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
 import androidx.room.PrimaryKey
 
 @Entity(
-    primaryKeys = arrayOf("inmuebleId", "fotoId"), foreignKeys = arrayOf(
+    foreignKeys = arrayOf(
         ForeignKey(
             entity = Inmueble::class,
             parentColumns = arrayOf("inmuebleId"),
@@ -21,6 +22,7 @@ import androidx.room.PrimaryKey
 )
 data class Foto(
     val inmuebleId: Int,
-    @PrimaryKey(autoGenerate = true) val fotoId: Int,
     var imagen: Bitmap
-)
+) {
+    @PrimaryKey(autoGenerate = true) var fotoId: Int = 0
+}
