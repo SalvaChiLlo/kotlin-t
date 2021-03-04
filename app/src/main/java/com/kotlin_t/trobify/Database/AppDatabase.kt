@@ -21,7 +21,7 @@ import com.kotlin_t.trobify.Persistencia.*
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun contratoDAO(): ContratoDAO
-    abstract fun esClienteDAO(): esClienteDAO
+    abstract fun clientesInmboliriasDAO(): clientesInmobiliariasDAO
     abstract fun favoritoDAO(): FavoritoDAO
     abstract fun fotoDAO(): FotoDAO
     abstract fun inmobiliariaDAO(): InmobiliariaDAO
