@@ -5,10 +5,11 @@ import androidx.room.*
 import com.kotlin_t.trobify.Logica.*
 import com.kotlin_t.trobify.Persistencia.*
 
+
 @Database(
     entities = [
         Contrato::class,
-        esCliente::class,
+        clientesInmobiliarias::class,
         Favorito::class,
         Foto::class,
         Inmobiliaria::class,
@@ -28,17 +29,22 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun usuarioDAO(): UsuarioDAO
 
     companion object {
+        @Volatile
         private var INSTANCE: AppDatabase? = null
         fun getDatabase(context: Context?): AppDatabase? {
-            if (INSTANCE == null) {
-                INSTANCE = Room.databaseBuilder(
-                    context!!,
-                    AppDatabase::class.java, "userdatabase"
-                ).allowMainThreadQueries()
-                    .fallbackToDestructiveMigration()
-                    .build()
+            synchronized(this) {
+                var instance = INSTANCE
+                if (INSTANCE == null) {
+                    INSTANCE = Room.databaseBuilder(
+                        context!!.applicationContext,
+                        AppDatabase::class.java, "userdatabase"
+                    ).allowMainThreadQueries()
+                        .fallbackToDestructiveMigration()
+                        .build()
+                    INSTANCE = instance
+                }
+                return instance
             }
-            return INSTANCE
         }
 
         fun destroyInstance() {
