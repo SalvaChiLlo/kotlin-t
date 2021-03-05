@@ -1,8 +1,9 @@
-package com.kotlin_t.trobify.Logica
+package com.kotlin_t.trobify.logica
 
 import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -13,8 +14,8 @@ import androidx.room.PrimaryKey
             parentColumns = arrayOf("dni"),
             childColumns = arrayOf("dniPropietario"),
         )
-    )
-
+    ),
+    indices = arrayOf(Index(value = ["dniPropietario", "inmuebleId"], unique = true))
 )
 data class Inmueble(
     var dniPropietario: String,

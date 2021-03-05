@@ -1,4 +1,4 @@
-package com.kotlin_t.trobify.Logica
+package com.kotlin_t.trobify.logica
 
 import androidx.room.*
 import androidx.room.ForeignKey.CASCADE
@@ -14,7 +14,8 @@ import androidx.room.ForeignKey.CASCADE
             onUpdate = CASCADE
 
         )
-    )
+    ),
+    indices = arrayOf(Index(value = ["dni", "inmobiliariaId"], unique = true))
 )
 data class Inmobiliaria(
     @PrimaryKey(autoGenerate = true) val inmobiliariaId: Int?,

@@ -1,9 +1,9 @@
-package com.kotlin_t.trobify.Presentacion.home
+package com.kotlin_t.trobify.presentacion.home
 
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.kotlin_t.trobify.Persistencia.InmuebleDAO
+import com.kotlin_t.trobify.persistencia.InmuebleDAO
 import java.lang.IllegalArgumentException
 
 class HomeViewModelFactory(
