@@ -1,9 +1,11 @@
 package com.kotlin_t.trobify.logica
 
 import android.graphics.Bitmap
+import androidx.annotation.NonNull
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(
@@ -17,9 +19,14 @@ import androidx.room.PrimaryKey
         )
     ),
     tableName = "Fotos",
+    indices = arrayOf(
+        Index(value = ["inmuebleId"], unique = true)
+    )
+
 
 )
 data class Foto(
+    @NonNull
     val inmuebleId: Int,
     var imagen: Bitmap
 ) {

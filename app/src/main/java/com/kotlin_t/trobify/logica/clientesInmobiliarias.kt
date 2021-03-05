@@ -3,6 +3,7 @@ package com.kotlin_t.trobify.logica
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.ForeignKey.CASCADE
+import androidx.room.Index
 
 @Entity(
     primaryKeys = arrayOf("inmobiliariaId", "dni"),
@@ -21,7 +22,8 @@ import androidx.room.ForeignKey.CASCADE
             onUpdate = CASCADE,
             onDelete = CASCADE
         )
-    )
+    ),
+    indices = arrayOf(Index(value = ["dni", "inmobiliariaId"], unique = true))
 )
 data class clientesInmobiliarias(
     val inmobiliariaId: Int,

@@ -31,12 +31,13 @@ abstract class AppDatabase : RoomDatabase() {
     companion object {
         @Volatile
         private var INSTANCE: AppDatabase? = null
-        fun getDatabase(context: Context?): AppDatabase? {
+
+        fun getDatabase(context: Context): AppDatabase {
             synchronized(this) {
                 var instance = INSTANCE
-                if (INSTANCE == null) {
-                    INSTANCE = Room.databaseBuilder(
-                        context!!.applicationContext,
+                if (instance == null) {
+                    instance = Room.databaseBuilder(
+                        context.applicationContext,
                         AppDatabase::class.java, "userdatabase"
                     ).allowMainThreadQueries()
                         .fallbackToDestructiveMigration()

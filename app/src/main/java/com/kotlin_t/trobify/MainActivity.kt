@@ -23,7 +23,7 @@ import com.kotlin_t.trobify.logica.Usuario
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    lateinit var database: AppDatabase
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,80 +51,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
-        database = AppDatabase.getDatabase(this)!!
-        if (database.usuarioDAO().getAll().isEmpty()) {
-            testDB()
-        }
     }
 
-    private fun testDB() {
-        database.usuarioDAO()
-            .insertAll(
-                Usuario(
-                    "12345678E",
-                    "salva",
-                    "1234567890",
-                    "salva",
-                    "chinesta",
-                    "666999000",
-                    "unIban",
-                    null
-                )
-            )
-        database.inmobiliariaDAO()
-            .insertAll(
-                Inmobiliaria(
-                    null,
-                    database.usuarioDAO().findById("12345678E").dni
-                )
-            )
-        database.inmuebleDAO().insertAll(
-            Inmueble(
-                database.usuarioDAO().findById("12345678E").dni,
-                "Dir",
-                true,
-                null,
-                "someURL",
-                12,
-                123000,
-                "Piso",
-                "Venta",
-                100,
-                false,
-                3,
-                2,
-                "Valencia",
-                "Valenica",
-                "Benimaclet",
-                "España",
-                1.2394322,
-                35.1231234,
-                "Nuevo",
-                true,
-                8,
-                "Titulo",
-                "Subotitulo",
-                "Descripcion"
-            )
-        )
-        database.favoritoDAO().insertAll(
-            Favorito(
-                database.inmuebleDAO().loadAllByPropietario("12345678E")[0].inmuebleId,
-                database.usuarioDAO().findById("12345678E").dni
-            )
-        )
-//        database.fotoDAO().insertAll()
-//        database.esClienteDAO().insertAll()
-//        database.contratoDAO().insertAll()
 
-        Log.d("Contratos", database.contratoDAO().getAll().toString())
-        Log.d("esCliente", database.clientesInmboliriasDAO().getAll().toString())
-        Log.d("Favoritos", database.favoritoDAO().getAll().toString())
-        Log.d("Fotos", database.fotoDAO().getAll().toString())
-        Log.d("Inmuebles", database.inmuebleDAO().getAll().toString())
-        Log.d("Usuarios", database.usuarioDAO().getAll().toString())
-        Log.d("Inmobiliarias", database.inmobiliariaDAO().getAll().toString())
-    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
