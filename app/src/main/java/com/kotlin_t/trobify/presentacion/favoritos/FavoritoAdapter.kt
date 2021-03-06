@@ -38,7 +38,7 @@ class FavoritoAdapter(val context: Context, val dataset: List<Inmueble>) :
     override fun onBindViewHolder(holder: FavoritoViewHolder, position: Int) {
         val database = AppDatabase.getDatabase(context)
         // Set image
-        holder.imageFav.setImageResource(R.drawable.ic_launcher_background)
+        holder.imageFav.setImageBitmap(dataset[position].miniatura)
         // Set direccion
         holder.textDir.text = dataset[position].direccion
         // Set precio

@@ -18,36 +18,7 @@ class ListaFavoritosViewModel(val database: AppDatabase, application: Applicatio
         }
         Log.e("FAVV", listaFavoritos.toString())
         Log.e("FAVV", listaInmuebles.toString())
-//        return listaInmuebles
-        return listOf(
-            Inmueble(
-                "weq",
-                "dasdasd",
-                true,
-                null,
-                null,
-                2,
-                12345,
-                "piso",
-                "alquiler",
-                123,
-                false,
-                5,
-                2,
-                "Valencia",
-                "Valencia",
-                "Benimaclet",
-                "España",
-                1.23322,
-                36.00000,
-                "nuevo",
-                true,
-                123,
-                "Titulo",
-                "213",
-                "Descripcion"
-            )
-        )
+        return listaInmuebles
     }
 
     fun checkIfFavorito(inmuebleId: Int): Boolean {
