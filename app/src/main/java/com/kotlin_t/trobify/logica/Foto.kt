@@ -20,7 +20,7 @@ import androidx.room.PrimaryKey
     ),
     tableName = "Fotos",
     indices = arrayOf(
-        Index(value = ["inmuebleId"], unique = true)
+        Index(value = ["inmuebleId"])
     )
 
 

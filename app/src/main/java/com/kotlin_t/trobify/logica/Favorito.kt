@@ -23,7 +23,7 @@ import androidx.room.Index
             onDelete = CASCADE
         )
     ),
-    indices = arrayOf(Index("dni", unique = true)),
+    indices = arrayOf(Index("dni")),
     tableName = "Favoritos",
     primaryKeys = ["inmuebleId", "dni"]
 )

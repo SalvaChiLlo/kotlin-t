@@ -15,6 +15,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.snackbar.Snackbar
 import com.kotlin_t.trobify.database.AppDatabase
+import com.kotlin_t.trobify.database.PopulateDB
 import com.kotlin_t.trobify.logica.Favorito
 import com.kotlin_t.trobify.logica.Inmobiliaria
 import com.kotlin_t.trobify.logica.Inmueble
@@ -51,9 +52,15 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        populate()
     }
 
-
+    private fun populate() {
+        val database = AppDatabase.getDatabase(this)
+        if(database.usuarioDAO().getAll().isEmpty() || database.inmuebleDAO().getAll().isEmpty()) {
+            PopulateDB(database, this).populate()
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.

@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.presentacion.favoritos
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Favorito
@@ -15,7 +16,8 @@ class ListaFavoritosViewModel(val database: AppDatabase, application: Applicatio
         listaFavoritos.forEach {
             listaInmuebles.add(database.inmuebleDAO().findById(it.inmuebleId.toString()))
         }
-
+        Log.e("FAVV", listaFavoritos.toString())
+        Log.e("FAVV", listaInmuebles.toString())
 //        return listaInmuebles
         return listOf(
             Inmueble(
