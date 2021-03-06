@@ -6,18 +6,30 @@
     android:layout_margin="8dp">
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/miniatura_fav"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:importantForAccessibility="no"/>
+        android:importantForAccessibility="no"
+        android:scaleType="centerCrop"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Prueba"
-        android:id="@+id/title_fav"/>
+        android:id="@+id/direcciontext"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Prueba"
+        android:id="@+id/preciotext"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/favoicon"/>
 </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

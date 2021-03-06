@@ -12,6 +12,7 @@ import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentHomeBinding
 import com.kotlin_t.trobify.databinding.FragmentListaFavoritosBinding
 import com.kotlin_t.trobify.logica.Favorito
+import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.presentacion.favoritos.FavoritoAdapter
 import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModel
 import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModelFactory
@@ -44,12 +45,8 @@ class ListaFavoritosFragment : Fragment() {
         Toast.makeText(requireContext(), "Lista de Favoritos", Toast.LENGTH_LONG).show()
         recyclerView = binding.favoritosRecyclerView
 
-        recyclerView.adapter = FavoritoAdapter(requireContext(), listOf(
-            Favorito(1,"123"),
-            Favorito(1,"123"),
-            Favorito(1,"123"),
-            Favorito(1,"123"),
-            Favorito(1,"123"),
-        ))
+        recyclerView.adapter = FavoritoAdapter(
+            requireContext(), listaFavoritosViewModel.getInmueblesFavoritos()
+        )
     }
 }

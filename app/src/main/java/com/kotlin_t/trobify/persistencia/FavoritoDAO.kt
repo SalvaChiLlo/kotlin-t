@@ -12,7 +12,7 @@ interface FavoritoDAO {
     fun loadAllByIds(ids: Set<Int>): List<Favorito>
 
     @Query("SELECT * FROM Favoritos WHERE inmuebleId like :inmuebleId")
-    fun findById(inmuebleId: String): Favorito
+    fun findById(inmuebleId: String): Favorito?
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(vararg inmuebles: Favorito)
