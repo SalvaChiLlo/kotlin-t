@@ -13,5 +13,7 @@
     <string name="text_home">This is home Fragment</string>
     <string name="text_gallery">This is gallery Fragment</string>
     <string name="text_slideshow">This is slideshow Fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -26,7 +26,7 @@ class SlideshowFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.textSlideshow.text = getText(R.string.text_home)
+        binding.textSlideshow.text = getText(R.string.text_slideshow)
     }
 
     override fun onDestroy() {
