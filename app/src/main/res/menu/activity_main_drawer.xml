@@ -20,6 +20,6 @@
         <item
             android:id="@+id/nav_favoritos"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="favoritos" />
+            android:title="@string/favoritos" />
     </group>
 </menu>

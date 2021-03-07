@@ -22,7 +22,7 @@ class ListaFavoritosViewModel(val database: AppDatabase, application: Applicatio
     }
 
     fun checkIfFavorito(inmuebleId: Int): Boolean {
-        val favorito = database.favoritoDAO().findById(inmuebleId.toString())
+        val favorito = database.favoritoDAO().findById(inmuebleId)
 
         return true
     }

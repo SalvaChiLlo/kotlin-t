@@ -42,11 +42,10 @@ class FavoritoAdapter(val context: Context, val dataset: List<Inmueble>) :
         // Set direccion
         holder.textDir.text = dataset[position].direccion
         // Set precio
-        holder.textPrice.text =
-            if (dataset[position].operacion == "alquiler")
-                "${dataset[position].precio}€/mes"
-            else
-                "${dataset[position].precio}€"
+        var type: Int
+        if (dataset[position].operacion == "alquiler") type = R.string.precioMes
+        else type = R.string.precio
+        holder.textPrice.text = context.getString(type, dataset[position].precio)
 
         // Set FavButton Icon
         holder.favicon.setImageResource(R.drawable.ic_baseline_favorite_24)
@@ -54,14 +53,14 @@ class FavoritoAdapter(val context: Context, val dataset: List<Inmueble>) :
         holder.favicon.setOnClickListener {
             Toast.makeText(context, "Called Favorito", Toast.LENGTH_LONG).show()
 
-            val search = database.favoritoDAO().findById(dataset[position].inmuebleId.toString())
+            val search = database.favoritoDAO().findById(dataset[position].inmuebleId)
             Log.e("FAVVV", search.toString())
             if (search == null) {
                 holder.favicon.setImageResource(R.drawable.ic_baseline_favorite_24)
-                database.favoritoDAO().insertAll(Favorito(dataset[position].inmuebleId, "-1"))
+                database.favoritoDAO().insertAll(Favorito(dataset[position].inmuebleId, null))
             } else {
                 holder.favicon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                database.favoritoDAO().delete(Favorito(dataset[position].inmuebleId, "-1"))
+                database.favoritoDAO().delete(Favorito(dataset[position].inmuebleId, null))
             }
 
         }

@@ -23,11 +23,11 @@ import androidx.room.Index
             onDelete = CASCADE
         )
     ),
-    indices = arrayOf(Index("dni")),
+    indices = arrayOf(Index("dni", unique = true)),
     tableName = "Favoritos",
-    primaryKeys = ["inmuebleId", "dni"]
+    primaryKeys = ["inmuebleId"]
 )
 data class Favorito(
     val inmuebleId: Int,
-    val dni: String
+    val dni: String?
 )
