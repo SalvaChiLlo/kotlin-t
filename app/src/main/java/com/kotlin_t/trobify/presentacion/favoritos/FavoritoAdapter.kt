@@ -22,15 +22,15 @@ import java.lang.Appendable
 class FavoritoAdapter(val context: Context, val dataset: List<Inmueble>) :
     RecyclerView.Adapter<FavoritoAdapter.FavoritoViewHolder>() {
     class FavoritoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val textDir: TextView = view.findViewById(R.id.direcciontext)
-        val textPrice: TextView = view.findViewById(R.id.preciotext)
-        val imageFav: ImageView = view.findViewById(R.id.miniatura_fav)
-        val favicon: ImageView = view.findViewById(R.id.favoicon)
+        val imagen: ImageView = view.findViewById(R.id.home_imagen)
+        val direccion : TextView = view.findViewById(R.id.home_direccion)
+        val precioMes : TextView = view.findViewById(R.id.home_precio_mes)
+        val favorito: ImageView = view.findViewById(R.id.favorito_icon)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritoViewHolder {
         val layoutInflater =
-            LayoutInflater.from(context).inflate(R.layout.favorito_item, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.home_item, parent, false)
 
         return FavoritoViewHolder(layoutInflater)
     }
@@ -38,28 +38,31 @@ class FavoritoAdapter(val context: Context, val dataset: List<Inmueble>) :
     override fun onBindViewHolder(holder: FavoritoViewHolder, position: Int) {
         val database = AppDatabase.getDatabase(context)
         // Set image
-        holder.imageFav.setImageBitmap(dataset[position].miniatura)
+        holder.imagen.setImageBitmap(dataset[position].miniatura)
         // Set direccion
-        holder.textDir.text = dataset[position].direccion
+        holder.direccion.text = dataset[position].direccion
         // Set precio
         var type: Int
         if (dataset[position].operacion == "alquiler") type = R.string.precioMes
         else type = R.string.precio
-        holder.textPrice.text = context.getString(type, dataset[position].precio)
+        holder.precioMes.text = context.getString(type, dataset[position].precio)
 
         // Set FavButton Icon
-        holder.favicon.setImageResource(R.drawable.ic_baseline_favorite_24)
+        if(database.favoritoDAO().findById(dataset[position].inmuebleId) == null) {
+            holder.favorito.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+        } else {
+            holder.favorito.setImageResource(R.drawable.ic_baseline_favorite_24)
+        }
         // FavButton setOnClickListener
-        holder.favicon.setOnClickListener {
+        holder.favorito.setOnClickListener {
             Toast.makeText(context, "Called Favorito", Toast.LENGTH_LONG).show()
 
             val search = database.favoritoDAO().findById(dataset[position].inmuebleId)
-            Log.e("FAVVV", search.toString())
             if (search == null) {
-                holder.favicon.setImageResource(R.drawable.ic_baseline_favorite_24)
+                holder.favorito.setImageResource(R.drawable.ic_baseline_favorite_24)
                 database.favoritoDAO().insertAll(Favorito(dataset[position].inmuebleId, null))
             } else {
-                holder.favicon.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                holder.favorito.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                 database.favoritoDAO().delete(Favorito(dataset[position].inmuebleId, null))
             }
 
