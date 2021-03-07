@@ -19,12 +19,16 @@ import com.kotlin_t.trobify.logica.Inmueble
 import java.lang.Appendable
 
 
-class FavoritoAdapter(val context: Context, val dataset: List<Inmueble>) :
+class FavoritoAdapter(
+    val context: Context,
+    val dataset: List<Inmueble>,
+    val viewModel: ListaFavoritosViewModel
+) :
     RecyclerView.Adapter<FavoritoAdapter.FavoritoViewHolder>() {
     class FavoritoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         val imagen: ImageView = view.findViewById(R.id.home_imagen)
-        val direccion : TextView = view.findViewById(R.id.home_direccion)
-        val precioMes : TextView = view.findViewById(R.id.home_precio_mes)
+        val direccion: TextView = view.findViewById(R.id.home_direccion)
+        val precioMes: TextView = view.findViewById(R.id.home_precio_mes)
         val favorito: ImageView = view.findViewById(R.id.favorito_icon)
     }
 
@@ -36,7 +40,6 @@ class FavoritoAdapter(val context: Context, val dataset: List<Inmueble>) :
     }
 
     override fun onBindViewHolder(holder: FavoritoViewHolder, position: Int) {
-        val database = AppDatabase.getDatabase(context)
         // Set image
         holder.imagen.setImageBitmap(dataset[position].miniatura)
         // Set direccion
@@ -46,28 +49,14 @@ class FavoritoAdapter(val context: Context, val dataset: List<Inmueble>) :
         if (dataset[position].operacion == "alquiler") type = R.string.precioMes
         else type = R.string.precio
         holder.precioMes.text = context.getString(type, dataset[position].precio)
-
-        // Set FavButton Icon
-        if(database.favoritoDAO().findById(dataset[position].inmuebleId) == null) {
-            holder.favorito.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-        } else {
-            holder.favorito.setImageResource(R.drawable.ic_baseline_favorite_24)
+        viewModel.checkIfFavorito(dataset[position], holder.favorito)
+        holder.favorito.setOnClickListener{
+            viewModel.addOrRemoveFavorite(dataset[position], null, holder.favorito)
         }
-        // FavButton setOnClickListener
-        holder.favorito.setOnClickListener {
-            Toast.makeText(context, "Called Favorito", Toast.LENGTH_LONG).show()
 
-            val search = database.favoritoDAO().findById(dataset[position].inmuebleId)
-            if (search == null) {
-                holder.favorito.setImageResource(R.drawable.ic_baseline_favorite_24)
-                database.favoritoDAO().insertAll(Favorito(dataset[position].inmuebleId, null))
-            } else {
-                holder.favorito.setImageResource(R.drawable.ic_baseline_favorite_border_24)
-                database.favoritoDAO().delete(Favorito(dataset[position].inmuebleId, null))
-            }
-
-        }
     }
+
+
 
     override fun getItemCount(): Int = dataset.size
 
