@@ -1,9 +1,8 @@
 package com.kotlin_t.trobify.presentacion.home
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -28,18 +27,18 @@ class HomeFragment : Fragment() {
         val datasource = AppDatabase.getDatabase(application)
         val viewModelFactory = HomeViewModelFactory(datasource, application)
         homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
-        binding.viewModel = homeViewModel
-        binding.lifecycleOwner = this
+        binding.apply {
+            viewModel = homeViewModel
+            lifecycleOwner = viewLifecycleOwner
+            recyclerView.apply {
+                layoutManager = LinearLayoutManager(context)
+                adapter = HomeItemAdapter(requireContext(), homeViewModel.getListaInmubles(), homeViewModel)
+                setHasFixedSize(true)
+            }
+        }
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.recyclerView.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = HomeItemAdapter(requireContext(), homeViewModel.getListaInmubles(), homeViewModel)
-            setHasFixedSize(true)
-        }
-    }
 
 
 }

@@ -8,10 +8,15 @@
             name="viewModel"
             type="com.kotlin_t.trobify.presentacion.home.HomeViewModel" />
     </data>
-    <FrameLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
         tools:context=".presentacion.home.HomeFragment">
+        <include
+            layout="@layout/home_toolbar"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -20,5 +25,5 @@
             android:scrollbars="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             />
-    </FrameLayout>
+    </LinearLayout>
 </layout>

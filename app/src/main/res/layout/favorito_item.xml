@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_margin="8dp">
 <LinearLayout
@@ -11,6 +12,7 @@
 
     <ImageView
         android:id="@+id/miniatura_fav"
+        tools:src="@drawable/_19669861"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:importantForAccessibility="no"
@@ -18,18 +20,19 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prueba"
+        tools:text="Avenida Cardenal Benlloch, 106"
         android:id="@+id/direcciontext"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Prueba"
+        tools:text="300€/mes"
         android:id="@+id/preciotext"/>
 
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:id="@+id/favoicon"/>
+        android:id="@+id/favoicon"
+        tools:src="@drawable/ic_baseline_favorite_24"/>
 </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
