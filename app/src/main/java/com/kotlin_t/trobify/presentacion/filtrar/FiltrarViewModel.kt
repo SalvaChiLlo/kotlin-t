@@ -79,8 +79,8 @@ class FiltrarViewModel(val database: AppDatabase, application: Application) :
             listOf(Constantes.ATICO, Constantes.CASA_CHALET, Constantes.HABITACION, Constantes.PISO)
         )
 
-        preciosOpciones[0] = 0;
-        preciosOpciones[1] = 999999999
+        preciosOpciones[0] = database.inmuebleDAO().getMinPrecio()
+        preciosOpciones[1] = database.inmuebleDAO().getMaxPrecio()
 
         habitacionesOpciones.addAll(
             listOf(Constantes.UNO, Constantes.DOS, Constantes.TRES, Constantes.CUATROoMAS)
@@ -98,5 +98,4 @@ class FiltrarViewModel(val database: AppDatabase, application: Application) :
             listOf(Constantes.PLANTA_BAJA, Constantes.PLANTA_INTERMEDIA, Constantes.PLANTA_ALTA)
         )
     }
-
 }

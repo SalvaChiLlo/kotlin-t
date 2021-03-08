@@ -17,6 +17,12 @@ interface InmuebleDAO {
     @Query("SELECT * FROM Inmuebles WHERE inmuebleId like :inmuebleId")
     fun findById(inmuebleId: String): Inmueble
 
+    @Query("SELECT max(precio) FROM Inmuebles")
+    fun getMaxPrecio(): Int
+
+    @Query("SELECT min(precio) FROM Inmuebles")
+    fun getMinPrecio(): Int
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(vararg inmuebles: Inmueble)
 
