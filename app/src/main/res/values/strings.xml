@@ -16,7 +16,7 @@
     <string name="precioMes">%d€/mes</string>
     <string name="precio">%d€</string>
     <string name="favoritos">Favoritos</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tipo_de_operaci_n">Tipo de Operación</string>
     <string name="tipo_de_inmueble">Tipo de inmueble</string>
@@ -42,8 +42,8 @@
     <string name="buen_estado">Buen estado</string>
     <string name="a_reformar">A reformar</string>
     <string name="nueva_construcci_n">Nueva construcción</string>
-    <string name="planta_baja_0_3">Planta baja (0-3)</string>
-    <string name="planta_intermedia_3_10">Planta intermedia (3-10)</string>
+    <string name="planta_baja_0_3">Planta baja (0–3)</string>
+    <string name="planta_intermedia_3_10">Planta intermedia (3–10)</string>
     <string name="planta_alta_10">Planta alta (10 - *)</string>
 
 </resources>
