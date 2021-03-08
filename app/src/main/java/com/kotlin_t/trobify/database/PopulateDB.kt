@@ -54,7 +54,7 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
             val listaInmuebles = database.inmuebleDAO().getAll()
             // Crear Favoritos
             for (i in 0..6) {
-                database.favoritoDAO().insertAll(Favorito(listaInmuebles[i].inmuebleId, "-1"))
+                database.favoritoDAO().insertAll(Favorito(listaInmuebles[i].inmuebleId, null))
             }
 
             for (i in 0 until listaInmuebles.size - 1) {

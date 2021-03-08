@@ -17,4 +17,34 @@
     <string name="precio">%d€</string>
     <string name="favoritos">Favoritos</string>
 
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="tipo_de_operaci_n">Tipo de Operación</string>
+    <string name="tipo_de_inmueble">Tipo de inmueble</string>
+    <string name="precio_m_nimo">Precio Mínimo:</string>
+    <string name="n_de_habitaciones">Nº de Habitaciones</string>
+    <string name="n_de_ba_os">Nº de Baños</string>
+    <string name="estado">Estado</string>
+    <string name="planta">Planta</string>
+    <string name="venta">Venta</string>
+    <string name="alquiler">Alquiler</string>
+    <string name="alquiler_de_habitaci_n">Alquiler de Habitación</string>
+    <string name="intercambio_de_viviendas">Intercambio de viviendas</string>
+    <string name="tico">Ático</string>
+    <string name="habitaci_n">Habitación</string>
+    <string name="casa_chalet">Casa / Chalet</string>
+    <string name="piso">Piso</string>
+    <string name="_4">4</string>
+    <string name="_3">3</string>
+    <string name="_2">2</string>
+    <string name="_1">1</string>
+    <string name="_4_o_m_s">4 o más</string>
+    <string name="obra_nueva">Obra nueva</string>
+    <string name="buen_estado">Buen estado</string>
+    <string name="a_reformar">A reformar</string>
+    <string name="nueva_construcci_n">Nueva construcción</string>
+    <string name="planta_baja_0_3">Planta baja (0–3)</string>
+    <string name="planta_intermedia_3_10">Planta intermedia (3–10)</string>
+    <string name="planta_alta_10">Planta alta (10 - *)</string>
+    <string name="precio_m_ximo">Precio Máximo:</string>
+
 </resources>
