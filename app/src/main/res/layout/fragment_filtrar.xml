@@ -139,12 +139,14 @@
                 app:layout_constraintStart_toEndOf="@id/textView4"
                 app:layout_constraintTop_toBottomOf="@+id/linear_layout_tipo_inmueble" />
 
-            <com.google.android.material.slider.RangeSlider
+            <com.google.android.material.slider.Slider
                 android:id="@+id/precio_minimo_slider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-
+                android:valueFrom="0.0"
+                android:value="30000.0"
+                android:valueTo="100000.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -153,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-                android:text="@string/precio_m_nimo"
+                android:text="@string/precio_m_ximo"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -170,12 +172,14 @@
                 app:layout_constraintStart_toEndOf="@id/textView5"
                 app:layout_constraintTop_toBottomOf="@+id/precio_minimo_slider" />
 
-            <com.google.android.material.slider.RangeSlider
+            <com.google.android.material.slider.Slider
                 android:id="@+id/precio_maximo_slider"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
-
+                android:valueFrom="0.0"
+                android:value="45000.0"
+                android:valueTo="100000.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
