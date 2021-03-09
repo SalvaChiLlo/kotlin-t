@@ -137,6 +137,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         )
 
         this.listaInmuebles = miBusqueda.meetCriteria(this.listaInmuebles)
+        Log.e("EEEEEEE", this.listaInmuebles.toString())
     }
 
     fun changeOperaciones(operacion: String, remove:Boolean) {
@@ -145,6 +146,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         } else {
             operacionesOpciones.add(operacion)
         }
+        filtrarInmuebles()
     }
 
     fun changeTipos(tipo: String, remove: Boolean) {
@@ -153,6 +155,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         } else {
             tiposOpciones.add(tipo)
         }
+        filtrarInmuebles()
     }
 
     fun changePrecios(precio: Int, min: Boolean) {
@@ -161,8 +164,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         } else {
             preciosOpciones[1] = precio
         }
-        Log.e("EEEEEEEEE", "${preciosOpciones[0]}   ${preciosOpciones[1]}")
-
+        filtrarInmuebles()
     }
 
     fun changeHabitaciones(habitacion: Int, remove: Boolean) {
@@ -171,6 +173,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         } else {
             habitacionesOpciones.add(habitacion)
         }
+        filtrarInmuebles()
     }
 
     fun changeBanos(bano: Int, remove: Boolean) {
@@ -179,6 +182,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         } else {
             banosOpciones.add(bano)
         }
+        filtrarInmuebles()
     }
 
     fun changeEstado(estado: String, remove: Boolean) {
@@ -187,6 +191,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         } else {
             estadoOpciones.add(estado)
         }
+        filtrarInmuebles()
     }
 
     fun changePlanta(planta: String, remove: Boolean) {
@@ -195,5 +200,6 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         } else {
             plantaOpciones.add(planta)
         }
+        filtrarInmuebles()
     }
 }
