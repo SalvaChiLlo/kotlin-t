@@ -136,8 +136,8 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
             )
         )
 
-        this.listaInmuebles = miBusqueda.meetCriteria(this.listaInmuebles)
-        Log.e("EEEEEEE", this.listaInmuebles.toString())
+        this.listaInmuebles = miBusqueda.meetCriteria(database.inmuebleDAO().getAll())
+        Log.e("EEEEEEE", this.listaInmuebles.size.toString())
     }
 
     fun changeOperaciones(operacion: String, remove:Boolean) {
