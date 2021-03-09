@@ -49,25 +49,25 @@ class FiltrarFragment : Fragment() {
     }
 
     private fun setOperacionForm() {
-        binding.ventaChkb.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.ventaChkb.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeOperaciones(
                 Constantes.VENTA,
                 isChecked
             )
         }
-        binding.alquilerChkb.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.alquilerChkb.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeOperaciones(
                 Constantes.ALQUILER,
                 isChecked
             )
         }
-        binding.alquilerHabitacionChkb.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.alquilerHabitacionChkb.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeOperaciones(
                 Constantes.ALQUILER_HABITACION,
                 isChecked
             )
         }
-        binding.intecambioChkb.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.intecambioChkb.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeOperaciones(
                 Constantes.INTERCAMBIO_VIVIENDA,
                 isChecked
@@ -76,22 +76,22 @@ class FiltrarFragment : Fragment() {
     }
 
     private fun setInmuebleForm() {
-        binding.aticoChbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.aticoChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.ATICO, isChecked
             )
         }
-        binding.casaChaletChbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.casaChaletChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.CASA_CHALET, isChecked
             )
         }
-        binding.habitacionChbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.habitacionChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.HABITACION, isChecked
             )
         }
-        binding.pisoChbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.pisoChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.PISO, isChecked
             )
@@ -99,55 +99,55 @@ class FiltrarFragment : Fragment() {
     }
 
     private fun setHabitacionesForm() {
-        binding.habitaciones1Chbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.habitaciones1Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.UNO, isChecked)
         }
-        binding.habitaciones2Chbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.habitaciones2Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.DOS, isChecked)
         }
-        binding.habitaciones3Chbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.habitaciones3Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.TRES, isChecked)
         }
-        binding.habitaciones4Chbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.habitaciones4Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.CUATROoMAS, isChecked)
         }
     }
 
     private fun setBanosForm() {
-        binding.banos1Chbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.banos1Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.UNO, isChecked)
         }
-        binding.banos2Chbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.banos2Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.DOS, isChecked)
         }
-        binding.banos3Chbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.banos3Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.TRES, isChecked)
         }
-        binding.banos4Chbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.banos4Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.CUATROoMAS, isChecked)
         }
     }
 
     private fun setEstadoForm() {
-        binding.nuevaConstruccionChbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.nuevaConstruccionChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeEstado(Constantes.NUEVA_CONSTRUCCION, isChecked)
         }
-        binding.buenEstadoChbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.buenEstadoChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeEstado(Constantes.BUEN_ESTADO, isChecked)
         }
-        binding.aReformarChbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.aReformarChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeEstado(Constantes.REFORMAR, isChecked)
         }
     }
 
     private fun setPlantaForm() {
-        binding.plantaIntermediaChbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.plantaIntermediaChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changePlanta(Constantes.PLANTA_INTERMEDIA, isChecked)
         }
-        binding.plantaBajaChbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.plantaBajaChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changePlanta(Constantes.PLANTA_BAJA, isChecked)
         }
-        binding.plantaAltaChbk.setOnCheckedChangeListener { buttonView, isChecked ->
+        binding.plantaAltaChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changePlanta(Constantes.PLANTA_ALTA, isChecked)
         }
     }
