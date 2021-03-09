@@ -16,7 +16,7 @@ import com.kotlin_t.trobify.persistencia.*
         Inmueble::class,
         Usuario::class
     ],
-    version = 10
+    version = 11
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {

@@ -8,6 +8,7 @@ import com.kotlin_t.trobify.logica.Favorito
 import com.kotlin_t.trobify.logica.Foto
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.logica.Usuario
+import com.kotlin_t.trobify.presentacion.Constantes
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
@@ -91,8 +92,8 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
                 null,
                 i + 1,
                 i * 100000,
-                if (i % 2 == 0) "piso" else "chalet",
-                if (i % 2 == 0) "alquiler" else "venta",
+                if (i % 2 == 0) Constantes.PISO else Constantes.CASA_CHALET,
+                if (i % 2 == 0) Constantes.ALQUILER else Constantes.VENTA,
                 (i + 1) * 100,
                 i % 2 == 0,
                 i + 1,
@@ -103,7 +104,7 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
                 "España",
                 39.489658 + i / 200,
                 -0.422140 + i / 100,
-                "bueno",
+                Constantes.BUEN_ESTADO,
                 i % 2 == 0,
                 10,
                 "Direcion nº${i}, Municipio",

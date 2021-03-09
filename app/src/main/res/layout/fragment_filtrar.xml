@@ -134,10 +134,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:importantForAccessibility="no"
-                tools:text="0€"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout_tipo_inmueble" />
+                app:layout_constraintTop_toBottomOf="@+id/linear_layout_tipo_inmueble"
+                tools:text="0€" />
 
             <com.google.android.material.slider.Slider
                 android:id="@+id/precio_minimo_slider"
@@ -147,6 +147,7 @@
                 android:value="0.0"
                 android:valueFrom="0.0"
                 android:valueTo="100000.0"
+                app:labelBehavior="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -167,10 +168,10 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:importantForAccessibility="no"
-                tools:text="1000000000€"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/precio_minimo_slider" />
+                app:layout_constraintTop_toBottomOf="@+id/precio_minimo_slider"
+                tools:text="1000000000€" />
 
             <com.google.android.material.slider.Slider
                 android:id="@+id/precio_maximo_slider"
@@ -180,6 +181,7 @@
                 android:value="100000.0"
                 android:valueFrom="0.0"
                 android:valueTo="100000.0"
+                app:labelBehavior="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
