@@ -91,7 +91,7 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
                 posterBitmap,
                 null,
                 i + 1,
-                i * 100000,
+                (i + 1)* 100000,
                 if (i % 2 == 0) Constantes.PISO else Constantes.CASA_CHALET,
                 if (i % 2 == 0) Constantes.ALQUILER else Constantes.VENTA,
                 (i + 1) * 100,

@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.presentacion.filtrar
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -158,18 +159,30 @@ class FiltrarFragment : Fragment() {
             override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
                 if (slider == binding.precioMaximoSlider) {
                     binding.precioMaximoTextview.text = formatter.format(slider.value)
-                    binding.precioMinimoSlider.valueTo = slider.value
+                    if(slider.value > binding.precioMinimoSlider.valueFrom) {
+                        binding.precioMinimoSlider.valueTo = slider.value
+                    }
                     filtrarViewModel.changePrecios(slider.value.toInt(), false)
                 } else {
                     binding.precioMinimoTextview.text = formatter.format(slider.value)
-                    binding.precioMaximoSlider.valueFrom = slider.value
+                    if(slider.value < binding.precioMaximoSlider.valueTo) {
+                        binding.precioMaximoSlider.valueFrom = slider.value
+                    }
                     filtrarViewModel.changePrecios(slider.value.toInt(), true)
                 }
             }
         }
 
-        binding.precioMaximoSlider.stepSize = 100.0.toFloat();
-        binding.precioMinimoSlider.stepSize = 100.0.toFloat();
+        binding.precioMaximoSlider.stepSize = 10.0.toFloat();
+        binding.precioMinimoSlider.stepSize = 10.0.toFloat();
+
+        binding.precioMaximoSlider.valueTo= datasource.inmuebleDAO().getMaxPrecio().toFloat()
+        binding.precioMinimoSlider.valueTo= binding.precioMaximoSlider.valueTo
+        binding.precioMinimoSlider.valueFrom= datasource.inmuebleDAO().getMinPrecio().toFloat()
+        binding.precioMaximoSlider.valueFrom= binding.precioMinimoSlider.valueFrom
+
+        binding.precioMaximoSlider.value = binding.precioMaximoSlider.valueTo
+        binding.precioMaximoSlider.value = binding.precioMaximoSlider.valueTo
 
         binding.precioMaximoSlider.addOnChangeListener(touchListener)
         binding.precioMinimoSlider.addOnChangeListener(touchListener)
@@ -180,6 +193,7 @@ class FiltrarFragment : Fragment() {
         binding.precioMinimoTextview.text = formatter.format(
             datasource.inmuebleDAO().getMinPrecio()
         )
+
     }
 
 }

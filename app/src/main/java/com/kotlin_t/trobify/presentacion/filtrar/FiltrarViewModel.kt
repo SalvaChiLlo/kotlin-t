@@ -49,6 +49,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
             OperacionCriteria(operacionesOpciones)
         }
 
+
         val tipoDeInmueble = if (tiposOpciones.isEmpty()) {
             TipoInmuebleCriteria(
                 setOf(
@@ -62,9 +63,11 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
             TipoInmuebleCriteria(tiposOpciones)
         }
 
+
         val precio = AndCriteria(
             PrecioMinimoCriteria(preciosOpciones[0]), PrecioMaximoCriteria(preciosOpciones[1])
         )
+
 
         val habitaciones = if (habitacionesOpciones.isEmpty()) {
             NroHabitacionesCriteria(
@@ -78,6 +81,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         } else {
             NroHabitacionesCriteria(habitacionesOpciones)
         }
+
 
         val banos = if (banosOpciones.isEmpty()) {
             NroBanosCriteria(
@@ -115,6 +119,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         } else {
             PlantaCriteria(plantaOpciones)
         }
+
 
         val miBusqueda = AndCriteria(
             tipoDeOperacion,
