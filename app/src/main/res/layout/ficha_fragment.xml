@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:importantForAccessibility="no"
-    tools:context=".presentacion.ficha.Ficha">
+    tools:context=".presentacion.ficha.FichaFragment">
 
     <ScrollView
         android:layout_width="match_parent"

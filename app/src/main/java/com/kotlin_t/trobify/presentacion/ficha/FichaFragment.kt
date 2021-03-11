@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.kotlin_t.trobify.R
 
-class Ficha : Fragment() {
+class FichaFragment : Fragment() {
 
     companion object {
-        fun newInstance() = Ficha()
+        fun newInstance() = FichaFragment()
     }
 
     private lateinit var viewModel: FichaViewModel

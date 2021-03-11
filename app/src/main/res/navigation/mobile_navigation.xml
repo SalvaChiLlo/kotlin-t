@@ -30,7 +30,7 @@
 
     <fragment
         android:id="@+id/fichaFragment"
-        android:name="com.kotlin_t.trobify.presentacion.ficha.Ficha"
+        android:name="com.kotlin_t.trobify.presentacion.ficha.FichaFragment"
         android:label="Ficha"/>
     <!---Añadir acciones hacia atrás-->
 </navigation>
