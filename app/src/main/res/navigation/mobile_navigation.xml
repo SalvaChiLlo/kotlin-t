@@ -27,4 +27,10 @@
             android:id="@+id/action_filtrarFragment_to_nav_home"
             app:destination="@id/nav_home" />
     </fragment>
+
+    <fragment
+        android:id="@+id/fichaFragment"
+        android:name="com.kotlin_t.trobify.presentacion.ficha.Ficha"
+        android:label="Ficha"/>
+    <!---Añadir acciones hacia atrás-->
 </navigation>
