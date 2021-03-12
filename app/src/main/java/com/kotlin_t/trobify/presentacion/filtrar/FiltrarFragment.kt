@@ -13,6 +13,7 @@ import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentFiltrarBinding
 import com.kotlin_t.trobify.presentacion.Constantes
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 import java.text.NumberFormat
 import java.util.*
 
@@ -31,7 +32,8 @@ class FiltrarFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_filtrar, container, false)
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
-        val viewModelFactory = FiltrarViewModelFactory(datasource, application)
+        val model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        val viewModelFactory = FiltrarViewModelFactory(datasource, application, model)
         filtrarViewModel =
             ViewModelProvider(this, viewModelFactory).get(FiltrarViewModel::class.java)
         binding.viewModel = filtrarViewModel
@@ -40,6 +42,8 @@ class FiltrarFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
         setOperacionForm()
         setInmuebleForm()
         setHabitacionesForm()

@@ -4,9 +4,11 @@ import android.app.Application
 import android.util.Log
 import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentFiltrarBinding
 import com.kotlin_t.trobify.presentacion.Constantes
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Estado.EstadoCriteria
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.NroBanos.NroBanosCriteria
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.NroHabitaciones.NroHabitacionesCriteria
@@ -18,7 +20,7 @@ import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio.PrecioMaximoCri
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio.PrecioMinimoCriteria
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.TipoInmueble.TipoInmuebleCriteria
 
-class FiltrarViewModel(val database: AppDatabase, application: Application) :
+class FiltrarViewModel(val database: AppDatabase, application: Application, val model: SharedViewModel) :
     AndroidViewModel(application) {
     private var listaInmuebles = database.inmuebleDAO().getAll()
     private var operacionesOpciones = mutableSetOf<String>()
@@ -142,7 +144,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application) :
         )
 
         this.listaInmuebles = miBusqueda.meetCriteria(database.inmuebleDAO().getAll())
-        Log.e("EEEEEEE", this.listaInmuebles.size.toString())
+        model.setInmuebles(this.listaInmuebles)
     }
 
     fun changeOperaciones(operacion: String, remove:Boolean) {
