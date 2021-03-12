@@ -31,7 +31,7 @@ class FiltrarFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_filtrar, container, false)
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
-        val viewModelFactory = FiltrarViewModelFactory(datasource, application, binding)
+        val viewModelFactory = FiltrarViewModelFactory(datasource, application)
         filtrarViewModel =
             ViewModelProvider(this, viewModelFactory).get(FiltrarViewModel::class.java)
         binding.viewModel = filtrarViewModel

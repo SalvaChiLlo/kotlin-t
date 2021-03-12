@@ -18,7 +18,7 @@ import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio.PrecioMaximoCri
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio.PrecioMinimoCriteria
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.TipoInmueble.TipoInmuebleCriteria
 
-class FiltrarViewModel(val database: AppDatabase, application: Application, val binding: FragmentFiltrarBinding) :
+class FiltrarViewModel(val database: AppDatabase, application: Application) :
     AndroidViewModel(application) {
     private var listaInmuebles = database.inmuebleDAO().getAll()
     private var operacionesOpciones = mutableSetOf<String>()
