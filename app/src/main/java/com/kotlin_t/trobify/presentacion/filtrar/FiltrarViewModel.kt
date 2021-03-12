@@ -144,6 +144,7 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         )
 
         this.listaInmuebles = miBusqueda.meetCriteria(database.inmuebleDAO().getAll())
+
         model.setInmuebles(this.listaInmuebles)
     }
 
