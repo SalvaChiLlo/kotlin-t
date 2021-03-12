@@ -30,7 +30,7 @@ class HomeItemAdapter(private val context: Context, private val dataset: List<In
 
 
     override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int) {
-        inmueble = dataset.get(position)
+        inmueble = dataset[position]
         holder.imagen.setImageBitmap(inmueble.miniatura)
         holder.direccion.text = inmueble.direccion
         var type: Int

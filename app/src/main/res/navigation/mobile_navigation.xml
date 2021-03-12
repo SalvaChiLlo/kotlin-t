@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_nav_home_to_fichaFragment"
             app:destination="@id/fichaFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_ordenacionFragment"
+            app:destination="@id/ordenacionFragment" />
     </fragment>
 
     <fragment
@@ -38,6 +41,14 @@
         <argument
             android:name="InmuebleID"
             app:argType="integer" />
+    </fragment>
+    <fragment
+        android:id="@+id/ordenacionFragment"
+        android:name="com.kotlin_t.trobify.presentacion.ordenacion.OrdenacionFragment"
+        android:label="OrdenacionFragment" >
+        <action
+            android:id="@+id/action_ordenacionFragment_to_nav_home"
+            app:destination="@id/nav_home" />
     </fragment>
     <!---Añadir acciones hacia atrás-->
 </navigation>
