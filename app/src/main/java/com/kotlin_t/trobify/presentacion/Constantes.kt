@@ -1,7 +1,7 @@
 package com.kotlin_t.trobify.presentacion
 
 class Constantes {
-    companion object{
+    companion object {
         // Tipos de Operaciones
         val VENTA = "venta"
         val ALQUILER = "alquiler"
@@ -29,5 +29,17 @@ class Constantes {
         val PLANTA_BAJA = "planta baja"
         val PLANTA_INTERMEDIA = "planta intermedia"
         val PLANTA_ALTA = "planta alta"
+
+        fun loadCriterios(): List<String> {
+            return listOf(
+                "Relevancia",
+                "Precio más bajo",
+                "Antiguo",
+                "Más grande",
+                "Más pequeño",
+                "Pisos altos",
+                "Pisos bajos"
+            )
+        }
     }
 }

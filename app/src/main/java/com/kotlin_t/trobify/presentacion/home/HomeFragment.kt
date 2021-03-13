@@ -14,11 +14,12 @@ import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.databinding.FragmentHomeBinding
 import com.kotlin_t.trobify.presentacion.SharedViewModel
+import com.kotlin_t.trobify.presentacion.ordenacion.OrdenacionFragmentDirections
 
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    lateinit var homeViewModel: HomeViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
 
     override fun onCreateView(
@@ -49,11 +50,16 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val filterButton = view.findViewById<ImageView>(R.id.filter_button)
+        val orderButton = view.findViewById<ImageView>(R.id.order_button)
 
         filterButton.setOnClickListener {
             val action = HomeFragmentDirections.actionNavHomeToFiltrarFragment()
             findNavController().navigate(action)
         }
+        orderButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionNavHomeToOrdenacionFragment())
+        }
+
     }
 
 

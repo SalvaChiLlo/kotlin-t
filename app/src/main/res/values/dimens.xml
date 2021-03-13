@@ -5,4 +5,9 @@
     <dimen name="nav_header_vertical_spacing">8dp</dimen>
     <dimen name="nav_header_height">176dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="ordenar_margin">8dp</dimen>
+    <dimen name="orden_separador">2dp</dimen>
+    <dimen name="orden_padding_start">20dp</dimen>
+    <dimen name="orden_padding_end">0dp</dimen>
+
 </resources>
