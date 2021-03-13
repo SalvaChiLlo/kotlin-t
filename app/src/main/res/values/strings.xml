@@ -46,5 +46,6 @@
     <string name="planta_intermedia_3_10">Planta intermedia (3–10)</string>
     <string name="planta_alta_10">Planta alta (10 - *)</string>
     <string name="precio_m_ximo">Precio Máximo:</string>
+    <string name="filtrar">Filtrar</string>
 
 </resources>

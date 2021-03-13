@@ -10,362 +10,355 @@
             type="com.kotlin_t.trobify.presentacion.filtrar.FiltrarViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".presentacion.filtrar.FiltrarFragment">
+        android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            tools:context=".presentacion.filtrar.FiltrarFragment"
+            android:layout_marginBottom="50dp">
 
-            <TextView
-                android:id="@+id/textView3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/tipo_de_operaci_n"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <LinearLayout
-                android:id="@+id/linear_layout_tipo_operacion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView3">
-
-                <CheckBox
-                    android:id="@+id/venta_chkb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/venta" />
-
-                <CheckBox
-                    android:id="@+id/alquiler_chkb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/alquiler" />
-
-                <CheckBox
-                    android:id="@+id/alquiler_habitacion_chkb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/alquiler_de_habitaci_n" />
-
-                <CheckBox
-                    android:id="@+id/intecambio_chkb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/intercambio_de_viviendas" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/tipo_de_inmueble"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout_tipo_operacion" />
-
-            <LinearLayout
-                android:id="@+id/linear_layout_tipo_inmueble"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="vertical"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView2">
-
-                <CheckBox
-                    android:id="@+id/atico_chbk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/tico" />
-
-                <CheckBox
-                    android:id="@+id/casa_chalet_chbk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/casa_chalet" />
-
-                <CheckBox
-                    android:id="@+id/habitacion_chbk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/habitaci_n" />
-
-                <CheckBox
-                    android:id="@+id/piso_chbk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/piso" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/precio_m_nimo"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout_tipo_inmueble" />
-
-            <TextView
-                android:id="@+id/precio_minimo_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:importantForAccessibility="no"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@id/textView4"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout_tipo_inmueble"
-                tools:text="0€" />
-
-            <com.google.android.material.slider.Slider
-                android:id="@+id/precio_minimo_slider"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:value="0.0"
-                android:valueFrom="0.0"
-                android:valueTo="100000.0"
-                app:labelBehavior="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView4" />
+                >
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/precio_m_ximo"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/precio_minimo_slider" />
-
-            <TextView
-                android:id="@+id/precio_maximo_textview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:importantForAccessibility="no"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@id/textView5"
-                app:layout_constraintTop_toBottomOf="@+id/precio_minimo_slider"
-                tools:text="1000000000€" />
-
-            <com.google.android.material.slider.Slider
-                android:id="@+id/precio_maximo_slider"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:value="100000.0"
-                android:valueFrom="0.0"
-                android:valueTo="100000.0"
-                app:labelBehavior="gone"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/n_de_habitaciones"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/precio_maximo_slider" />
-
-            <LinearLayout
-                android:id="@+id/linear_layout_num_habitaciones"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView6">
-
-                <CheckBox
-                    android:id="@+id/habitaciones1_chbk"
+                <TextView
+                    android:id="@+id/textView3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/_1" />
+                    android:layout_margin="8dp"
+                    android:text="@string/tipo_de_operaci_n"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <CheckBox
-                    android:id="@+id/habitaciones2_chbk"
+                <LinearLayout
+                    android:id="@+id/linear_layout_tipo_operacion"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/_2" />
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView3">
 
-                <CheckBox
-                    android:id="@+id/habitaciones3_chbk"
+                    <CheckBox
+                        android:id="@+id/venta_chkb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/venta" />
+
+                    <CheckBox
+                        android:id="@+id/alquiler_chkb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/alquiler" />
+
+                    <CheckBox
+                        android:id="@+id/alquiler_habitacion_chkb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/alquiler_de_habitaci_n" />
+
+                    <CheckBox
+                        android:id="@+id/intecambio_chkb"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/intercambio_de_viviendas" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/_3" />
+                    android:layout_margin="8dp"
+                    android:text="@string/tipo_de_inmueble"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear_layout_tipo_operacion" />
 
-                <CheckBox
-                    android:id="@+id/habitaciones4_chbk"
+                <LinearLayout
+                    android:id="@+id/linear_layout_tipo_inmueble"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/_4_o_m_s" />
-            </LinearLayout>
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView2">
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/n_de_ba_os"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout_num_habitaciones" />
+                    <CheckBox
+                        android:id="@+id/atico_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tico" />
 
-            <LinearLayout
-                android:id="@+id/linear_layout_num_baños"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView7">
+                    <CheckBox
+                        android:id="@+id/casa_chalet_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/casa_chalet" />
 
-                <CheckBox
-                    android:id="@+id/banos1_chbk"
+                    <CheckBox
+                        android:id="@+id/habitacion_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/habitaci_n" />
+
+                    <CheckBox
+                        android:id="@+id/piso_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/piso" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/_1" />
+                    android:layout_margin="8dp"
+                    android:text="Rando de precios"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear_layout_tipo_inmueble" />
 
-                <CheckBox
-                    android:id="@+id/banos2_chbk"
+                <TextView
+                    android:id="@+id/precio_minimo_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/_2" />
+                    android:layout_margin="8dp"
+                    android:importantForAccessibility="no"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                    app:layout_constraintStart_toEndOf="@id/textView4"
+                    app:layout_constraintTop_toTopOf="@+id/textView4"
+                    tools:text="0€" />
 
-                <CheckBox
-                    android:id="@+id/banos3_chbk"
+                <TextView
+                    android:id="@+id/precio_maximo_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/_3" />
+                    android:layout_margin="8dp"
+                    android:importantForAccessibility="no"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView4"
+                    app:layout_constraintStart_toEndOf="@id/precio_minimo_textview"
+                    app:layout_constraintTop_toTopOf="@+id/textView4"
+                    tools:text="1000000000€" />
 
-                <CheckBox
-                    android:id="@+id/banos4_chbk"
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/precio_maximo_slider"
+                    android:layout_margin="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:labelBehavior="gone"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/precio_minimo_textview"/>
+
+                <TextView
+                    android:id="@+id/textView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/_4_o_m_s" />
-            </LinearLayout>
+                    android:layout_margin="8dp"
+                    android:text="@string/n_de_habitaciones"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/precio_maximo_slider" />
 
-            <TextView
-                android:id="@+id/textView8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/estado"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout_num_baños" />
+                <LinearLayout
+                    android:id="@+id/linear_layout_num_habitaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView6">
 
-            <LinearLayout
-                android:id="@+id/linear_layout_estado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView8">
+                    <CheckBox
+                        android:id="@+id/habitaciones1_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/_1" />
 
-                <CheckBox
-                    android:id="@+id/nueva_construccion_chbk"
+                    <CheckBox
+                        android:id="@+id/habitaciones2_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/_2" />
+
+                    <CheckBox
+                        android:id="@+id/habitaciones3_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/_3" />
+
+                    <CheckBox
+                        android:id="@+id/habitaciones4_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/_4_o_m_s" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/nueva_construcci_n" />
+                    android:layout_margin="8dp"
+                    android:text="@string/n_de_ba_os"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear_layout_num_habitaciones" />
 
-                <CheckBox
-                    android:id="@+id/buen_estado_chbk"
+                <LinearLayout
+                    android:id="@+id/linear_layout_num_baños"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+                    <CheckBox
+                        android:id="@+id/banos1_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/_1" />
+
+                    <CheckBox
+                        android:id="@+id/banos2_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/_2" />
+
+                    <CheckBox
+                        android:id="@+id/banos3_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/_3" />
+
+                    <CheckBox
+                        android:id="@+id/banos4_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/_4_o_m_s" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView8"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/buen_estado" />
+                    android:layout_margin="8dp"
+                    android:text="@string/estado"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear_layout_num_baños" />
 
-                <CheckBox
-                    android:id="@+id/a_reformar_chbk"
+                <LinearLayout
+                    android:id="@+id/linear_layout_estado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+                    <CheckBox
+                        android:id="@+id/nueva_construccion_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/nueva_construcci_n" />
+
+                    <CheckBox
+                        android:id="@+id/buen_estado_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/buen_estado" />
+
+                    <CheckBox
+                        android:id="@+id/a_reformar_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/a_reformar" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/a_reformar" />
-            </LinearLayout>
+                    android:layout_margin="8dp"
+                    android:text="@string/planta"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linear_layout_estado" />
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="@string/planta"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_layout_estado" />
-
-            <LinearLayout
-                android:id="@+id/linear_layout_planta"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="horizontal"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView9">
-
-                <CheckBox
-                    android:id="@+id/planta_baja_chbk"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/linear_layout_planta"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/planta_baja_0_3" />
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView9">
 
-                <CheckBox
-                    android:id="@+id/planta_intermedia_chbk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/planta_intermedia_3_10" />
+                    <CheckBox
+                        android:id="@+id/planta_baja_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/planta_baja_0_3" />
 
-                <CheckBox
-                    android:id="@+id/planta_alta_chbk"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/planta_alta_10" />
-            </LinearLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+                    <CheckBox
+                        android:id="@+id/planta_intermedia_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/planta_intermedia_3_10" />
+
+                    <CheckBox
+                        android:id="@+id/planta_alta_chbk"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/planta_alta_10" />
+                </LinearLayout>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <Button
+            android:id="@+id/filtrarButton"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
+            android:text="@string/filtrar"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
