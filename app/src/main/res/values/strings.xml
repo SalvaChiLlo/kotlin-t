@@ -47,5 +47,6 @@
     <string name="planta_alta_10">Planta alta (10 - *)</string>
     <string name="precio_m_ximo">Precio Máximo:</string>
     <string name="relevancia">Relevancia</string>
+    <string name="rando_de_precios">Rando de precios</string>
 
 </resources>
