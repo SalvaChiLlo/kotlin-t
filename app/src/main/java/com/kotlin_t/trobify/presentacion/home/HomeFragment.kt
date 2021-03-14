@@ -51,14 +51,21 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val filterButton = view.findViewById<ImageView>(R.id.filter_button)
         val orderButton = view.findViewById<ImageView>(R.id.order_button)
+        val locationButton = view.findViewById<ImageView>(R.id.location_button)
 
         filterButton.setOnClickListener {
             val action = HomeFragmentDirections.actionNavHomeToFiltrarFragment()
             findNavController().navigate(action)
         }
+
         orderButton.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavHomeToOrdenacionFragment())
         }
+
+        locationButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionNavHomeToMapsFragment())
+        }
+
 
     }
 

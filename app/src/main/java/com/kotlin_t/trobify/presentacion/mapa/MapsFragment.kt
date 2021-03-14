@@ -1,0 +1,128 @@
+package com.kotlin_t.trobify.presentacion.mapa
+
+import android.Manifest
+import android.content.pm.PackageManager
+import android.graphics.Camera
+import androidx.fragment.app.Fragment
+
+import android.os.Bundle
+import android.util.Log
+import android.util.Log.INFO
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil.setContentView
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
+
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
+import com.kotlin_t.trobify.R
+import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.presentacion.SharedViewModel
+import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
+import java.util.logging.Level.INFO
+
+class MapsFragment : Fragment() {
+
+    private lateinit var map: GoogleMap
+    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val zoomLevel = 10f
+
+    private val callback = OnMapReadyCallback { googleMap ->
+        /**
+         * Manipulates the map once available.
+         * This callback is triggered when the map is ready to be used.
+         * This is where we can add markers or lines, add listeners or move the camera.
+         * In this case, we just add a marker near Sydney, Australia.
+         * If Google Play services is not installed on the device, the user will be prompted to
+         * install it inside the SupportMapFragment. This method will only be triggered once the
+         * user has installed Google Play services and returned to the app.
+         */
+
+
+        map = googleMap
+        map.mapType = GoogleMap.MAP_TYPE_NORMAL
+        /*
+        val sydney = LatLng(-34.0, 151.0)
+        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
+
+        setMarkers(map)
+        setMarkersListeners(map)
+        setZoomOnFirstInmueble(map)
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_maps, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
+    }
+
+    fun setMarkers(map: GoogleMap) {
+
+        // Obtener lista de inmuebles
+        val listaInmuebles: List<Inmueble> = sharedViewModel.inmuebles.value!!
+
+        // Crear un marcador en el mapa por cada inmueble
+        for(inmueble in listaInmuebles) {
+
+            Log.d("TAG","Inmueble añadido en: ${inmueble.latitud}, ${inmueble.longitud} con precio ${inmueble.precio}")
+
+            var latitud = inmueble.latitud!!
+            var longitud = inmueble.longitud!!
+            var localizacion = LatLng(latitud, longitud)
+
+
+            map.addMarker(
+                MarkerOptions()
+                    .position(localizacion)
+                    .title("${inmueble.precio}€")).showInfoWindow()
+
+        }
+
+    }
+
+    fun setMarkersListeners(map: GoogleMap) {
+
+        map.setOnMarkerClickListener { marker ->
+
+            val localizacion = marker.position
+            val inmuebleId = sharedViewModel.getInmuebleIdFromLatLng(localizacion)
+
+            findNavController().navigate(MapsFragmentDirections.actionMapsFragmentToFichaFragment(inmuebleId))
+
+            true
+        }
+
+    }
+
+    fun setZoomOnFirstInmueble(map: GoogleMap) {
+
+        val inmueble = sharedViewModel.getFirstInmueble()
+        val localizacion = LatLng(inmueble.latitud!!,inmueble.longitud!!)
+
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(localizacion,zoomLevel))
+
+    }
+
+
+}
+

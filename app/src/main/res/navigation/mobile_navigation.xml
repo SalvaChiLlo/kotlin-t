@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_nav_home_to_ordenacionFragment"
             app:destination="@id/ordenacionFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_mapsFragment"
+            app:destination="@id/mapsFragment" />
     </fragment>
 
     <fragment
@@ -52,6 +55,18 @@
         <action
             android:id="@+id/action_ordenacionFragment_to_nav_home"
             app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.kotlin_t.trobify.presentacion.mapa.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_mapsFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_mapsFragment_to_fichaFragment"
+            app:destination="@id/fichaFragment" />
     </fragment>
     <!---Añadir acciones hacia atrás-->
 </navigation>

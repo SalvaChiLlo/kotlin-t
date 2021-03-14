@@ -81,7 +81,8 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
         var posterBitmap: Bitmap? = null
         posterBitmap = getBitmapFromURL("https://source.unsplash.com/300x300/?building")
         posterBitmap = processImage(posterBitmap!!)
-
+        var latitud = 39.489658 + (i.toDouble() / 20.0)
+        var longitud = -0.422140 + (i.toDouble() / 20.0)
 
         database.inmuebleDAO().insertAll(
             Inmueble(
@@ -102,8 +103,8 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
                 "Valencia",
                 "Benimaclet",
                 "España",
-                39.489658 + i / 200,
-                -0.422140 + i / 100,
+                latitud,
+                longitud,
                 Constantes.BUEN_ESTADO,
                 i % 2 == 0,
                 10,
