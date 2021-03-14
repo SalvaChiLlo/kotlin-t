@@ -6,17 +6,20 @@ import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.databinding.FragmentHomeBinding
+import com.kotlin_t.trobify.presentacion.SharedViewModel
+import com.kotlin_t.trobify.presentacion.ordenacion.OrdenacionFragmentDirections
 
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    lateinit var homeViewModel: HomeViewModel
+    private lateinit var homeViewModel: HomeViewModel
 
 
     override fun onCreateView(
@@ -29,27 +32,35 @@ class HomeFragment : Fragment() {
         val datasource = AppDatabase.getDatabase(application)
         val viewModelFactory = HomeViewModelFactory(datasource, application)
         homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
+        val model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+
         binding.apply {
             viewModel = homeViewModel
             lifecycleOwner = viewLifecycleOwner
             recyclerView.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = HomeItemAdapter(requireContext(), homeViewModel.getListaInmubles(), homeViewModel)
                 setHasFixedSize(true)
             }
+            model.inmuebles.observe(viewLifecycleOwner, Observer {
+                recyclerView.adapter = HomeItemAdapter(requireContext(), it, homeViewModel)
+            })
         }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val filterButton = view.findViewById<ImageView>(R.id.filter_button)
+        val orderButton = view.findViewById<ImageView>(R.id.order_button)
 
-        filterButton.setOnClickListener{
+        filterButton.setOnClickListener {
             val action = HomeFragmentDirections.actionNavHomeToFiltrarFragment()
             findNavController().navigate(action)
         }
-    }
+        orderButton.setOnClickListener {
+            findNavController().navigate(HomeFragmentDirections.actionNavHomeToOrdenacionFragment())
+        }
 
+    }
 
 
 }

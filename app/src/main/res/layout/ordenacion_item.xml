@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <CheckedTextView
+        android:id="@+id/orden_relevancia"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ordenar_margin"
+        android:layout_width="match_parent"
+        android:paddingEnd="@dimen/orden_padding_end"
+        android:paddingStart="@dimen/orden_padding_start"
+        tools:text="Relevancia"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="parent"/>
+    <View
+        android:background="@color/black"
+        android:id="@+id/separador_2"
+        android:layout_height="@dimen/orden_separador"
+        android:layout_margin="@dimen/ordenar_margin"
+        android:layout_width="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/orden_relevancia" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

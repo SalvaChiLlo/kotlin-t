@@ -4,9 +4,11 @@ import android.app.Application
 import android.util.Log
 import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModelProvider
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentFiltrarBinding
 import com.kotlin_t.trobify.presentacion.Constantes
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Estado.EstadoCriteria
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.NroBanos.NroBanosCriteria
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.NroHabitaciones.NroHabitacionesCriteria
@@ -18,7 +20,11 @@ import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio.PrecioMaximoCri
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio.PrecioMinimoCriteria
 import com.kotlin_t.trobify.presentacion.filtrar.Criteria.TipoInmueble.TipoInmuebleCriteria
 
-class FiltrarViewModel(val database: AppDatabase, application: Application, val binding: FragmentFiltrarBinding) :
+class FiltrarViewModel(
+    val database: AppDatabase,
+    application: Application,
+    val model: SharedViewModel
+) :
     AndroidViewModel(application) {
     private var listaInmuebles = database.inmuebleDAO().getAll()
     private var operacionesOpciones = mutableSetOf<String>()
@@ -35,7 +41,6 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
     }
 
     fun filtrarInmuebles() {
-
         val tipoDeOperacion = if (operacionesOpciones.isEmpty()) {
             OperacionCriteria(
                 setOf(
@@ -142,69 +147,63 @@ class FiltrarViewModel(val database: AppDatabase, application: Application, val 
         )
 
         this.listaInmuebles = miBusqueda.meetCriteria(database.inmuebleDAO().getAll())
-        Log.e("EEEEEEE", this.listaInmuebles.size.toString())
+
+        model.setInmuebles(this.listaInmuebles)
     }
 
-    fun changeOperaciones(operacion: String, remove:Boolean) {
-        if(!remove) {
+    fun changeOperaciones(operacion: String, remove: Boolean) {
+        if (!remove) {
             operacionesOpciones.remove(operacion)
         } else {
             operacionesOpciones.add(operacion)
         }
-        filtrarInmuebles()
     }
 
     fun changeTipos(tipo: String, remove: Boolean) {
-        if(!remove) {
+        if (!remove) {
             tiposOpciones.remove(tipo)
         } else {
             tiposOpciones.add(tipo)
         }
-        filtrarInmuebles()
     }
 
     fun changePrecios(precio: Int, min: Boolean) {
-        if(min){
+        if (min) {
             preciosOpciones[0] = precio
         } else {
             preciosOpciones[1] = precio
         }
-        filtrarInmuebles()
     }
 
     fun changeHabitaciones(habitacion: Int, remove: Boolean) {
-        if(!remove) {
+        if (!remove) {
             habitacionesOpciones.remove(habitacion)
         } else {
             habitacionesOpciones.add(habitacion)
         }
-        filtrarInmuebles()
     }
 
     fun changeBanos(bano: Int, remove: Boolean) {
-        if(!remove) {
+        if (!remove) {
             banosOpciones.remove(bano)
         } else {
             banosOpciones.add(bano)
         }
-        filtrarInmuebles()
     }
 
     fun changeEstado(estado: String, remove: Boolean) {
-        if(!remove) {
+        if (!remove) {
             estadoOpciones.remove(estado)
         } else {
             estadoOpciones.add(estado)
         }
-        filtrarInmuebles()
     }
 
     fun changePlanta(planta: String, remove: Boolean) {
-        if(!remove) {
+        if (!remove) {
             plantaOpciones.remove(planta)
         } else {
             plantaOpciones.add(planta)
         }
-        filtrarInmuebles()
     }
 }

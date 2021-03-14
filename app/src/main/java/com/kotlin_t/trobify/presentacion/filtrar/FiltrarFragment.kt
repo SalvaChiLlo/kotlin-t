@@ -2,17 +2,21 @@ package com.kotlin_t.trobify.presentacion.filtrar
 
 import android.os.Bundle
 import android.util.Log
+import android.util.Range
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.google.android.material.slider.RangeSlider
 import com.google.android.material.slider.Slider
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentFiltrarBinding
 import com.kotlin_t.trobify.presentacion.Constantes
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 import java.text.NumberFormat
 import java.util.*
 
@@ -20,6 +24,7 @@ class FiltrarFragment : Fragment() {
     lateinit var binding: FragmentFiltrarBinding
     lateinit var filtrarViewModel: FiltrarViewModel
     lateinit var datasource: AppDatabase
+    lateinit var model: SharedViewModel
 
 
     override fun onCreateView(
@@ -31,7 +36,8 @@ class FiltrarFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_filtrar, container, false)
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
-        val viewModelFactory = FiltrarViewModelFactory(datasource, application, binding)
+        model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        val viewModelFactory = FiltrarViewModelFactory(datasource, application, model)
         filtrarViewModel =
             ViewModelProvider(this, viewModelFactory).get(FiltrarViewModel::class.java)
         binding.viewModel = filtrarViewModel
@@ -47,6 +53,12 @@ class FiltrarFragment : Fragment() {
         setEstadoForm()
         setPlantaForm()
         setPriceForm()
+
+        binding.filtrarButton.setOnClickListener {
+            filtrarViewModel.filtrarInmuebles()
+            val action = FiltrarFragmentDirections.actionFiltrarFragmentToNavHome()
+            findNavController().navigate(action)
+        }
     }
 
     private fun setOperacionForm() {
@@ -155,44 +167,35 @@ class FiltrarFragment : Fragment() {
 
     fun setPriceForm() {
         val formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY)
-        val touchListener: Slider.OnChangeListener = object : Slider.OnChangeListener {
-            override fun onValueChange(slider: Slider, value: Float, fromUser: Boolean) {
-                if (slider == binding.precioMaximoSlider) {
-                    binding.precioMaximoTextview.text = formatter.format(slider.value)
-                    if(slider.value > binding.precioMinimoSlider.valueFrom) {
-                        binding.precioMinimoSlider.valueTo = slider.value
-                    }
-                    filtrarViewModel.changePrecios(slider.value.toInt(), false)
-                } else {
-                    binding.precioMinimoTextview.text = formatter.format(slider.value)
-                    if(slider.value < binding.precioMaximoSlider.valueTo) {
-                        binding.precioMaximoSlider.valueFrom = slider.value
-                    }
-                    filtrarViewModel.changePrecios(slider.value.toInt(), true)
-                }
+
+//        val touchListener: Slider.OnChangeListener =
+//            Slider.OnChangeListener { slider, value, fromUser ->
+//                if (slider == binding.precioMaximoSlider) {
+//                    binding.precioMaximoTextview.text = formatter.format(slider.value)
+//                    binding.precioMinimoSlider.valueTo = value
+//                    filtrarViewModel.changePrecios(value.toInt(), false)
+//                } else {
+//                    binding.precioMinimoTextview.text = formatter.format(slider.value)
+//                    binding.precioMaximoSlider.valueFrom = value
+//                    filtrarViewModel.changePrecios(value.toInt(), true)
+//                }
+//            }
+
+        val touchListener: RangeSlider.OnChangeListener =
+            RangeSlider.OnChangeListener { slider, value, fromUser ->
+                binding.precioMaximoTextview.text = formatter.format(slider.values[1])
+                binding.precioMinimoTextview.text = formatter.format(slider.values[0])
+                filtrarViewModel.changePrecios(slider.values[0].toInt(), true)
+                filtrarViewModel.changePrecios(slider.values[1].toInt(), false)
             }
-        }
 
-        binding.precioMaximoSlider.stepSize = 10.0.toFloat();
-        binding.precioMinimoSlider.stepSize = 10.0.toFloat();
-
-        binding.precioMaximoSlider.valueTo= datasource.inmuebleDAO().getMaxPrecio().toFloat()
-        binding.precioMinimoSlider.valueTo= binding.precioMaximoSlider.valueTo
-        binding.precioMinimoSlider.valueFrom= datasource.inmuebleDAO().getMinPrecio().toFloat()
-        binding.precioMaximoSlider.valueFrom= binding.precioMinimoSlider.valueFrom
-
-        binding.precioMaximoSlider.value = binding.precioMaximoSlider.valueTo
-        binding.precioMaximoSlider.value = binding.precioMaximoSlider.valueTo
-
+        binding.precioMaximoSlider.valueTo = datasource.inmuebleDAO().getMaxPrecio().toFloat()
+        binding.precioMaximoSlider.valueFrom = datasource.inmuebleDAO().getMinPrecio().toFloat()
+        binding.precioMaximoSlider.values =
+            mutableListOf(binding.precioMaximoSlider.valueFrom, binding.precioMaximoSlider.valueTo)
+        binding.precioMaximoSlider.stepSize = 10f
         binding.precioMaximoSlider.addOnChangeListener(touchListener)
-        binding.precioMinimoSlider.addOnChangeListener(touchListener)
-
-        binding.precioMaximoTextview.text = formatter.format(
-            datasource.inmuebleDAO().getMaxPrecio()
-        )
-        binding.precioMinimoTextview.text = formatter.format(
-            datasource.inmuebleDAO().getMinPrecio()
-        )
+        binding.precioMaximoSlider.setMinSeparationValue(100f)
 
     }
 

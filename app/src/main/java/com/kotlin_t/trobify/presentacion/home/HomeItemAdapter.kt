@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.logica.Inmueble
@@ -29,7 +30,7 @@ class HomeItemAdapter(private val context: Context, private val dataset: List<In
 
 
     override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int) {
-        inmueble = dataset.get(position)
+        inmueble = dataset[position]
         holder.imagen.setImageBitmap(inmueble.miniatura)
         holder.direccion.text = inmueble.direccion
         var type: Int
@@ -38,7 +39,10 @@ class HomeItemAdapter(private val context: Context, private val dataset: List<In
         holder.precioMes.text = context.getString(type, dataset[position].precio)
         homeViewModel.setFavoriteIcon(inmueble, holder.favorito)
 
-
+        holder.imagen.setOnClickListener{
+            val action = HomeFragmentDirections.actionNavHomeToFichaFragment(inmueble.inmuebleId)
+            holder.itemView.findNavController().navigate(action)
+        }
 
     }
 
