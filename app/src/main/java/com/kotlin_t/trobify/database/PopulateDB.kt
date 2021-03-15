@@ -13,6 +13,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import kotlin.random.Random
 
 
 class PopulateDB(val database: AppDatabase, val context: Context) {
@@ -90,11 +91,11 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
                 i % 2 == 0,
                 posterBitmap,
                 null,
-                i + 1,
-                (i + 1)* 100000,
+                i + Random.nextInt(1, 10),
+                (i + Random.nextInt(1, 10))* Random.nextInt(10000, 100000),
                 if (i % 2 == 0) Constantes.PISO else Constantes.CASA_CHALET,
                 if (i % 2 == 0) Constantes.ALQUILER else Constantes.VENTA,
-                (i + 1) * 100,
+                (i + Random.nextInt(1, 10)) * Random.nextInt(10, 100),
                 i % 2 == 0,
                 i + 1,
                 i + 1,

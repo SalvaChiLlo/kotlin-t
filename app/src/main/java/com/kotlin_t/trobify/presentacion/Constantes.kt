@@ -34,6 +34,7 @@ class Constantes {
             return listOf(
                 "Relevancia",
                 "Precio más bajo",
+                "Precio más alto",
                 "Antiguo",
                 "Más grande",
                 "Más pequeño",

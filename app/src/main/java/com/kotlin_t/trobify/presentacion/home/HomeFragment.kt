@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.presentacion.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.Toast
@@ -20,6 +21,7 @@ import com.kotlin_t.trobify.presentacion.ordenacion.OrdenacionFragmentDirections
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
+    private lateinit var sharedViewModel: SharedViewModel
 
 
     override fun onCreateView(
@@ -32,7 +34,7 @@ class HomeFragment : Fragment() {
         val datasource = AppDatabase.getDatabase(application)
         val viewModelFactory = HomeViewModelFactory(datasource, application)
         homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
-        val model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         binding.apply {
             viewModel = homeViewModel
@@ -41,8 +43,15 @@ class HomeFragment : Fragment() {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
             }
-            model.inmuebles.observe(viewLifecycleOwner, Observer {
-                recyclerView.adapter = HomeItemAdapter(requireContext(), it, homeViewModel)
+            val estrategia = sharedViewModel.estrategiaOrdenacion
+            sharedViewModel.inmuebles.observe(viewLifecycleOwner, Observer {
+                if (estrategia != null) {
+                    Log.d("estrategia", estrategia.toString())
+                    recyclerView.adapter = HomeItemAdapter(requireContext(), estrategia.ordenar(it), homeViewModel)
+                }
+                else{
+                    recyclerView.adapter = HomeItemAdapter(requireContext(), it, homeViewModel)
+                }
             })
         }
         return binding.root

@@ -1,24 +1,19 @@
 package com.kotlin_t.trobify.presentacion.filtrar
 
 import android.app.Application
-import android.util.Log
-import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.databinding.FragmentFiltrarBinding
 import com.kotlin_t.trobify.presentacion.Constantes
 import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Estado.EstadoCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.NroBanos.NroBanosCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.NroHabitaciones.NroHabitacionesCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Operacion.OperacionCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Operadores.AndCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Operadores.OrCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Planta.PlantaCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio.PrecioMaximoCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio.PrecioMinimoCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.TipoInmueble.TipoInmuebleCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Estado.EstadoCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.NroBanos.NroBanosCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.NroHabitaciones.NroHabitacionesCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Operacion.OperacionCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Operadores.AndCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Planta.PlantaCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Precio.PrecioMaximoCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Precio.PrecioMinimoCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.TipoInmueble.TipoInmuebleCriteria
 
 class FiltrarViewModel(val database: AppDatabase, application: Application, val model: SharedViewModel) :
     AndroidViewModel(application) {

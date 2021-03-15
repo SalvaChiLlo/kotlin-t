@@ -1,7 +1,7 @@
-package com.kotlin_t.trobify.presentacion.filtrar.Criteria.Operacion
+package com.kotlin_t.trobify.presentacion.filtrar.criteria.Operacion
 
 import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Criteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Criteria
 
 class OperacionCriteria(val tipoDeInmueble: Set<String>): Criteria {
     override fun meetCriteria(inmuebles: List<Inmueble>): List<Inmueble> {

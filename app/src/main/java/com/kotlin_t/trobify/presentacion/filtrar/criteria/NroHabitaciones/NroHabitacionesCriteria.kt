@@ -1,7 +1,7 @@
-package com.kotlin_t.trobify.presentacion.filtrar.Criteria.NroHabitaciones
+package com.kotlin_t.trobify.presentacion.filtrar.criteria.NroHabitaciones
 
 import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Criteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Criteria
 
 class NroHabitacionesCriteria(val cantidad: Set<Int>): Criteria {
     override fun meetCriteria(inmuebles: List<Inmueble>): List<Inmueble> {

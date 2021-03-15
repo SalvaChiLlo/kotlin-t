@@ -42,7 +42,7 @@ class FiltrarFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
         setOperacionForm()
         setInmuebleForm()

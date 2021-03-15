@@ -1,7 +1,7 @@
-package com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio
+package com.kotlin_t.trobify.presentacion.filtrar.criteria.Precio
 
 import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Criteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Criteria
 
 class PrecioMinimoCriteria(val precioMIN: Int): Criteria {
     override fun meetCriteria(inmuebles: List<Inmueble>): List<Inmueble> {

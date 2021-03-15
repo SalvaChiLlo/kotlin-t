@@ -8,9 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.presentacion.ordenacion.EstrategiaOrdenacion
 
 class SharedViewModel(@NonNull application: Application) : AndroidViewModel(application) {
     val inmuebles = MutableLiveData<List<Inmueble>>()
+    var estrategiaOrdenacion: EstrategiaOrdenacion? = null
 
     init {
         inmuebles.value = AppDatabase.getDatabase(application).inmuebleDAO().getAll()

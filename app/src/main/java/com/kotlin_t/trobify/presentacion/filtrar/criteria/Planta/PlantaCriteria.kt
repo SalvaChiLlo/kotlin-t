@@ -1,8 +1,8 @@
-package com.kotlin_t.trobify.presentacion.filtrar.Criteria.Planta
+package com.kotlin_t.trobify.presentacion.filtrar.criteria.Planta
 
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.presentacion.Constantes
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Criteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Criteria
 
 class PlantaCriteria(val planta: Set<String>) : Criteria {
     override fun meetCriteria(inmuebles: List<Inmueble>): List<Inmueble> {
