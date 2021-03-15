@@ -41,6 +41,9 @@
         <argument
             android:name="InmuebleID"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_fichaFragment_to_nav_home"
+            app:destination="@id/nav_home" />
     </fragment>
     <fragment
         android:id="@+id/ordenacionFragment"
