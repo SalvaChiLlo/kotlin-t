@@ -14,11 +14,40 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     val inmuebles = MutableLiveData<List<Inmueble>>()
     var estrategiaOrdenacion: EstrategiaOrdenacion? = null
 
+    // Variables de filtro
+    var operacionesOpciones = MutableLiveData<MutableSet<String>>()
+    var tiposOpciones = MutableLiveData<MutableSet<String>>()
+    var preciosOpciones = MutableLiveData<IntArray>()
+    var habitacionesOpciones = MutableLiveData<MutableSet<Int>>()
+    var banosOpciones = MutableLiveData<MutableSet<Int>>()
+    var estadoOpciones = MutableLiveData<MutableSet<String>>()
+    var plantaOpciones = MutableLiveData<MutableSet<String>>()
+    var database = AppDatabase.getDatabase(application)
     init {
-        inmuebles.value = AppDatabase.getDatabase(application).inmuebleDAO().getAll()
+        inmuebles.value = database.inmuebleDAO().getAll()
+        operacionesOpciones.value = mutableSetOf<String>()
+        tiposOpciones.value = mutableSetOf<String>()
+        preciosOpciones.value = IntArray(2)
+        habitacionesOpciones.value = mutableSetOf<Int>()
+        banosOpciones.value = mutableSetOf<Int>()
+        estadoOpciones.value = mutableSetOf<String>()
+        plantaOpciones.value = mutableSetOf<String>()
     }
 
     fun setInmuebles(inmuebles: List<Inmueble>) {
         this.inmuebles.value = inmuebles
+    }
+
+    fun resetFiltro() {
+        inmuebles.value = database.inmuebleDAO().getAll()
+        operacionesOpciones.value = mutableSetOf<String>()
+        tiposOpciones.value = mutableSetOf<String>()
+        preciosOpciones.value = IntArray(2)
+        habitacionesOpciones.value = mutableSetOf<Int>()
+        banosOpciones.value = mutableSetOf<Int>()
+        estadoOpciones.value = mutableSetOf<String>()
+        plantaOpciones.value = mutableSetOf<String>()
+        preciosOpciones.value!!.set(0, database.inmuebleDAO().getMinPrecio())
+        preciosOpciones.value!!.set(1, database.inmuebleDAO().getMaxPrecio())
     }
 }
