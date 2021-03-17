@@ -59,8 +59,8 @@
     <fragment
         android:id="@+id/mapsFragment"
         android:name="com.kotlin_t.trobify.presentacion.mapa.MapsFragment"
-        android:label="fragment_maps"
-        tools:layout="@layout/fragment_maps" >
+        android:label="@string/mapa"
+        tools:layout="@layout/fragment_maps">
         <action
             android:id="@+id/action_mapsFragment_to_nav_home"
             app:destination="@id/nav_home" />

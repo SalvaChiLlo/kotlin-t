@@ -1,36 +1,22 @@
 package com.kotlin_t.trobify.presentacion.mapa
 
-import android.Manifest
-import android.content.pm.PackageManager
-import android.graphics.Camera
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
-import android.util.Log
-import android.util.Log.INFO
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
-import java.util.logging.Level.INFO
 
 class MapsFragment : Fragment() {
 
@@ -52,6 +38,7 @@ class MapsFragment : Fragment() {
 
         map = googleMap
         map.mapType = GoogleMap.MAP_TYPE_NORMAL
+        map.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireContext()))
         /*
         val sydney = LatLng(-34.0, 151.0)
         googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
@@ -80,21 +67,26 @@ class MapsFragment : Fragment() {
 
         // Obtener lista de inmuebles
         val listaInmuebles: List<Inmueble> = sharedViewModel.inmuebles.value!!
+        var latitud: Double; var longitud: Double;
+        var localizacion: LatLng;
+        var marker: Marker
 
         // Crear un marcador en el mapa por cada inmueble
         for(inmueble in listaInmuebles) {
 
-            Log.d("TAG","Inmueble añadido en: ${inmueble.latitud}, ${inmueble.longitud} con precio ${inmueble.precio}")
+            //Log.d("TAG","Inmueble añadido en: ${inmueble.latitud}, ${inmueble.longitud} con precio ${inmueble.precio}")
 
-            var latitud = inmueble.latitud!!
-            var longitud = inmueble.longitud!!
-            var localizacion = LatLng(latitud, longitud)
+            latitud = inmueble.latitud!!
+            longitud = inmueble.longitud!!
+            localizacion = LatLng(latitud, longitud)
 
+            marker = map.addMarker(
+                        MarkerOptions()
+                            .position(localizacion)
+                            .title("${inmueble.direccion}")
+                            .snippet("${inmueble.precio}€"))
 
-            map.addMarker(
-                MarkerOptions()
-                    .position(localizacion)
-                    .title("${inmueble.precio}€")).showInfoWindow()
+            marker.tag = inmueble
 
         }
 
@@ -102,12 +94,29 @@ class MapsFragment : Fragment() {
 
     fun setMarkersListeners(map: GoogleMap) {
 
-        map.setOnMarkerClickListener { marker ->
+        // Cuando se aprieta en el InfoWindow de un Marker, se abre la ficha del inmueble
+        map.setOnInfoWindowClickListener { marker ->
 
             val localizacion = marker.position
             val inmuebleId = sharedViewModel.getInmuebleIdFromLatLng(localizacion)
 
-            findNavController().navigate(MapsFragmentDirections.actionMapsFragmentToFichaFragment(inmuebleId))
+            findNavController().navigate(
+                MapsFragmentDirections.actionMapsFragmentToFichaFragment(
+                    inmuebleId
+                )
+            )
+
+            true
+        }
+
+        // Apretar en el Marker muestra y esconde la información del inmueble en el mapa
+        map.setOnMarkerClickListener { marker ->
+
+            if(!marker.isInfoWindowShown) {
+                marker.showInfoWindow()
+            } else {
+                marker.hideInfoWindow()
+            }
 
             true
         }
@@ -122,6 +131,8 @@ class MapsFragment : Fragment() {
         map.moveCamera(CameraUpdateFactory.newLatLngZoom(localizacion,zoomLevel))
 
     }
+
+
 
 
 }
