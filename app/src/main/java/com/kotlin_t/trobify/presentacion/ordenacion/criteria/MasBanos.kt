@@ -3,13 +3,13 @@ package com.kotlin_t.trobify.presentacion.ordenacion.criteria
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.presentacion.ordenacion.EstrategiaOrdenacion
 
-class Relevancia: EstrategiaOrdenacion {
+class MasBanos: EstrategiaOrdenacion {
     override fun ordenar(inmuebles: List<Inmueble>): List<Inmueble> {
-        TODO("Not yet implemented")
+        return inmuebles.sortedByDescending {
+            it.banos
+        }
     }
     override fun toString(): String{
-        return "Relavancia"
+        return "Más baños"
     }
-
-
 }

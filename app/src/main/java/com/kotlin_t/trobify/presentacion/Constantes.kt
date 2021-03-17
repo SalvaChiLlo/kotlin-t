@@ -32,14 +32,16 @@ class Constantes {
 
         fun loadCriterios(): List<String> {
             return listOf(
-                "Relevancia",
-                "Precio más bajo",
                 "Precio más alto",
-                "Antiguo",
+                "Precio más bajo",
                 "Más grande",
                 "Más pequeño",
                 "Pisos altos",
-                "Pisos bajos"
+                "Pisos bajos",
+                "Más Baños",
+                "Menos Baños",
+                "Más Habitaciones",
+                "Menos Habitaciones"
             )
         }
     }

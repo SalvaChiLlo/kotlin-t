@@ -5,10 +5,9 @@ import com.kotlin_t.trobify.presentacion.ordenacion.EstrategiaOrdenacion
 
 class MayorTamano: EstrategiaOrdenacion {
     override fun ordenar(inmuebles: List<Inmueble>): List<Inmueble> {
-        val res = inmuebles.sortedByDescending {
+        return inmuebles.sortedByDescending {
             it.tamano
         }
-        return res
     }
     override fun toString(): String{
         return "Más grande"
