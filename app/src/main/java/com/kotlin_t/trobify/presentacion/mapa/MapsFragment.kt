@@ -74,18 +74,13 @@ class MapsFragment : Fragment() {
         // Crear un marcador en el mapa por cada inmueble
         for(inmueble in listaInmuebles) {
 
-            //Log.d("TAG","Inmueble añadido en: ${inmueble.latitud}, ${inmueble.longitud} con precio ${inmueble.precio}")
-
             latitud = inmueble.latitud!!
             longitud = inmueble.longitud!!
             localizacion = LatLng(latitud, longitud)
 
-            marker = map.addMarker(
-                        MarkerOptions()
-                            .position(localizacion)
-                            .title("${inmueble.direccion}")
-                            .snippet("${inmueble.precio}€"))
+            marker = map.addMarker(MarkerOptions().position(localizacion))
 
+            // Información adicional para el CustomInfoWindow
             marker.tag = inmueble
 
         }
@@ -100,6 +95,7 @@ class MapsFragment : Fragment() {
             val localizacion = marker.position
             val inmuebleId = sharedViewModel.getInmuebleIdFromLatLng(localizacion)
 
+            // Abrir la ficha del inmueble
             findNavController().navigate(
                 MapsFragmentDirections.actionMapsFragmentToFichaFragment(
                     inmuebleId

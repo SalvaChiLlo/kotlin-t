@@ -25,8 +25,8 @@ class CustomInfoWindowForGoogleMap(context: Context) : GoogleMap.InfoWindowAdapt
         val precio = view.findViewById<TextView>(R.id.home_precio_mes)
         val foto = view.findViewById<ImageView>(R.id.home_imagen)
 
-        direccion.text = marker.title
-        precio.text = marker.snippet
+        direccion.text = ((marker.tag as Inmueble)).direccion
+        precio.text = ((marker.tag as Inmueble)).precio.toString() + "€"
         foto.setImageBitmap((marker.tag as Inmueble).miniatura)
 
     }
