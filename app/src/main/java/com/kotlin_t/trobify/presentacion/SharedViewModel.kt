@@ -39,7 +39,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     }
 
     fun setInmuebles(inmuebles: List<Inmueble>) {
-        this._inmuebles.value = inmuebles
+        this.inmuebles.value = inmuebles
     }
 
 
