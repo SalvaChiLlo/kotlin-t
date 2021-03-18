@@ -211,7 +211,6 @@ class FiltrarFragment : Fragment() {
             mutableListOf(model.preciosOpciones.value!![0].toFloat(), model.preciosOpciones.value!![1].toFloat())
 
 
-        binding.precioMaximoSlider.stepSize = 10f
         binding.precioMaximoSlider.addOnChangeListener(touchListener)
         binding.precioMaximoSlider.setMinSeparationValue(100f)
 
