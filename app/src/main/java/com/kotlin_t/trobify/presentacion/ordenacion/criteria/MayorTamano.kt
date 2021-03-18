@@ -10,7 +10,7 @@ class MayorTamano: EstrategiaOrdenacion {
         }
     }
     override fun toString(): String{
-        return "Más grande"
+        return "Más Grande"
     }
 
 }
