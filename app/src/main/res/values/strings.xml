@@ -50,5 +50,8 @@
     <string name="rando_de_precios">Rando de precios</string>
     <string name="filtrar">Filtrar</string>
     <string name="mapa">Mapa</string>
+    <string name="inicio_titulo">Inicio</string>
+    <string name="ordenar_titulo">¡Ordena a tu gusto!</string>
+    <string name="filtrar_titulo">¡Filtra como quieras!</string>
 
 </resources>
