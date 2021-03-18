@@ -66,23 +66,28 @@ class MapsFragment : Fragment() {
     fun setMarkers(map: GoogleMap) {
 
         // Obtener lista de inmuebles
-        val listaInmuebles: List<Inmueble> = sharedViewModel.inmuebles.value!!
-        var latitud: Double; var longitud: Double;
-        var localizacion: LatLng;
-        var marker: Marker
+        val listaInmuebles: List<Inmueble>? = sharedViewModel.inmuebles.value
+        if (listaInmuebles != null) {
 
-        // Crear un marcador en el mapa por cada inmueble
-        for(inmueble in listaInmuebles) {
 
-            latitud = inmueble.latitud!!
-            longitud = inmueble.longitud!!
-            localizacion = LatLng(latitud, longitud)
+            var latitud: Double;
+            var longitud: Double;
+            var localizacion: LatLng;
+            var marker: Marker
 
-            marker = map.addMarker(MarkerOptions().position(localizacion))
+            // Crear un marcador en el mapa por cada inmueble
+            for (inmueble in listaInmuebles) {
 
-            // Información adicional para el CustomInfoWindow
-            marker.tag = inmueble
+                latitud = inmueble.latitud!!
+                longitud = inmueble.longitud!!
+                localizacion = LatLng(latitud, longitud)
 
+                marker = map.addMarker(MarkerOptions().position(localizacion))
+
+                // Información adicional para el CustomInfoWindow
+                marker.tag = inmueble
+
+            }
         }
 
     }
@@ -122,9 +127,14 @@ class MapsFragment : Fragment() {
     fun setZoomOnFirstInmueble(map: GoogleMap) {
 
         val inmueble = sharedViewModel.getFirstInmueble()
-        val localizacion = LatLng(inmueble.latitud!!,inmueble.longitud!!)
+        val localizacion: LatLng
+        if(inmueble != null) {
+            localizacion = LatLng(inmueble.latitud!!, inmueble.longitud!!)
+        } else {
+            localizacion = LatLng(39.46854170253597, -0.376975419650787) // Valencia Centro
+        }
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(localizacion,zoomLevel))
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(localizacion, zoomLevel))
 
     }
 
