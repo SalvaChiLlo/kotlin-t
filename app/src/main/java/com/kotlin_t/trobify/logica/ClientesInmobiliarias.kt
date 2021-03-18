@@ -25,7 +25,7 @@ import androidx.room.Index
     ),
     indices = arrayOf(Index(value = ["dni", "inmobiliariaId"], unique = true))
 )
-data class clientesInmobiliarias(
+data class ClientesInmobiliarias(
     val inmobiliariaId: Int,
     val dni: String
 )

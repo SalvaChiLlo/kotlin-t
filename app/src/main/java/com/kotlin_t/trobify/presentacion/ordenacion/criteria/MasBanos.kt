@@ -10,6 +10,6 @@ class MasBanos: EstrategiaOrdenacion {
         }
     }
     override fun toString(): String{
-        return "Más baños"
+        return "Más Baños"
     }
 }

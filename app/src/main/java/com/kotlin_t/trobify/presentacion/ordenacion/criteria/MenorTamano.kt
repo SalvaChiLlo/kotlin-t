@@ -10,6 +10,6 @@ class MenorTamano: EstrategiaOrdenacion {
         }
     }
     override fun toString(): String{
-        return "Más pequeño"
+        return "Más Pequeño"
     }
 }
