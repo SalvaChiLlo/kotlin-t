@@ -1,4 +1,4 @@
-package com.kotlin_t.trobify.presentacion.filtrar.Criteria
+package com.kotlin_t.trobify.presentacion.filtrar.criteria
 
 import com.kotlin_t.trobify.logica.Inmueble
 

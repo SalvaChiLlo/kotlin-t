@@ -1,7 +1,7 @@
-package com.kotlin_t.trobify.presentacion.filtrar.Criteria.Operadores
+package com.kotlin_t.trobify.presentacion.filtrar.criteria.Operadores
 
 import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Criteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Criteria
 
 class AndCriteria(val criteria: Criteria, val otherCriteria: Criteria) : Criteria {
     override fun meetCriteria(inmuebles: List<Inmueble>): List<Inmueble> {

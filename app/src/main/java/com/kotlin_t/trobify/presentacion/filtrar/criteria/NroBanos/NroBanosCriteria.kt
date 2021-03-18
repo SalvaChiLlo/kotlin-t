@@ -1,7 +1,7 @@
-package com.kotlin_t.trobify.presentacion.filtrar.Criteria.NroBanos
+package com.kotlin_t.trobify.presentacion.filtrar.criteria.NroBanos
 
 import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Criteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Criteria
 
 class NroBanosCriteria(val cantidad: Set<Int>) : Criteria {
     override fun meetCriteria(inmuebles: List<Inmueble>): List<Inmueble> {

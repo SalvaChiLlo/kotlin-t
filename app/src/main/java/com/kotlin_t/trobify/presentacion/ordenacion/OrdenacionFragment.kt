@@ -7,11 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.OrdenacionFragmentBinding
 import com.kotlin_t.trobify.presentacion.Constantes
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.home.HomeViewModel
 import com.kotlin_t.trobify.presentacion.home.HomeViewModelFactory
 
@@ -26,19 +28,24 @@ class OrdenacionFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.ordenacion_fragment, container, false)
         val application = requireNotNull(this.activity).application
         val datasource = AppDatabase.getDatabase(application)
-        val viewModelFactory = OrdenacionViewModelFactory(datasource, application)
+        val model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        val viewModelFactory = OrdenacionViewModelFactory(datasource, application, model)
         viewModel = ViewModelProvider(this, viewModelFactory).get(OrdenacionViewModel::class.java)
+        val sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        binding.ordenacionRecyclerview.adapter = OrdenacionItemAdapter(sharedViewModel, Constantes.loadCriterios(),this)
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             ordenacionRecyclerview.apply {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
-                adapter = OrdenacionItemAdapter(requireContext(), Constantes.loadCriterios())
+
             }
         }
         return binding.root
     }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
 
+    }
 
 
 }

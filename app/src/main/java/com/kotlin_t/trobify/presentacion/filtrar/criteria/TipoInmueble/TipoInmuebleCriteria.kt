@@ -1,8 +1,7 @@
-package com.kotlin_t.trobify.presentacion.filtrar.Criteria.TipoInmueble
+package com.kotlin_t.trobify.presentacion.filtrar.criteria.TipoInmueble
 
-import android.util.Log
 import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Criteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Criteria
 
 class TipoInmuebleCriteria(val operacion: Set<String>): Criteria {
     override fun meetCriteria(inmuebles: List<Inmueble>): List<Inmueble> {

@@ -6,6 +6,7 @@ import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
@@ -20,6 +21,7 @@ import com.kotlin_t.trobify.logica.Favorito
 import com.kotlin_t.trobify.logica.Inmobiliaria
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.logica.Usuario
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -44,7 +46,9 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
+        val model = ViewModelProvider(this).get(SharedViewModel::class.java)
+        model.preciosOpciones.value!!.set(0, AppDatabase.getDatabase(this).inmuebleDAO().getMinPrecio())
+        model.preciosOpciones.value!!.set(1, AppDatabase.getDatabase(this).inmuebleDAO().getMaxPrecio())
         populate()
     }
 
@@ -63,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
+
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 }

@@ -9,19 +9,19 @@ import com.kotlin_t.trobify.persistencia.*
 @Database(
     entities = [
         Contrato::class,
-        clientesInmobiliarias::class,
+        ClientesInmobiliarias::class,
         Favorito::class,
         Foto::class,
         Inmobiliaria::class,
         Inmueble::class,
         Usuario::class
     ],
-    version = 11
+    version = 12
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun contratoDAO(): ContratoDAO
-    abstract fun clientesInmboliriasDAO(): clientesInmobiliariasDAO
+    abstract fun clientesInmboliriasDAO(): ClientesInmobiliariasDAO
     abstract fun favoritoDAO(): FavoritoDAO
     abstract fun fotoDAO(): FotoDAO
     abstract fun inmobiliariaDAO(): InmobiliariaDAO

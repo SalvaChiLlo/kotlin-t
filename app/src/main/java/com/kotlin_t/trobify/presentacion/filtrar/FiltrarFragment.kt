@@ -59,27 +59,35 @@ class FiltrarFragment : Fragment() {
             val action = FiltrarFragmentDirections.actionFiltrarFragmentToNavHome()
             findNavController().navigate(action)
         }
+
+        binding.resetFiltros.setOnClickListener{
+            resetForm()
+        }
     }
 
     private fun setOperacionForm() {
+        binding.ventaChkb.isChecked = model.operacionesOpciones.value!!.contains(Constantes.VENTA)
         binding.ventaChkb.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeOperaciones(
                 Constantes.VENTA,
                 isChecked
             )
         }
+        binding.alquilerChkb.isChecked = model.operacionesOpciones.value!!.contains(Constantes.ALQUILER)
         binding.alquilerChkb.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeOperaciones(
                 Constantes.ALQUILER,
                 isChecked
             )
         }
+        binding.alquilerHabitacionChkb.isChecked = model.operacionesOpciones.value!!.contains(Constantes.ALQUILER_HABITACION)
         binding.alquilerHabitacionChkb.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeOperaciones(
                 Constantes.ALQUILER_HABITACION,
                 isChecked
             )
         }
+        binding.intecambioChkb.isChecked = model.operacionesOpciones.value!!.contains(Constantes.INTERCAMBIO_VIVIENDA)
         binding.intecambioChkb.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeOperaciones(
                 Constantes.INTERCAMBIO_VIVIENDA,
@@ -89,21 +97,25 @@ class FiltrarFragment : Fragment() {
     }
 
     private fun setInmuebleForm() {
+        binding.aticoChbk.isChecked = model.tiposOpciones.value!!.contains(Constantes.ATICO)
         binding.aticoChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.ATICO, isChecked
             )
         }
+        binding.casaChaletChbk.isChecked = model.tiposOpciones.value!!.contains(Constantes.CASA_CHALET)
         binding.casaChaletChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.CASA_CHALET, isChecked
             )
         }
+        binding.habitacionChbk.isChecked = model.tiposOpciones.value!!.contains(Constantes.HABITACION)
         binding.habitacionChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.HABITACION, isChecked
             )
         }
+        binding.pisoChbk.isChecked = model.tiposOpciones.value!!.contains(Constantes.PISO)
         binding.pisoChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.PISO, isChecked
@@ -112,74 +124,75 @@ class FiltrarFragment : Fragment() {
     }
 
     private fun setHabitacionesForm() {
+        binding.habitaciones1Chbk.isChecked = model.habitacionesOpciones.value!!.contains(Constantes.UNO)
         binding.habitaciones1Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.UNO, isChecked)
         }
+        binding.habitaciones2Chbk.isChecked = model.habitacionesOpciones.value!!.contains(Constantes.DOS)
         binding.habitaciones2Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.DOS, isChecked)
         }
+        binding.habitaciones3Chbk.isChecked = model.habitacionesOpciones.value!!.contains(Constantes.TRES)
         binding.habitaciones3Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.TRES, isChecked)
         }
+        binding.habitaciones4Chbk.isChecked = model.habitacionesOpciones.value!!.contains(Constantes.CUATROoMAS)
         binding.habitaciones4Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.CUATROoMAS, isChecked)
         }
     }
 
     private fun setBanosForm() {
+        binding.banos1Chbk.isChecked = model.banosOpciones.value!!.contains(Constantes.UNO)
         binding.banos1Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.UNO, isChecked)
         }
+        binding.banos2Chbk.isChecked = model.banosOpciones.value!!.contains(Constantes.DOS)
         binding.banos2Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.DOS, isChecked)
         }
+        binding.banos3Chbk.isChecked = model.banosOpciones.value!!.contains(Constantes.TRES)
         binding.banos3Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.TRES, isChecked)
         }
+        binding.banos4Chbk.isChecked = model.banosOpciones.value!!.contains(Constantes.CUATROoMAS)
         binding.banos4Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.CUATROoMAS, isChecked)
         }
     }
 
     private fun setEstadoForm() {
+        binding.nuevaConstruccionChbk.isChecked = model.estadoOpciones.value!!.contains(Constantes.NUEVA_CONSTRUCCION)
         binding.nuevaConstruccionChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeEstado(Constantes.NUEVA_CONSTRUCCION, isChecked)
         }
+        binding.buenEstadoChbk.isChecked = model.estadoOpciones.value!!.contains(Constantes.BUEN_ESTADO)
         binding.buenEstadoChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeEstado(Constantes.BUEN_ESTADO, isChecked)
         }
+        binding.aReformarChbk.isChecked = model.estadoOpciones.value!!.contains(Constantes.REFORMAR)
         binding.aReformarChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeEstado(Constantes.REFORMAR, isChecked)
         }
     }
 
     private fun setPlantaForm() {
+        binding.plantaIntermediaChbk.isChecked = model.plantaOpciones.value!!.contains(Constantes.PLANTA_INTERMEDIA)
         binding.plantaIntermediaChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changePlanta(Constantes.PLANTA_INTERMEDIA, isChecked)
         }
+        binding.plantaBajaChbk.isChecked = model.plantaOpciones.value!!.contains(Constantes.PLANTA_BAJA)
         binding.plantaBajaChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changePlanta(Constantes.PLANTA_BAJA, isChecked)
         }
+        binding.plantaAltaChbk.isChecked = model.plantaOpciones.value!!.contains(Constantes.PLANTA_ALTA)
         binding.plantaAltaChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changePlanta(Constantes.PLANTA_ALTA, isChecked)
         }
     }
 
-    fun setPriceForm() {
+    private fun setPriceForm() {
         val formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY)
-
-//        val touchListener: Slider.OnChangeListener =
-//            Slider.OnChangeListener { slider, value, fromUser ->
-//                if (slider == binding.precioMaximoSlider) {
-//                    binding.precioMaximoTextview.text = formatter.format(slider.value)
-//                    binding.precioMinimoSlider.valueTo = value
-//                    filtrarViewModel.changePrecios(value.toInt(), false)
-//                } else {
-//                    binding.precioMinimoTextview.text = formatter.format(slider.value)
-//                    binding.precioMaximoSlider.valueFrom = value
-//                    filtrarViewModel.changePrecios(value.toInt(), true)
-//                }
-//            }
 
         val touchListener: RangeSlider.OnChangeListener =
             RangeSlider.OnChangeListener { slider, value, fromUser ->
@@ -187,16 +200,56 @@ class FiltrarFragment : Fragment() {
                 binding.precioMinimoTextview.text = formatter.format(slider.values[0])
                 filtrarViewModel.changePrecios(slider.values[0].toInt(), true)
                 filtrarViewModel.changePrecios(slider.values[1].toInt(), false)
+                Log.e("AAAAAAAAA", model.preciosOpciones.value!![0].toString())
+                Log.e("AAAAAAAAA", model.preciosOpciones.value!![1].toString())
+
             }
 
         binding.precioMaximoSlider.valueTo = datasource.inmuebleDAO().getMaxPrecio().toFloat()
         binding.precioMaximoSlider.valueFrom = datasource.inmuebleDAO().getMinPrecio().toFloat()
         binding.precioMaximoSlider.values =
-            mutableListOf(binding.precioMaximoSlider.valueFrom, binding.precioMaximoSlider.valueTo)
-        binding.precioMaximoSlider.stepSize = 10f
+            mutableListOf(model.preciosOpciones.value!![0].toFloat(), model.preciosOpciones.value!![1].toFloat())
+
+
         binding.precioMaximoSlider.addOnChangeListener(touchListener)
         binding.precioMaximoSlider.setMinSeparationValue(100f)
 
+        Log.e("EEE", model.preciosOpciones.value!![0].toString())
+        Log.e("EEE", model.preciosOpciones.value!![1].toString())
+        binding.precioMinimoTextview.text = formatter.format(model.preciosOpciones.value!![0])
+        binding.precioMaximoTextview.text = formatter.format(model.preciosOpciones.value!![1])
     }
 
+    private fun resetForm() {
+        model.resetFiltro()
+        binding.alquilerHabitacionChkb.isChecked = false
+        binding.ventaChkb.isChecked = false
+        binding.alquilerChkb.isChecked = false
+        binding.intecambioChkb.isChecked = false
+        binding.aticoChbk.isChecked = false
+        binding.casaChaletChbk.isChecked = false
+        binding.habitacionChbk.isChecked = false
+        binding.pisoChbk.isChecked = false
+        binding.habitaciones1Chbk.isChecked = false
+        binding.habitaciones2Chbk.isChecked = false
+        binding.habitaciones3Chbk.isChecked = false
+        binding.habitaciones4Chbk.isChecked = false
+        binding.banos1Chbk.isChecked = false
+        binding.banos2Chbk.isChecked = false
+        binding.banos3Chbk.isChecked = false
+        binding.banos4Chbk.isChecked = false
+        binding.nuevaConstruccionChbk.isChecked = false
+        binding.buenEstadoChbk.isChecked = false
+        binding.aReformarChbk.isChecked = false
+        binding.plantaIntermediaChbk.isChecked = false
+        binding.plantaBajaChbk.isChecked = false
+        binding.plantaAltaChbk.isChecked = false
+
+        val formatter = NumberFormat.getCurrencyInstance(Locale.GERMANY)
+        binding.precioMinimoTextview.text = formatter.format(model.preciosOpciones.value!![0])
+        binding.precioMaximoTextview.text = formatter.format(model.preciosOpciones.value!![1])
+        binding.precioMaximoSlider.values =
+            mutableListOf(model.preciosOpciones.value!![0].toFloat(), model.preciosOpciones.value!![1].toFloat())
+        filtrarViewModel.filtrarInmuebles()
+    }
 }

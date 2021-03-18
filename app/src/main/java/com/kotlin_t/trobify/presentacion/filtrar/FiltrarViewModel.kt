@@ -1,24 +1,19 @@
 package com.kotlin_t.trobify.presentacion.filtrar
 
 import android.app.Application
-import android.util.Log
-import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModelProvider
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.databinding.FragmentFiltrarBinding
 import com.kotlin_t.trobify.presentacion.Constantes
 import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Estado.EstadoCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.NroBanos.NroBanosCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.NroHabitaciones.NroHabitacionesCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Operacion.OperacionCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Operadores.AndCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Operadores.OrCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Planta.PlantaCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio.PrecioMaximoCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.Precio.PrecioMinimoCriteria
-import com.kotlin_t.trobify.presentacion.filtrar.Criteria.TipoInmueble.TipoInmuebleCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Estado.EstadoCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.NroBanos.NroBanosCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.NroHabitaciones.NroHabitacionesCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Operacion.OperacionCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Operadores.AndCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Planta.PlantaCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Precio.PrecioMaximoCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Precio.PrecioMinimoCriteria
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.TipoInmueble.TipoInmuebleCriteria
 
 class FiltrarViewModel(
     val database: AppDatabase,
@@ -27,21 +22,9 @@ class FiltrarViewModel(
 ) :
     AndroidViewModel(application) {
     private var listaInmuebles = database.inmuebleDAO().getAll()
-    private var operacionesOpciones = mutableSetOf<String>()
-    private var tiposOpciones = mutableSetOf<String>()
-    private var preciosOpciones = IntArray(2)
-    private var habitacionesOpciones = mutableSetOf<Int>()
-    private var banosOpciones = mutableSetOf<Int>()
-    private var estadoOpciones = mutableSetOf<String>()
-    private var plantaOpciones = mutableSetOf<String>()
-
-    init {
-        preciosOpciones[0] = database.inmuebleDAO().getMinPrecio()
-        preciosOpciones[1] = database.inmuebleDAO().getMaxPrecio()
-    }
 
     fun filtrarInmuebles() {
-        val tipoDeOperacion = if (operacionesOpciones.isEmpty()) {
+        val tipoDeOperacion = if (model.operacionesOpciones.value!!.isEmpty()) {
             OperacionCriteria(
                 setOf(
                     Constantes.VENTA,
@@ -51,11 +34,11 @@ class FiltrarViewModel(
                 )
             )
         } else {
-            OperacionCriteria(operacionesOpciones)
+            OperacionCriteria(model.operacionesOpciones.value!!)
         }
 
 
-        val tipoDeInmueble = if (tiposOpciones.isEmpty()) {
+        val tipoDeInmueble = if (model.tiposOpciones.value!!.isEmpty()) {
             TipoInmuebleCriteria(
                 setOf(
                     Constantes.ATICO,
@@ -65,16 +48,16 @@ class FiltrarViewModel(
                 )
             )
         } else {
-            TipoInmuebleCriteria(tiposOpciones)
+            TipoInmuebleCriteria(model.tiposOpciones.value!!)
         }
 
 
         val precio = AndCriteria(
-            PrecioMinimoCriteria(preciosOpciones[0]), PrecioMaximoCriteria(preciosOpciones[1])
+            PrecioMinimoCriteria(model.preciosOpciones.value!![0]), PrecioMaximoCriteria(model.preciosOpciones.value!![1])
         )
 
 
-        val habitaciones = if (habitacionesOpciones.isEmpty()) {
+        val habitaciones = if (model.habitacionesOpciones.value!!.isEmpty()) {
             NroHabitacionesCriteria(
                 setOf(
                     Constantes.UNO,
@@ -84,11 +67,11 @@ class FiltrarViewModel(
                 )
             )
         } else {
-            NroHabitacionesCriteria(habitacionesOpciones)
+            NroHabitacionesCriteria(model.habitacionesOpciones.value!!)
         }
 
 
-        val banos = if (banosOpciones.isEmpty()) {
+        val banos = if (model.banosOpciones.value!!.isEmpty()) {
             NroBanosCriteria(
                 setOf(
                     Constantes.UNO,
@@ -98,10 +81,10 @@ class FiltrarViewModel(
                 )
             )
         } else {
-            NroBanosCriteria(banosOpciones)
+            NroBanosCriteria(model.banosOpciones.value!!)
         }
 
-        val estado = if (estadoOpciones.isEmpty()) {
+        val estado = if (model.estadoOpciones.value!!.isEmpty()) {
             EstadoCriteria(
                 setOf(
                     Constantes.NUEVA_CONSTRUCCION,
@@ -110,10 +93,10 @@ class FiltrarViewModel(
                 )
             )
         } else {
-            EstadoCriteria(estadoOpciones)
+            EstadoCriteria(model.estadoOpciones.value!!)
         }
 
-        val planta = if (plantaOpciones.isEmpty()) {
+        val planta = if (model.plantaOpciones.value!!.isEmpty()) {
             PlantaCriteria(
                 setOf(
                     Constantes.PLANTA_BAJA,
@@ -122,7 +105,7 @@ class FiltrarViewModel(
                 )
             )
         } else {
-            PlantaCriteria(plantaOpciones)
+            PlantaCriteria(model.plantaOpciones.value!!)
         }
 
 
@@ -153,57 +136,57 @@ class FiltrarViewModel(
 
     fun changeOperaciones(operacion: String, remove: Boolean) {
         if (!remove) {
-            operacionesOpciones.remove(operacion)
+            model.operacionesOpciones.value!!.remove(operacion)
         } else {
-            operacionesOpciones.add(operacion)
+            model.operacionesOpciones.value!!.add(operacion)
         }
     }
 
     fun changeTipos(tipo: String, remove: Boolean) {
         if (!remove) {
-            tiposOpciones.remove(tipo)
+            model.tiposOpciones.value!!.remove(tipo)
         } else {
-            tiposOpciones.add(tipo)
+            model.tiposOpciones.value!!.add(tipo)
         }
     }
 
     fun changePrecios(precio: Int, min: Boolean) {
         if (min) {
-            preciosOpciones[0] = precio
+            model.preciosOpciones.value!![0] = precio
         } else {
-            preciosOpciones[1] = precio
+            model.preciosOpciones.value!![1] = precio
         }
     }
 
     fun changeHabitaciones(habitacion: Int, remove: Boolean) {
         if (!remove) {
-            habitacionesOpciones.remove(habitacion)
+            model.habitacionesOpciones.value!!.remove(habitacion)
         } else {
-            habitacionesOpciones.add(habitacion)
+            model.habitacionesOpciones.value!!.add(habitacion)
         }
     }
 
     fun changeBanos(bano: Int, remove: Boolean) {
         if (!remove) {
-            banosOpciones.remove(bano)
+            model.banosOpciones.value!!.remove(bano)
         } else {
-            banosOpciones.add(bano)
+            model.banosOpciones.value!!.add(bano)
         }
     }
 
     fun changeEstado(estado: String, remove: Boolean) {
         if (!remove) {
-            estadoOpciones.remove(estado)
+            model.estadoOpciones.value!!.remove(estado)
         } else {
-            estadoOpciones.add(estado)
+            model.estadoOpciones.value!!.add(estado)
         }
     }
 
     fun changePlanta(planta: String, remove: Boolean) {
         if (!remove) {
-            plantaOpciones.remove(planta)
+            model.plantaOpciones.value!!.remove(planta)
         } else {
-            plantaOpciones.add(planta)
+            model.plantaOpciones.value!!.add(planta)
         }
     }
 }
