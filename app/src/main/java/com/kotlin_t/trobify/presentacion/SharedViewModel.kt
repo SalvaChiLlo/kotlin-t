@@ -57,8 +57,11 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         return -1
     }
 
-    fun getFirstInmueble(): Inmueble {
-        return inmuebles.value!![0]
+    fun getFirstInmueble(): Inmueble? {
+        if(!inmuebles.value.isNullOrEmpty()) {
+            return inmuebles.value?.get(0)
+        }
+        else return null
     }
 
 
