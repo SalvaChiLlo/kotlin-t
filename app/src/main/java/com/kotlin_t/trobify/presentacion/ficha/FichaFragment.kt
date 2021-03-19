@@ -11,6 +11,7 @@ import android.widget.TextView
 import com.google.android.material.textview.MaterialTextView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
+import org.w3c.dom.Text
 import kotlin.properties.Delegates
 
 class FichaFragment : Fragment() {
@@ -20,18 +21,27 @@ class FichaFragment : Fragment() {
         fun newInstance() = FichaFragment()
     }
 
-    private lateinit var viewModel: FichaViewModel
+    private lateinit var fichaViewModel: FichaViewModel
+    lateinit var datasource: AppDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        val application = requireNotNull(this.activity).application
+        datasource = AppDatabase.getDatabase(application)
+        val viewModelFactory =  FichaViewModelFactory(datasource, application)
+        fichaViewModel = ViewModelProvider(this, viewModelFactory).get(FichaViewModel::class.java)
+        arguments?.let {
+            inmuebleId = it.getInt("InmuebleID")!!
+        }
+        fichaViewModel.setHouse(inmuebleId)
         return inflater.inflate(R.layout.ficha_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        viewModel = ViewModelProvider(this).get(FichaViewModel::class.java)
+        fichaViewModel = ViewModelProvider(this).get(FichaViewModel::class.java)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,17 +49,46 @@ class FichaFragment : Fragment() {
         arguments?.let {
             inmuebleId = it.getInt("InmuebleID")!!
         }
+        updateMedia(view)
+        /*
         val inmueble =
             AppDatabase.getDatabase(requireContext()).inmuebleDAO().findById(inmuebleId.toString())
-        view.findViewById<ImageView>(R.id.fotoPortal).setImageBitmap(inmueble.miniatura)
-        view.findViewById<MaterialTextView>(R.id.textoTitulo).text = inmueble.titulo
-        view.findViewById<TextView>(R.id.textoPrecio).text =
-            if (inmueble.operacion == "alquiler")
-                getString(R.string.precioMes, inmueble.precio)
-            else
-                getString(R.string.precio, inmueble.precio)
+        //view.findViewById<ImageView>(R.id.fotoPortal).setImageBitmap(inmueble.miniatura)
+        //view.findViewById<MaterialTextView>(R.id.textoTitulo).text = inmueble.titulo
+
         view.findViewById<TextView>(R.id.textoEstado).text = inmueble.estado
-        view.findViewById<TextView>(R.id.textoDescripcion).text = inmueble.descripcion
+        view.findViewById<TextView>(R.id.textoDescripcion).text = inmueble.descripcion*/
     }
 
+
+    fun updateMedia(container: View) {
+        setText(container)
+        setPhotos(container)
+        setMap(container)
+    }
+
+    private fun setText(container: View) {
+        //update de todos los textos
+        container!!.findViewById<MaterialTextView>(R.id.textoTitulo).text = fichaViewModel.inmueble.titulo
+        container!!.findViewById<TextView>(R.id.textoPrecio).text =
+            if (fichaViewModel.inmueble.operacion == "alquiler")
+                getString(R.string.precioMes, fichaViewModel.inmueble.precio)
+            else
+                getString(R.string.precio, fichaViewModel.inmueble.precio)
+        container!!.findViewById<TextView>(R.id.textoEstado).text = fichaViewModel.inmueble.estado
+        container!!.findViewById<TextView>(R.id.textoDescripcion).text = fichaViewModel.inmueble.descripcion
+        container!!.findViewById<TextView>(R.id.textoUsuario).text = fichaViewModel.usuario.nombre + " " + fichaViewModel.usuario.apellidos
+    }
+
+    private fun setPhotos(container: View) {
+        //foto de la casa y de foto de perfil
+        container!!.findViewById<ImageView>(R.id.fotoPortal).setImageBitmap(fichaViewModel.inmueble.miniatura)
+        if (fichaViewModel.usuario.fotoPerfil != null)
+            container!!.findViewById<ImageView>(R.id.fotoUsuario).setImageBitmap(fichaViewModel.usuario.fotoPerfil)
+    }
+
+    private fun setMap(container: View) {
+        //inicializamos el mapa en esta sección
+        //todo
+    }
 }

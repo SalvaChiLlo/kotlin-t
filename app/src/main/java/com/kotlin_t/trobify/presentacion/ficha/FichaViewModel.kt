@@ -9,13 +9,13 @@ import com.kotlin_t.trobify.logica.Usuario
 class FichaViewModel(private val database: AppDatabase,
                      private val application: Application
 ) : ViewModel() {
-    lateinit var inmueble : Inmueble
-    lateinit var usuario : Usuario
 
-    fun setHouse(inmueble: Inmueble) {
-        this.inmueble = inmueble
-        //TODO buscar en el DAO el usuario por el dni del inmueble asignado
-        //setUser()
+    lateinit var inmueble: Inmueble
+    lateinit var usuario: Usuario
+
+    fun setHouse(id : Int) {
+        this.inmueble = database.inmuebleDAO().findById(id.toString())
+        setUser(database.usuarioDAO().findById(inmueble.dniPropietario))
     }
 
     private fun setUser(owner : Usuario) {
