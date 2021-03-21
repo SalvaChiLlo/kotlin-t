@@ -54,11 +54,11 @@ class FiltrarFragment : Fragment() {
         setPlantaForm()
         setPriceForm()
 
-        binding.filtrarButton.setOnClickListener {
-            filtrarViewModel.filtrarInmuebles()
-            val action = FiltrarFragmentDirections.actionFiltrarFragmentToNavHome()
-            findNavController().navigate(action)
-        }
+//        binding.filtrarButton.setOnClickListener {
+//            filtrarViewModel.filtrarInmuebles()
+//            val action = FiltrarFragmentDirections.actionFiltrarFragmentToNavHome()
+//            findNavController().navigate(action)
+//        }
 
         binding.resetFiltros.setOnClickListener{
             resetForm()
@@ -72,6 +72,7 @@ class FiltrarFragment : Fragment() {
                 Constantes.VENTA,
                 isChecked
             )
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.alquilerChkb.isChecked = model.operacionesOpciones.value!!.contains(Constantes.ALQUILER)
         binding.alquilerChkb.setOnCheckedChangeListener { _, isChecked ->
@@ -79,6 +80,7 @@ class FiltrarFragment : Fragment() {
                 Constantes.ALQUILER,
                 isChecked
             )
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.alquilerHabitacionChkb.isChecked = model.operacionesOpciones.value!!.contains(Constantes.ALQUILER_HABITACION)
         binding.alquilerHabitacionChkb.setOnCheckedChangeListener { _, isChecked ->
@@ -86,6 +88,7 @@ class FiltrarFragment : Fragment() {
                 Constantes.ALQUILER_HABITACION,
                 isChecked
             )
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.intecambioChkb.isChecked = model.operacionesOpciones.value!!.contains(Constantes.INTERCAMBIO_VIVIENDA)
         binding.intecambioChkb.setOnCheckedChangeListener { _, isChecked ->
@@ -93,6 +96,7 @@ class FiltrarFragment : Fragment() {
                 Constantes.INTERCAMBIO_VIVIENDA,
                 isChecked
             )
+            filtrarViewModel.filtrarInmuebles()
         }
     }
 
@@ -102,24 +106,28 @@ class FiltrarFragment : Fragment() {
             filtrarViewModel.changeTipos(
                 Constantes.ATICO, isChecked
             )
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.casaChaletChbk.isChecked = model.tiposOpciones.value!!.contains(Constantes.CASA_CHALET)
         binding.casaChaletChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.CASA_CHALET, isChecked
             )
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.habitacionChbk.isChecked = model.tiposOpciones.value!!.contains(Constantes.HABITACION)
         binding.habitacionChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.HABITACION, isChecked
             )
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.pisoChbk.isChecked = model.tiposOpciones.value!!.contains(Constantes.PISO)
         binding.pisoChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeTipos(
                 Constantes.PISO, isChecked
             )
+            filtrarViewModel.filtrarInmuebles()
         }
     }
 
@@ -127,18 +135,22 @@ class FiltrarFragment : Fragment() {
         binding.habitaciones1Chbk.isChecked = model.habitacionesOpciones.value!!.contains(Constantes.UNO)
         binding.habitaciones1Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.UNO, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.habitaciones2Chbk.isChecked = model.habitacionesOpciones.value!!.contains(Constantes.DOS)
         binding.habitaciones2Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.DOS, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.habitaciones3Chbk.isChecked = model.habitacionesOpciones.value!!.contains(Constantes.TRES)
         binding.habitaciones3Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.TRES, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.habitaciones4Chbk.isChecked = model.habitacionesOpciones.value!!.contains(Constantes.CUATROoMAS)
         binding.habitaciones4Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeHabitaciones(Constantes.CUATROoMAS, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
     }
 
@@ -146,18 +158,22 @@ class FiltrarFragment : Fragment() {
         binding.banos1Chbk.isChecked = model.banosOpciones.value!!.contains(Constantes.UNO)
         binding.banos1Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.UNO, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.banos2Chbk.isChecked = model.banosOpciones.value!!.contains(Constantes.DOS)
         binding.banos2Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.DOS, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.banos3Chbk.isChecked = model.banosOpciones.value!!.contains(Constantes.TRES)
         binding.banos3Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.TRES, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.banos4Chbk.isChecked = model.banosOpciones.value!!.contains(Constantes.CUATROoMAS)
         binding.banos4Chbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeBanos(Constantes.CUATROoMAS, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
     }
 
@@ -165,14 +181,17 @@ class FiltrarFragment : Fragment() {
         binding.nuevaConstruccionChbk.isChecked = model.estadoOpciones.value!!.contains(Constantes.NUEVA_CONSTRUCCION)
         binding.nuevaConstruccionChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeEstado(Constantes.NUEVA_CONSTRUCCION, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.buenEstadoChbk.isChecked = model.estadoOpciones.value!!.contains(Constantes.BUEN_ESTADO)
         binding.buenEstadoChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeEstado(Constantes.BUEN_ESTADO, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.aReformarChbk.isChecked = model.estadoOpciones.value!!.contains(Constantes.REFORMAR)
         binding.aReformarChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeEstado(Constantes.REFORMAR, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
     }
 
@@ -180,14 +199,17 @@ class FiltrarFragment : Fragment() {
         binding.plantaIntermediaChbk.isChecked = model.plantaOpciones.value!!.contains(Constantes.PLANTA_INTERMEDIA)
         binding.plantaIntermediaChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changePlanta(Constantes.PLANTA_INTERMEDIA, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.plantaBajaChbk.isChecked = model.plantaOpciones.value!!.contains(Constantes.PLANTA_BAJA)
         binding.plantaBajaChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changePlanta(Constantes.PLANTA_BAJA, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
         binding.plantaAltaChbk.isChecked = model.plantaOpciones.value!!.contains(Constantes.PLANTA_ALTA)
         binding.plantaAltaChbk.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changePlanta(Constantes.PLANTA_ALTA, isChecked)
+            filtrarViewModel.filtrarInmuebles()
         }
     }
 
@@ -202,7 +224,7 @@ class FiltrarFragment : Fragment() {
                 filtrarViewModel.changePrecios(slider.values[1].toInt(), false)
                 Log.e("AAAAAAAAA", model.preciosOpciones.value!![0].toString())
                 Log.e("AAAAAAAAA", model.preciosOpciones.value!![1].toString())
-
+                filtrarViewModel.filtrarInmuebles()
             }
 
         binding.precioMaximoSlider.valueTo = datasource.inmuebleDAO().getMaxPrecio().toFloat()
