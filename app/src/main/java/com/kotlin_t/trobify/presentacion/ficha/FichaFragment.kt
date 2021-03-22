@@ -1,18 +1,25 @@
 package com.kotlin_t.trobify.presentacion.ficha
 
-import androidx.lifecycle.ViewModelProvider
+import android.content.Intent
+import android.location.Address
+import android.location.Geocoder
+import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.maps.*
 import com.google.android.material.textview.MaterialTextView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
-import org.w3c.dom.Text
+import java.util.*
 import kotlin.properties.Delegates
+
 
 class FichaFragment : Fragment() {
     var inmuebleId by Delegates.notNull<Int>()
@@ -36,6 +43,7 @@ class FichaFragment : Fragment() {
             inmuebleId = it.getInt("InmuebleID")!!
         }
         fichaViewModel.setHouse(inmuebleId)
+
         return inflater.inflate(R.layout.ficha_fragment, container, false)
     }
 
@@ -50,21 +58,37 @@ class FichaFragment : Fragment() {
             inmuebleId = it.getInt("InmuebleID")!!
         }
         updateMedia(view)
-        /*
-        val inmueble =
-            AppDatabase.getDatabase(requireContext()).inmuebleDAO().findById(inmuebleId.toString())
-        //view.findViewById<ImageView>(R.id.fotoPortal).setImageBitmap(inmueble.miniatura)
-        //view.findViewById<MaterialTextView>(R.id.textoTitulo).text = inmueble.titulo
 
-        view.findViewById<TextView>(R.id.textoEstado).text = inmueble.estado
-        view.findViewById<TextView>(R.id.textoDescripcion).text = inmueble.descripcion*/
+        val mapButton : ImageButton = view.findViewById(R.id.mapa)
+
+
+        mapButton.setOnClickListener {
+
+            mapClickHandler()
+
+        }
     }
-
+/*
+    override fun onMapReady(googleMap: GoogleMap?) {
+        //configura el mapa
+        googleMap?.apply {
+            val mark : LatLng
+            if(fichaViewModel.inmueble.latitud != null)
+                mark = LatLng(fichaViewModel.inmueble.latitud!!, fichaViewModel.inmueble?.longitud!!)
+            else mark = LatLng(0.0, 0.0)
+            addMarker(
+                MarkerOptions().position(mark).title(fichaViewModel.inmueble.titulo)
+            )
+            moveCamera(CameraUpdateFactory.newLatLng(mark))
+            MapsInitializer.initialize(activity)
+        }
+    }
+    */
 
     fun updateMedia(container: View) {
         setText(container)
         setPhotos(container)
-        setMap(container)
+        setMap(container) //próxima versión
     }
 
     private fun setText(container: View) {
@@ -75,20 +99,53 @@ class FichaFragment : Fragment() {
                 getString(R.string.precioMes, fichaViewModel.inmueble.precio)
             else
                 getString(R.string.precio, fichaViewModel.inmueble.precio)
-        container!!.findViewById<TextView>(R.id.textoEstado).text = fichaViewModel.inmueble.estado
+        container!!.findViewById<TextView>(R.id.textoEstado).text = fichaViewModel.inmueble.operacion
         container!!.findViewById<TextView>(R.id.textoDescripcion).text = fichaViewModel.inmueble.descripcion
         container!!.findViewById<TextView>(R.id.textoUsuario).text = fichaViewModel.usuario.nombre + " " + fichaViewModel.usuario.apellidos
+
+        //Direccion
+        val geocoder : Geocoder = Geocoder(context, Locale.getDefault())
+        var dir : String = ""
+        if (fichaViewModel.inmueble.latitud != null) {
+            var direccion: List<Address> = geocoder.getFromLocation(
+                fichaViewModel.inmueble.latitud!!,
+                fichaViewModel.inmueble.longitud!!,
+                1
+            )
+            dir += direccion.get(0).getAddressLine(0)
+        } else dir = "Dirección desconocida"
+
+        container!!.findViewById<TextView>(R.id.textoCalle).text = dir
+
+
+
     }
 
     private fun setPhotos(container: View) {
         //foto de la casa y de foto de perfil
         container!!.findViewById<ImageView>(R.id.fotoPortal).setImageBitmap(fichaViewModel.inmueble.miniatura)
+        //container!!.findViewById<ImageView>(R.id.favImage).setImageResource(R.drawable.ic_baseline_favorite_24)
+        //Añadir cuando se haga el viewmodel completo
+
         if (fichaViewModel.usuario.fotoPerfil != null)
             container!!.findViewById<ImageView>(R.id.fotoUsuario).setImageBitmap(fichaViewModel.usuario.fotoPerfil)
     }
 
     private fun setMap(container: View) {
         //inicializamos el mapa en esta sección
-        //todo
+        //mapView = container!!.findViewById<MapView>(R.id.mapView)
+        //mapView?.getMapAsync(this)
+
+    }
+
+    fun mapClickHandler() {
+        val gmmIntentUri = "http://maps.google.com/maps?q="+ fichaViewModel.inmueble.latitud  +
+                "," + fichaViewModel.inmueble.longitud +"("+ fichaViewModel.inmueble.titulo + ")&iwloc=A&hl=es"
+
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(gmmIntentUri))
+        intent.setPackage("com.google.android.apps.maps")
+        if (activity?.packageManager?.resolveActivity(intent, 0) != null) {
+            startActivity(intent)
+        }
     }
 }

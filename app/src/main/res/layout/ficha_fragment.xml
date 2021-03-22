@@ -27,15 +27,27 @@
                 android:scaleType="center"
                 android:src="@drawable/_19669861" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/textoTitulo"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="30sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/fotoPortal"
-                tools:text="Texto de ejemplo" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/textoTitulo"
+                    android:layout_width="335dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/fotoPortal"
+                    tools:text="Texto de ejemplo" />
+
+                <ImageView
+                    android:id="@+id/favImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    tools:src="@drawable/ic_baseline_favorite_24" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -65,8 +77,9 @@
                 android:id="@+id/descripcion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Descripción"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -78,17 +91,53 @@
                 tools:text="Esto es una prueba para testear esta ventana creada por el mismisimo mesias. Es una pena que el usuario cuando lea este texto no sea capaz de ver esta parrafada y no pueda conocer a su creador :(\nAh y tiene piscina, recomendada esta casa la verdad" />
 
             <TextView
+                android:id="@+id/caracteristicas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Características"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </TableLayout>
+
+            <TextView
                 android:id="@+id/ubicacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="Ubicación"
-                android:textSize="18sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <com.google.android.gms.maps.MapView
-                android:id="@+id/mapView"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textoCalle"
+                    android:layout_width="292dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textSize="18sp"
+                    tools:text="Calle de la Magdalena, 41 Valencia" />
+
+                <ImageButton
+                    android:id="@+id/mapa"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:src="@drawable/ic_baseline_location_on_24" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
