@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.presentacion.home
 
 import android.content.Context
+import android.util.Log
 
 
 import android.view.LayoutInflater
@@ -40,6 +41,7 @@ class HomeItemAdapter(private val context: Context, private val dataset: List<In
         homeViewModel.setFavoriteIcon(inmueble, holder.favorito)
 
         holder.imagen.setOnClickListener{
+            Log.e("INMUEBLE ID", inmueble.inmuebleId.toString())
             val action = HomeFragmentDirections.actionNavHomeToFichaFragment(inmueble.inmuebleId)
             holder.itemView.findNavController().navigate(action)
         }
