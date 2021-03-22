@@ -1,5 +1,6 @@
 package com.kotlin_t.trobify.presentacion.favoritos
 
+import ListaFavoritosFragmentDirections
 import android.R.drawable
 import android.content.Context
 import android.graphics.drawable.BitmapDrawable
@@ -11,11 +12,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.graphics.drawable.toBitmap
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Favorito
 import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 import java.lang.Appendable
 
 
@@ -42,6 +45,10 @@ class FavoritoAdapter(
     override fun onBindViewHolder(holder: FavoritoViewHolder, position: Int) {
         // Set image
         holder.imagen.setImageBitmap(dataset[position].miniatura)
+        holder.imagen.setOnClickListener{
+            val action = ListaFavoritosFragmentDirections.actionNavFavoritosToFichaFragment(dataset[position].inmuebleId)
+            holder.itemView.findNavController().navigate(action)
+        }
         // Set direccion
         holder.direccion.text = dataset[position].direccion
         // Set precio

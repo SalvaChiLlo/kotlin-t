@@ -27,7 +27,11 @@
     <fragment
         android:id="@+id/nav_favoritos"
         android:name="ListaFavoritosFragment"
-        android:label="Mis Favoritos" />
+        android:label="Mis Favoritos" >
+        <action
+            android:id="@+id/action_nav_favoritos_to_fichaFragment"
+            app:destination="@id/fichaFragment" />
+    </fragment>
     <fragment
         android:id="@+id/filtrarFragment"
         android:name="com.kotlin_t.trobify.presentacion.filtrar.FiltrarFragment"
