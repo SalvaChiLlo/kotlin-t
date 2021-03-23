@@ -99,7 +99,7 @@ class FichaFragment : Fragment() {
                 getString(R.string.precioMes, fichaViewModel.inmueble.precio)
             else
                 getString(R.string.precio, fichaViewModel.inmueble.precio)
-        container!!.findViewById<TextView>(R.id.textoEstado).text = fichaViewModel.inmueble.operacion
+        container!!.findViewById<TextView>(R.id.textoCompra).text = fichaViewModel.inmueble.operacion
         container!!.findViewById<TextView>(R.id.textoDescripcion).text = fichaViewModel.inmueble.descripcion
         container!!.findViewById<TextView>(R.id.textoUsuario).text = fichaViewModel.usuario.nombre + " " + fichaViewModel.usuario.apellidos
 
@@ -117,7 +117,7 @@ class FichaFragment : Fragment() {
 
         container!!.findViewById<TextView>(R.id.textoCalle).text = dir
 
-
+        setCaracteristicas(container)
 
     }
 
@@ -147,5 +147,26 @@ class FichaFragment : Fragment() {
         if (activity?.packageManager?.resolveActivity(intent, 0) != null) {
             startActivity(intent)
         }
+    }
+
+    fun setCaracteristicas(container: View) {
+        var addText : String = "Desconocido"
+        setText(container!!.findViewById<TextView>(R.id.textoEstado), fichaViewModel.inmueble.estado!!)
+        setText(container!!.findViewById<TextView>(R.id.textoNuevo),
+                if (fichaViewModel.inmueble.nuevoDesarrollo!!) "Si" else "No")
+        setText(container!!.findViewById<TextView>(R.id.textoDimensiones), fichaViewModel.inmueble.tamano!!.toString())
+        setText(container!!.findViewById<TextView>(R.id.textoTipo), fichaViewModel.inmueble.tipoDeInmueble!!)
+        setText(container!!.findViewById<TextView>(R.id.textoAltura), fichaViewModel.inmueble.altura!!.toString())
+        setText(container!!.findViewById<TextView>(R.id.textoHabitaciones), fichaViewModel.inmueble.habitaciones!!.toString())
+        setText(container!!.findViewById<TextView>(R.id.textoBanos), fichaViewModel.inmueble.banos!!.toString())
+        setText(container!!.findViewById<TextView>(R.id.textoAscensor),
+            if (fichaViewModel.inmueble.tieneAscensor!!) "Si" else "No")
+        setText(container!!.findViewById<TextView>(R.id.textoExterior),
+            if (fichaViewModel.inmueble.exterior!!) "Si" else "No")
+        setText(container!!.findViewById<TextView>(R.id.textoPrecioMetro), fichaViewModel.inmueble.precioPorMetro!!.toString())
+    }
+
+    fun setText(textView : TextView, text : String) {
+        textView.append(text)
     }
 }
