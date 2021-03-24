@@ -42,7 +42,6 @@ class ListaFavoritosFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        Toast.makeText(requireContext(), "Lista de Favoritos", Toast.LENGTH_LONG).show()
         recyclerView = binding.favoritosRecyclerView
 
         recyclerView.adapter = FavoritoAdapter(
