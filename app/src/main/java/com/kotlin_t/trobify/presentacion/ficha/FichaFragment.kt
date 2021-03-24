@@ -5,6 +5,10 @@ import android.location.Address
 import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
+import android.text.Html
+import android.text.SpannableStringBuilder
+import android.text.Spanned
+import android.text.style.SuperscriptSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +22,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Favorito
+import org.w3c.dom.Text
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -158,6 +163,7 @@ class FichaFragment : Fragment() {
         setText(container!!.findViewById<TextView>(R.id.textoNuevo),
                 if (fichaViewModel.inmueble.nuevoDesarrollo!!) "Si" else "No")
         setText(container!!.findViewById<TextView>(R.id.textoDimensiones), fichaViewModel.inmueble.tamano!!.toString())
+        setM2(container!!.findViewById<TextView>(R.id.textoDimensiones), "")
         setText(container!!.findViewById<TextView>(R.id.textoTipo), fichaViewModel.inmueble.tipoDeInmueble!!)
         setText(container!!.findViewById<TextView>(R.id.textoAltura), fichaViewModel.inmueble.altura!!.toString())
         setText(container!!.findViewById<TextView>(R.id.textoHabitaciones), fichaViewModel.inmueble.habitaciones!!.toString())
@@ -166,7 +172,10 @@ class FichaFragment : Fragment() {
             if (fichaViewModel.inmueble.tieneAscensor!!) "Si" else "No")
         setText(container!!.findViewById<TextView>(R.id.textoExterior),
             if (fichaViewModel.inmueble.exterior!!) "Si" else "No")
-        setText(container!!.findViewById<TextView>(R.id.textoPrecioMetro), fichaViewModel.inmueble.precioPorMetro!!.toString())
+        container!!.findViewById<TextView>(R.id.textoPrecioMetro).text = "- Precio por "
+        setM2(container!!.findViewById<TextView>(R.id.textoPrecioMetro),": ")
+        //container!!.findViewById<TextView>(R.id.textoPrecioMetro).text = "- Precio por m"
+        setText(container!!.findViewById<TextView>(R.id.textoPrecioMetro), fichaViewModel.inmueble.precioPorMetro!!.toString() + "€")
     }
 
     private fun setText(textView : TextView, text : String) {
@@ -190,5 +199,29 @@ class FichaFragment : Fragment() {
             }
             favorito.setImageResource(fav)
         }
+    }
+
+    private fun setM2(textView : TextView, secondWord : String) {
+        /*val superscriptSpan = SuperscriptSpan()
+        val builder = SpannableStringBuilder(text)
+        builder.setSpan(
+            superscriptSpan,
+            text.indexOf("2"),
+            text.indexOf("2") + 1,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        textView.setText(firstWord)
+        textView.append(builder)
+        textView.append(secondWord)*/
+
+        val html = "m<sup>2</sup>"
+        //textView.setText(firstWord)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            textView.append(Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY))
+        }
+        else{
+            textView.append(Html.fromHtml(html))
+        }
+        textView.append(secondWord)
     }
 }

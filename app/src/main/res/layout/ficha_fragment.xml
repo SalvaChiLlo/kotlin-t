@@ -104,7 +104,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:text="-Dimensiones: "
+                android:text="- Dimensiones: "
                 android:textSize="16sp" />
 
             <TextView
@@ -112,7 +112,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="-Exterior: "
+                android:text="- Exterior: "
                 android:textSize="16sp" />
 
             <TextView
@@ -120,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="-Precio por m2: "
+                android:text="- Precio por m2: "
                 android:textSize="16sp" />
 
             <TextView
@@ -128,7 +128,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="-Habitaciones: "
+                android:text="- Habitaciones: "
                 android:textSize="16sp" />
 
             <TextView
@@ -136,7 +136,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="-Estado: "
+                android:text="- Estado: "
                 android:textSize="16sp" />
 
             <TextView
@@ -144,7 +144,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="-Baños: "
+                android:text="- Baños: "
                 android:textSize="16sp" />
 
             <TextView
@@ -152,7 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="-Ascensor: "
+                android:text="- Ascensor: "
                 android:textSize="16sp" />
 
             <TextView
@@ -160,7 +160,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="-Nuevo desarrollo: "
+                android:text="- Nuevo desarrollo: "
                 android:textSize="16sp" />
 
             <TextView
@@ -168,7 +168,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="-Tipo de inmueble: "
+                android:text="- Tipo de inmueble: "
                 android:textSize="16sp" />
 
             <TextView
@@ -176,7 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="-Piso: "
+                android:text="- Piso: "
                 android:textSize="16sp" />
 
             <TextView
@@ -204,7 +204,7 @@
                 <ImageButton
                     android:id="@+id/mapa"
                     android:layout_width="138dp"
-                    android:layout_height="match_parent"
+                    android:layout_height="50dp"
                     android:layout_weight="1"
                     android:src="@drawable/ic_baseline_location_on_24" />
             </LinearLayout>
