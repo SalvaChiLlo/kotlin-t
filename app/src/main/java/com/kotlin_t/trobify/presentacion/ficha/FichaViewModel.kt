@@ -12,6 +12,7 @@ class FichaViewModel(private val database: AppDatabase,
 
     lateinit var inmueble: Inmueble
     lateinit var usuario: Usuario
+    val favoritoDatabase = database.favoritoDAO()
 
     fun setHouse(id : Int) {
         this.inmueble = database.inmuebleDAO().findById(id.toString())

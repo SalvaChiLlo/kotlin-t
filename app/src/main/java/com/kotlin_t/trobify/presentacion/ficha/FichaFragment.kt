@@ -17,6 +17,7 @@ import com.google.android.gms.maps.*
 import com.google.android.material.textview.MaterialTextView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
+import com.kotlin_t.trobify.logica.Favorito
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -67,6 +68,8 @@ class FichaFragment : Fragment() {
             mapClickHandler()
 
         }
+
+        setFavouriteIcon(view.findViewById<ImageView>(R.id.favImage))
     }
 /*
     override fun onMapReady(googleMap: GoogleMap?) {
@@ -138,7 +141,7 @@ class FichaFragment : Fragment() {
 
     }
 
-    fun mapClickHandler() {
+    private fun mapClickHandler() {
         val gmmIntentUri = "http://maps.google.com/maps?q="+ fichaViewModel.inmueble.latitud  +
                 "," + fichaViewModel.inmueble.longitud +"("+ fichaViewModel.inmueble.titulo + ")&iwloc=A&hl=es"
 
@@ -149,7 +152,7 @@ class FichaFragment : Fragment() {
         }
     }
 
-    fun setCaracteristicas(container: View) {
+    private fun setCaracteristicas(container: View) {
         var addText : String = "Desconocido"
         setText(container!!.findViewById<TextView>(R.id.textoEstado), fichaViewModel.inmueble.estado!!)
         setText(container!!.findViewById<TextView>(R.id.textoNuevo),
@@ -166,7 +169,26 @@ class FichaFragment : Fragment() {
         setText(container!!.findViewById<TextView>(R.id.textoPrecioMetro), fichaViewModel.inmueble.precioPorMetro!!.toString())
     }
 
-    fun setText(textView : TextView, text : String) {
+    private fun setText(textView : TextView, text : String) {
         textView.append(text)
+    }
+
+    private fun setFavouriteIcon(favorito: ImageView) {
+        var fav:Int
+        if(fichaViewModel.favoritoDatabase.findById(fichaViewModel.inmueble.inmuebleId) != null)
+            fav = R.drawable.ic_baseline_favorite_24
+        else fav = R.drawable.ic_baseline_favorite_border_24
+        favorito.setImageResource(fav)
+        favorito.setOnClickListener{
+            if(fav == R.drawable.ic_baseline_favorite_24){
+                fichaViewModel.favoritoDatabase.deleteById(fichaViewModel.inmueble.inmuebleId)
+                fav = R.drawable.ic_baseline_favorite_border_24
+            }
+            else{
+                fichaViewModel.favoritoDatabase.insertAll(Favorito(fichaViewModel.inmueble.inmuebleId, null))
+                fav = R.drawable.ic_baseline_favorite_24
+            }
+            favorito.setImageResource(fav)
+        }
     }
 }

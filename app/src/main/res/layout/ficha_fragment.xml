@@ -99,92 +99,85 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/textoDimensiones"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:paddingLeft="8dp">
+                android:layout_weight="1"
+                android:text="-Dimensiones: "
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textoAltura"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-Piso: "
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textoExterior"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-Exterior: "
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textoHabitaciones"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-Habitaciones: "
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textoPrecioMetro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-Precio por m2: "
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textoNuevo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-Nuevo desarrollo: "
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textoHabitaciones"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-Habitaciones: "
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textoDimensiones"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="-Dimensiones: "
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textoEstado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-Estado: "
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textoExterior"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-Exterior: "
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textoBanos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-Baños: "
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textoTipo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-Tipo de inmueble: "
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textoAscensor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-Ascensor: "
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textoBanos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-Baños: "
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textoNuevo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-Nuevo desarrollo: "
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textoPrecioMetro"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-Precio por m2: "
-                    android:textSize="16sp" />
+            <TextView
+                android:id="@+id/textoTipo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-Tipo de inmueble: "
+                android:textSize="16sp" />
 
-                <TextView
-                    android:id="@+id/textoAscensor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-Ascensor: "
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/textoEstado"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="-Estado: "
-                    android:textSize="16sp" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/textoAltura"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="-Piso: "
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/ubicacion"
