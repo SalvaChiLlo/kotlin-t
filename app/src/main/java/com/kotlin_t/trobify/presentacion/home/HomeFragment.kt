@@ -61,6 +61,7 @@ class HomeFragment : Fragment() {
         val filterButton = view.findViewById<ImageView>(R.id.filter_button)
         val orderButton = view.findViewById<ImageView>(R.id.order_button)
         val locationButton = view.findViewById<ImageView>(R.id.location_button)
+        val busquedaButton = view.findViewById<ImageView>(R.id.busqueda_button)
 
         filterButton.setOnClickListener {
             val action = HomeFragmentDirections.actionNavHomeToFiltrarFragment()
@@ -73,6 +74,9 @@ class HomeFragment : Fragment() {
 
         locationButton.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavHomeToMapsFragment())
+        }
+        busquedaButton.setOnClickListener{
+            findNavController().navigate(HomeFragmentDirections.actionNavHomeToBusquedaFragment())
         }
 
 

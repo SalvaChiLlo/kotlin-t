@@ -4,10 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
-import com.kotlin_t.trobify.logica.Favorito
-import com.kotlin_t.trobify.logica.Foto
-import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.logica.Usuario
+import com.kotlin_t.trobify.logica.*
 import com.kotlin_t.trobify.presentacion.Constantes
 import java.io.IOException
 import java.io.InputStream
@@ -85,17 +82,17 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
         var latitud = 39.489658 + (i.toDouble() / 20.0)
         var longitud = -0.422140 + (i.toDouble() / 20.0)
         var direcciones = listOf(
-            "Piso en venta en Altea Pueblo\n",
-            "Estudio en venta en calle Currica\n",
-            "Estudio en venta en calle Currica s/n\n",
-            "Estudio en venta en Zona de Mascarat\n",
-            "Piso en venta en calle Camp Preciós\n",
-            "Estudio en venta en calle Sorell\n",
-            "Piso en venta en Llavador, 1\n",
-            "Piso en venta en calle Metge Adolfo Quiles, 5\n",
-            "Casa o chalet en venta en calle Forat\n",
-            "Casa o chalet en venta en calle Forat, 23\n",
-            "Piso en venta en calle Camp Preciós, 15\n",
+            "Piso en venta en Altea Pueblo",
+            "Estudio en venta en calle Currica",
+            "Estudio en venta en calle Currica s/n",
+            "Estudio en venta en Zona de Mascarat",
+            "Piso en venta en calle Camp Preciós",
+            "Estudio en venta en calle Sorell",
+            "Piso en venta en Llavador, 1",
+            "Piso en venta en calle Metge Adolfo Quiles, 5",
+            "Casa o chalet en venta en calle Forat",
+            "Casa o chalet en venta en calle Forat, 23",
+            "Piso en venta en calle Camp Preciós, 15",
             "Piso en venta en calle Ascar, 24"
         )
         val tipoOperacion = listOf(
@@ -149,7 +146,7 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
                 Random.nextInt(1, 10),
                 Random.nextInt(1, 10),
                 "Valencia",
-                "Valencia",
+                if (i % 2 == 0)"Valencia" else "Madrid",
                 "Benimaclet",
                 "España",
                 latitud,

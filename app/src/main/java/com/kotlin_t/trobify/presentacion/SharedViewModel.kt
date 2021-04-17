@@ -26,6 +26,9 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     var estadoOpciones = MutableLiveData<MutableSet<String>>()
     var plantaOpciones = MutableLiveData<MutableSet<String>>()
     var database = AppDatabase.getDatabase(application)
+
+    // Variables de busqueda
+    var busquedaString = "";
   
     init {
         inmuebles.value = database.inmuebleDAO().getAll()
