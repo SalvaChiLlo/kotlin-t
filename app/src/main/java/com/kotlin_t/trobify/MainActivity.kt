@@ -1,10 +1,13 @@
 package com.kotlin_t.trobify
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -12,16 +15,11 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.database.PopulateDB
-import com.kotlin_t.trobify.logica.Favorito
-import com.kotlin_t.trobify.logica.Inmobiliaria
-import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.logica.Usuario
 import com.kotlin_t.trobify.presentacion.SharedViewModel
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -47,8 +45,78 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
         val model = ViewModelProvider(this).get(SharedViewModel::class.java)
-        model.preciosOpciones.value!!.set(0, AppDatabase.getDatabase(this).inmuebleDAO().getMinPrecio())
-        model.preciosOpciones.value!!.set(1, AppDatabase.getDatabase(this).inmuebleDAO().getMaxPrecio())
+        model.preciosOpciones.value!!.set(
+            0,
+            AppDatabase.getDatabase(this).inmuebleDAO().getMinPrecio()
+        )
+        model.preciosOpciones.value!!.set(
+            1,
+            AppDatabase.getDatabase(this).inmuebleDAO().getMaxPrecio()
+        )
+
+        try {
+            if (ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                    101
+                )
+            }
+
+            if (ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                    101
+                )
+            }
+
+            if (ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.INTERNET
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.INTERNET),
+                    101
+                )
+            }
+
+            if (ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                    101
+                )
+            }
+
+            if (ContextCompat.checkSelfPermission(
+                    applicationContext,
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    101
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         populate()
     }
 
