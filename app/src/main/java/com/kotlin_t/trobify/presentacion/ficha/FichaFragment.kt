@@ -127,6 +127,8 @@ class FichaFragment : Fragment() {
 
         setCaracteristicas(container)
 
+        container!!.findViewById<TextView>(R.id.textoTelefono).text = fichaViewModel.usuario.telefono
+
     }
 
     private fun setPhotos(container: View) {
