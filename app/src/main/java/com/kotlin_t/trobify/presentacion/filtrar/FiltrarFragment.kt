@@ -222,8 +222,6 @@ class FiltrarFragment : Fragment() {
                 binding.precioMinimoTextview.text = formatter.format(slider.values[0])
                 filtrarViewModel.changePrecios(slider.values[0].toInt(), true)
                 filtrarViewModel.changePrecios(slider.values[1].toInt(), false)
-                Log.e("AAAAAAAAA", model.preciosOpciones.value!![0].toString())
-                Log.e("AAAAAAAAA", model.preciosOpciones.value!![1].toString())
                 filtrarViewModel.filtrarInmuebles()
             }
 
@@ -236,8 +234,6 @@ class FiltrarFragment : Fragment() {
         binding.precioMaximoSlider.addOnChangeListener(touchListener)
         binding.precioMaximoSlider.setMinSeparationValue(100f)
 
-        Log.e("EEE", model.preciosOpciones.value!![0].toString())
-        Log.e("EEE", model.preciosOpciones.value!![1].toString())
         binding.precioMinimoTextview.text = formatter.format(model.preciosOpciones.value!![0])
         binding.precioMaximoTextview.text = formatter.format(model.preciosOpciones.value!![1])
     }

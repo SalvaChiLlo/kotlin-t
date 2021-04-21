@@ -124,10 +124,6 @@ class BusquedaViewModel(
 
         val busqueda = BusquedaCriteria(model.busquedaString)
 
-        for (bus in busqueda.meetCriteria(listaInmuebles)) {
-            Log.e("VIEWMODEL DIRECCION", bus.direccion!!)
-        }
-        Log.e("PASAU", "PASAU")
 
 
         val miBusqueda = AndCriteria(

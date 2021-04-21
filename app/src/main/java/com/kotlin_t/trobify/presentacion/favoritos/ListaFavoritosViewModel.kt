@@ -19,8 +19,6 @@ class ListaFavoritosViewModel(val database: AppDatabase, application: Applicatio
         listaFavoritos.forEach {
             listaInmuebles.add(database.inmuebleDAO().findById(it.inmuebleId.toString()))
         }
-        Log.e("FAVV", listaFavoritos.toString())
-        Log.e("FAVV", listaInmuebles.toString())
         return listaInmuebles
     }
 

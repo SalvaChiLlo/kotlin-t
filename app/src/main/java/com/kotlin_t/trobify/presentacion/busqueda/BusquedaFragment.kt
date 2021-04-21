@@ -122,7 +122,6 @@ class BusquedaFragment : Fragment() {
                 0.toFloat(),
                 locationListener
             )
-            Log.e("EEEEEEEEEEEE", "Sale")
         }
     }
 
