@@ -29,6 +29,8 @@ class BusquedaViewModel(
 ): AndroidViewModel(application) {
     var listaBusquedas = database.busquedaDAO().getAll()
     var listaInmuebles = database.inmuebleDAO().getAll()
+    var listaMunicipios = database.inmuebleDAO().getAll().map { Busqueda(it.municipio!!) }.toSet()
+
     fun search(busqueda: String) {
         database.busquedaDAO().insertAll(Busqueda(busqueda))
         model.busquedaString = busqueda

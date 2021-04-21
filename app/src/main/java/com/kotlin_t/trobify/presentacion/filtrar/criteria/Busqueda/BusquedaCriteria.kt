@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.presentacion.filtrar.criteria.Busqueda
 
 import android.util.Log
+import com.kotlin_t.trobify.logica.Busqueda
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.presentacion.filtrar.criteria.Criteria
 import java.util.*
@@ -14,6 +15,13 @@ class BusquedaCriteria(val busqueda: String) : Criteria {
                     busqueda.toLowerCase().contains(it.municipio!!.toLowerCase()) ||
                     it.titulo!!.toLowerCase().contains(busqueda.toLowerCase()) ||
                     busqueda.toLowerCase().contains(it.pais!!.toLowerCase())
+        }
+
+    }
+
+    fun meetCriteriaBusqueda(busquedas: List<Busqueda>): List<Busqueda> {
+        return busquedas.filter {
+            it.busqueda.toLowerCase().contains(busqueda)
         }
 
     }

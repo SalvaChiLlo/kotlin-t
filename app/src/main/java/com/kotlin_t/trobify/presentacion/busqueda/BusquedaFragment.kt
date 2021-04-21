@@ -23,6 +23,7 @@ import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentBusquedaBinding
 import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.filtrar.FiltrarViewModel
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Busqueda.BusquedaCriteria
 import java.util.*
 
 class BusquedaFragment : Fragment() {
@@ -57,7 +58,7 @@ class BusquedaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         busquedaViewModel.search("")
-        binding.campoBusqueda.setText(sharedModel.busquedaString)
+
         recyclerView = binding.historialBusquedas
 
         recyclerView.adapter = BusquedaAdapter(
@@ -68,6 +69,22 @@ class BusquedaFragment : Fragment() {
             busquedaViewModel.search(binding.campoBusqueda.text.toString())
             val action = BusquedaFragmentDirections.actionBusquedaFragmentToNavHome()
             findNavController().navigate(action)
+        }
+
+        binding.campoBusqueda.doAfterTextChanged {
+            if (binding.campoBusqueda.text.toString() == "") {
+                recyclerView.adapter = BusquedaAdapter(
+                    requireContext(), busquedaViewModel.listaBusquedas.reversed(), busquedaViewModel
+                )
+            } else {
+                recyclerView.adapter = BusquedaAdapter(
+                    requireContext(),
+                    BusquedaCriteria(binding.campoBusqueda.text.toString()).meetCriteriaBusqueda(
+                        busquedaViewModel.listaMunicipios.toList()
+                    ),
+                    busquedaViewModel
+                )
+            }
         }
 
         binding.miUbicacionButton.setOnClickListener {
@@ -92,6 +109,7 @@ class BusquedaFragment : Fragment() {
                     101
                 )
             }
+
             locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
                 0,
