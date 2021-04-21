@@ -10,7 +10,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.app.ActivityCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -54,6 +56,7 @@ class BusquedaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        busquedaViewModel.search("")
         binding.campoBusqueda.setText(sharedModel.busquedaString)
         recyclerView = binding.historialBusquedas
 
@@ -68,12 +71,6 @@ class BusquedaFragment : Fragment() {
         }
 
         binding.miUbicacionButton.setOnClickListener {
-            Log.e("EEEEEEEEEEEE", "Entra")
-
-            //Direccion
-            val geocoder: Geocoder = Geocoder(context, Locale.getDefault())
-            var dir: String = ""
-
             locationManager =
                 requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
             if (ActivityCompat.checkSelfPermission(
@@ -119,14 +116,12 @@ class BusquedaFragment : Fragment() {
     }
 
     fun setDireccion(latitud: Double, longitud: Double) {
-        val geocoder : Geocoder = Geocoder(context, Locale.getDefault())
-        var dir : String = ""
+        val geocoder: Geocoder = Geocoder(context, Locale.getDefault())
         var direccion: List<Address> = geocoder.getFromLocation(
             latitud,
             longitud,
             1
         )
-        Log.e("EEEEEEEEEE",direccion[0].toString())
         binding.campoBusqueda.setText(direccion[0].locality.toString())
     }
 }
