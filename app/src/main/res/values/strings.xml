@@ -70,5 +70,8 @@
     <string name="titulo">Título</string>
     <string name="importar_fotograf_as">Importar fotografías</string>
     <string name="piso_en_calle">Espacioso piso en calle...</string>
+    <string name="codigo_postal">Codigo Postal</string>
+    <string name="_46000">46000</string>
+    <string name="ascensor">Ascensor?</string>
 
 </resources>

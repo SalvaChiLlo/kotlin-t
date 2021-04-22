@@ -3,10 +3,12 @@ package com.kotlin_t.trobify.presentacion.busqueda
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Busqueda
+import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.presentacion.Constantes
 import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.filtrar.FiltrarViewModel
@@ -26,10 +28,19 @@ class BusquedaViewModel(
     val database: AppDatabase,
     application: Application,
     val model: SharedViewModel,
+    val viewLifecycleOwner: LifecycleOwner
 ): AndroidViewModel(application) {
     var listaBusquedas = database.busquedaDAO().getAll()
-    var listaInmuebles = database.inmuebleDAO().getAll()
     var listaMunicipios = database.inmuebleDAO().getAll().map { Busqueda(it.municipio!!) }.toSet()
+
+    var listaInmuebles = listOf<Inmueble>()
+
+    init {
+        model.inmuebles.observe(viewLifecycleOwner, {
+            listaInmuebles = it
+        })
+    }
+
 
     fun search(busqueda: String) {
         database.busquedaDAO().insertAll(Busqueda(busqueda))
@@ -148,7 +159,9 @@ class BusquedaViewModel(
                 )
             )
         )
-
+        database.inmuebleDAO().getAll().forEach {
+            Log.e("eee", it.inmuebleId.toString())
+        }
         this.listaInmuebles = miBusqueda.meetCriteria(database.inmuebleDAO().getAll())
 
         model.setInmuebles(this.listaInmuebles)

@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -31,6 +32,8 @@ import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentBusquedaBinding
 import com.kotlin_t.trobify.databinding.FragmentEditorFichaBinding
 import com.kotlin_t.trobify.logica.Foto
+import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.presentacion.Constantes
 import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.busqueda.BusquedaAdapter
 import com.kotlin_t.trobify.presentacion.busqueda.BusquedaFragmentDirections
@@ -127,12 +130,118 @@ class EditorFichaFragment : Fragment() {
                 locationListener
             )
         }
+
+        binding.descartar.setOnClickListener {
+            val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
+            findNavController().navigate(action)
+        }
+
+        binding.guardarInmueble.setOnClickListener {
+//            datasource.inmuebleDAO().insertAll(
+                val inmueble = Inmueble(
+                    sharedModel.usuario!!.dni,
+                    binding.editDireccion.text.toString(),
+                    false,
+                    if (editorFichaViewModel.imagesList.value!!.isEmpty()) null else editorFichaViewModel.imagesList.value!![0],
+                    null,
+                    binding.editPlanta.text.toString().toInt(),
+                    binding.editPrecio.text.toString().toInt(),
+                    tipoInmueble(),
+                    tipoOperacion(),
+                    binding.editSuperficie.text.toString().toInt(),
+                    false,
+                    binding.editHabitaciones.text.toString().toInt(),
+                    binding.editBanos.text.toString().toInt(),
+                    getProvincia(),
+                    getMunicipio(),
+                    getMunicipio(),
+                    "España",
+                    getLatitude(),
+                    getLongitude(),
+                    getEstado(),
+                    binding.hasAscensor.isChecked,
+                    binding.editPrecio.text.toString()
+                        .toInt() / binding.editSuperficie.text.toString().toInt(),
+                    binding.editTitulo.text.toString(),
+                    "",
+                    binding.editDescripcion.toString()
+                )
+//            )
+            datasource.inmuebleDAO().insertAll(inmueble)
+            if(editorFichaViewModel.inmueble == null) {
+                editorFichaViewModel.inmuebleID = datasource.inmuebleDAO().getAll().last().inmuebleId
+            }
+            editorFichaViewModel.imagesList.value?.forEach {
+                datasource.fotoDAO().insertAll(Foto(editorFichaViewModel.inmuebleID!!, it))
+            }
+
+            val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
+            sharedModel.updateInmuebles()
+            sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
+            findNavController().navigate(action)
+        }
     }
 
     var locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
             setDireccion(location.latitude, location.longitude)
             locationManager.removeUpdates(this)
+        }
+    }
+
+
+    fun getLatitude(): Double {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        return geocoder.getFromLocationName("${binding.editCP.text.toString()} spain", 1)
+            .get(0).latitude
+    }
+
+    fun getLongitude(): Double {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        return geocoder.getFromLocationName("${binding.editCP.text.toString()} spain", 1)
+            .get(0).longitude
+    }
+
+    fun getMunicipio(): String {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        return geocoder.getFromLocationName("${binding.editCP.text.toString()} spain", 1)
+            .get(0).locality
+    }
+
+    fun getProvincia(): String {
+        val geocoder = Geocoder(context, Locale.getDefault())
+        val dir = geocoder.getFromLocationName("${binding.editCP.text.toString()} spain", 1)
+        return if(!dir.isEmpty()) dir.get(0).adminArea else ""
+    }
+
+    fun tipoOperacion(): String {
+        val selectedID = binding.radioGroupOperacion.checkedRadioButtonId
+        return when (binding.radioGroupOperacion.findViewById<RadioButton>(selectedID).text) {
+            getString(R.string.venta) -> Constantes.VENTA
+            getString(R.string.alquiler) -> Constantes.ALQUILER
+            getString(R.string.intercambio_de_viviendas) -> Constantes.INTERCAMBIO_VIVIENDA
+            else -> ""
+        }
+    }
+
+    fun tipoInmueble(): String {
+        val selectedID = binding.radioGroupTipoInmueble.checkedRadioButtonId
+        return when (binding.radioGroupTipoInmueble.findViewById<RadioButton>(selectedID).text) {
+            getString(R.string.tico) -> Constantes.ATICO
+            getString(R.string.casa_chalet) -> Constantes.CASA_CHALET
+            getString(R.string.habitaci_n) -> Constantes.HABITACION
+            getString(R.string.piso) -> Constantes.PISO
+            else -> ""
+        }
+    }
+
+    fun getEstado(): String {
+        val selectedID = binding.radioGroupEstado.checkedRadioButtonId
+        return when (binding.radioGroupEstado.findViewById<RadioButton>(selectedID).text) {
+            getString(R.string.obra_nueva) -> Constantes.NUEVA_CONSTRUCCION
+            getString(R.string.buen_estado) -> Constantes.BUEN_ESTADO
+            getString(R.string.a_reformar) -> Constantes.REFORMAR
+            else -> ""
         }
     }
 
@@ -178,7 +287,7 @@ class EditorFichaFragment : Fragment() {
         val inputStream = context?.contentResolver?.openInputStream(imageUri)
         var bitmap = BitmapFactory.decodeStream(inputStream)
         bitmap = Bitmap.createScaledBitmap(bitmap!!, 300, 300, true)
-        editorFichaViewModel.addImageToList(Foto(editorFichaViewModel.inmuebleID!!, bitmap))
+        editorFichaViewModel.addImageToList(bitmap)
     }
 
 

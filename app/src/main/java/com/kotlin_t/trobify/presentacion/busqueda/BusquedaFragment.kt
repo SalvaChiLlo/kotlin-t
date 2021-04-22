@@ -48,7 +48,7 @@ class BusquedaFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
         sharedModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        val viewModelFactory = BusquedaViewModelFactory(datasource, application, sharedModel)
+        val viewModelFactory = BusquedaViewModelFactory(datasource, application,sharedModel, viewLifecycleOwner)
         busquedaViewModel =
             ViewModelProvider(this, viewModelFactory).get(BusquedaViewModel::class.java)
         binding.viewModel = busquedaViewModel

@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.presentacion.editorFicha
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,7 @@ import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModel
 
 class ImageAdapter(
     val context: Context,
-    val dataset: List<Foto>,
+    val dataset: List<Bitmap>,
     val editorFichaViewModel: EditorFichaViewModel
 ) : RecyclerView.Adapter<ImageAdapter.FotoViewHolder>() {
     class FotoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -36,7 +37,7 @@ class ImageAdapter(
     }
 
     override fun onBindViewHolder(holder: FotoViewHolder, position: Int) {
-        holder.imagen.setImageBitmap(dataset[position].imagen)
+        holder.imagen.setImageBitmap(dataset[position])
 
         holder.eliminar.setOnClickListener {
             editorFichaViewModel.removeImageFromList(dataset[position])

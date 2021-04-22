@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.presentacion.editorFicha
 
 import android.app.Application
+import android.graphics.Bitmap
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -14,29 +15,25 @@ class EditorFichaViewModel(
     application: Application,
     val model: SharedViewModel,
 ) : AndroidViewModel(application) {
-    var inmueble: Inmueble? = database.inmuebleDAO().findById("1")
+    var inmueble: Inmueble? = null
     var inmuebleID: Int? = null
-    var imagesList = MutableLiveData<MutableList<Foto>>()
+    var imagesList = MutableLiveData<MutableList<Bitmap>>()
 
 
     init {
         if (inmueble != null) {
             inmuebleID = inmueble!!.inmuebleId
-        } else {
-            inmuebleID =
-                if (database.inmuebleDAO().getAll().count() <= 0) 0 else database.inmuebleDAO()
-                    .getAll().last().inmuebleId + 1
         }
 
         imagesList.value = mutableListOf()
     }
 
-    fun addImageToList(image: Foto) {
+    fun addImageToList(image: Bitmap) {
         imagesList.value?.add(image)
         imagesList.value = imagesList.value
     }
 
-    fun removeImageFromList(image: Foto) {
+    fun removeImageFromList(image: Bitmap) {
         imagesList.value?.remove(image)
         imagesList.value = imagesList.value
     }
