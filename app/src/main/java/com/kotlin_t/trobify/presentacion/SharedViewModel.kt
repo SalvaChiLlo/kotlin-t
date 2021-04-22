@@ -10,9 +10,23 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.logica.Usuario
 import com.kotlin_t.trobify.presentacion.ordenacion.EstrategiaOrdenacion
 
 class SharedViewModel(@NonNull application: Application) : AndroidViewModel(application) {
+    ///////////////////////////////////////////////
+    // USUARIO QUE ESTÁ UTILIZANDO LA APLICACIÓN //
+    ///////////////////////////////////////////////
+    val usuario: Usuario? = Usuario(
+        "dniPrueba",
+        "UsuarioDePrueba",
+        "1234",
+        "Usuario de prueba",
+        "Apellidos de prueba",
+        "999888777",
+        "41234123412341",
+        null
+    )
 
     val inmuebles = MutableLiveData<List<Inmueble>>()
     var estrategiaOrdenacion: EstrategiaOrdenacion? = null

@@ -43,7 +43,8 @@
                 app:layout_constraintBottom_toBottomOf="@+id/searchButton"
                 app:layout_constraintEnd_toStartOf="@+id/miUbicacionButton"
                 app:layout_constraintStart_toEndOf="@+id/searchButton"
-                app:layout_constraintTop_toTopOf="@+id/miUbicacionButton" />
+                app:layout_constraintTop_toTopOf="@+id/miUbicacionButton"
+                android:hint="@string/madrid_valencia_barcelona"/>
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/miUbicacionButton"

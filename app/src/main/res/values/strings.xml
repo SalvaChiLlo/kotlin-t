@@ -47,11 +47,28 @@
     <string name="planta_alta_10">Planta alta (10 - *)</string>
     <string name="precio_m_ximo">Precio Máximo:</string>
     <string name="relevancia">Relevancia</string>
-    <string name="rando_de_precios">Rando de precios</string>
+    <string name="rango_de_precios">Rango de precios</string>
     <string name="filtrar">Filtrar</string>
     <string name="mapa">Mapa</string>
     <string name="inicio_titulo">Inicio</string>
     <string name="ordenar_titulo">¡Ordena a tu gusto!</string>
     <string name="filtrar_titulo">¡Filtra como quieras!</string>
+    <string name="tipos_de_inmueble">Tipos de inmueble</string>
+    <string name="precio_">Precio</string>
+    <string name="madrid_valencia_barcelona">Madrid, Valencia, Barcelona...</string>
+    <string name="simboloEuro">€</string>
+    <string name="_100_000_0">100,000.0</string>
+    <string name="superficie">Superficie</string>
+    <string name="metrosCuadrados">m²</string>
+    <string name="_200m">200m²</string>
+    <string name="habitaciones">Habitaciones</string>
+    <string name="ba_os">Baños</string>
+    <string name="direccion">Dirección</string>
+    <string name="descripci_n">Descripción</string>
+    <string name="escribe_una_breve_descripci_n">Escribe una breve descripción</string>
+    <string name="calle_ave_del_para_so_n_mero_7">Calle Ave del Paraíso, nº 7</string>
+    <string name="titulo">Título</string>
+    <string name="importar_fotograf_as">Importar fotografías</string>
+    <string name="piso_en_calle">Espacioso piso en calle...</string>
 
 </resources>
