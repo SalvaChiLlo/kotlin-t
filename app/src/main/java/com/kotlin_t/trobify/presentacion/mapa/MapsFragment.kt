@@ -1,5 +1,6 @@
 package com.kotlin_t.trobify.presentacion.mapa
 
+import android.graphics.Bitmap
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
@@ -14,6 +15,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.ui.IconGenerator
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.presentacion.SharedViewModel
@@ -23,6 +25,7 @@ class MapsFragment : Fragment() {
     private lateinit var map: GoogleMap
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val zoomLevel = 10f
+    private var markers: MutableList<Marker> = ArrayList()
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -46,7 +49,7 @@ class MapsFragment : Fragment() {
 
         setMarkers(map)
         setMarkersListeners(map)
-        setZoomOnFirstInmueble(map)
+        setZoomToFitMarkers(map)
     }
 
     override fun onCreateView(
@@ -74,6 +77,11 @@ class MapsFragment : Fragment() {
             var longitud: Double;
             var localizacion: LatLng;
             var marker: Marker
+            var bitmap: Bitmap
+            var precio: String
+
+            var iconGenerator = IconGenerator(this.requireContext())
+            iconGenerator.setStyle(IconGenerator.STYLE_BLUE)
 
             // Crear un marcador en el mapa por cada inmueble
             for (inmueble in listaInmuebles) {
@@ -82,10 +90,15 @@ class MapsFragment : Fragment() {
                 longitud = inmueble.longitud!!
                 localizacion = LatLng(latitud, longitud)
 
-                marker = map.addMarker(MarkerOptions().position(localizacion))
+                precio = inmueble.precio.toString() + "€"
+                bitmap = iconGenerator.makeIcon(precio)
+
+                marker = map.addMarker(MarkerOptions().icon(BitmapDescriptorFactory.fromBitmap(bitmap)).position(localizacion))
 
                 // Información adicional para el CustomInfoWindow
                 marker.tag = inmueble
+
+                markers.add(marker)
 
             }
         }
@@ -124,17 +137,16 @@ class MapsFragment : Fragment() {
 
     }
 
-    fun setZoomOnFirstInmueble(map: GoogleMap) {
+    fun setZoomToFitMarkers(map: GoogleMap) {
 
-        val inmueble = sharedViewModel.getFirstInmueble()
-        val localizacion: LatLng
-        if(inmueble != null) {
-            localizacion = LatLng(inmueble.latitud!!, inmueble.longitud!!)
-        } else {
-            localizacion = LatLng(39.46854170253597, -0.376975419650787) // Valencia Centro
-        }
+        var boundsBuilder = LatLngBounds.builder()
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(localizacion, zoomLevel))
+        markers.forEach{ boundsBuilder.include(it.position) }
+
+        val bounds = boundsBuilder.build()
+        val cu = CameraUpdateFactory.newLatLngBounds(bounds, 200)
+        map.moveCamera(cu)
+        map.animateCamera(cu)
 
     }
 
