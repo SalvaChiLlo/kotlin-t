@@ -17,7 +17,9 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -394,8 +396,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="@id/TituloLayout"
-                    app:layout_constraintTop_toBottomOf="@id/TituloLayout">
+                    app:layout_constraintStart_toStartOf="@id/DireccionLayout"
+                    app:layout_constraintTop_toBottomOf="@id/DireccionLayout">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/textCP"
@@ -425,8 +427,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="@id/CPLayout"
-                    app:layout_constraintTop_toBottomOf="@id/CPLayout">
+                    app:layout_constraintStart_toStartOf="@id/TituloLayout"
+                    app:layout_constraintTop_toBottomOf="@id/TituloLayout">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/textDireccion"
@@ -467,8 +469,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"
-                    app:layout_constraintStart_toStartOf="@id/DireccionLayout"
-                    app:layout_constraintTop_toBottomOf="@id/DireccionLayout">
+                    app:layout_constraintStart_toStartOf="@id/CPLayout"
+                    app:layout_constraintTop_toBottomOf="@id/CPLayout">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/textDescripcion"

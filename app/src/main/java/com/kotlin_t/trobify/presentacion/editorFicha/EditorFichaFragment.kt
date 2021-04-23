@@ -138,38 +138,39 @@ class EditorFichaFragment : Fragment() {
 
         binding.guardarInmueble.setOnClickListener {
 //            datasource.inmuebleDAO().insertAll(
-                val inmueble = Inmueble(
-                    sharedModel.usuario!!.dni,
-                    binding.editDireccion.text.toString(),
-                    false,
-                    if (editorFichaViewModel.imagesList.value!!.isEmpty()) null else editorFichaViewModel.imagesList.value!![0],
-                    null,
-                    binding.editPlanta.text.toString().toInt(),
-                    binding.editPrecio.text.toString().toInt(),
-                    tipoInmueble(),
-                    tipoOperacion(),
-                    binding.editSuperficie.text.toString().toInt(),
-                    false,
-                    binding.editHabitaciones.text.toString().toInt(),
-                    binding.editBanos.text.toString().toInt(),
-                    getProvincia(),
-                    getMunicipio(),
-                    getMunicipio(),
-                    "España",
-                    getLatitude(),
-                    getLongitude(),
-                    getEstado(),
-                    binding.hasAscensor.isChecked,
-                    binding.editPrecio.text.toString()
-                        .toInt() / binding.editSuperficie.text.toString().toInt(),
-                    binding.editTitulo.text.toString(),
-                    "",
-                    binding.editDescripcion.toString()
-                )
-//            )
+            val inmueble = Inmueble(
+                sharedModel.usuario!!.dni,
+                binding.editDireccion.text.toString(),
+                false,
+                if (editorFichaViewModel.imagesList.value!!.isEmpty()) null else editorFichaViewModel.imagesList.value!![0],
+                null,
+                binding.editPlanta.text.toString().toInt(),
+                binding.editPrecio.text.toString().toInt(),
+                tipoInmueble(),
+                tipoOperacion(),
+                binding.editSuperficie.text.toString().toInt(),
+                false,
+                binding.editHabitaciones.text.toString().toInt(),
+                binding.editBanos.text.toString().toInt(),
+                getProvincia(),
+                getMunicipio(),
+                getMunicipio(),
+                "España",
+                getLatitude(),
+                getLongitude(),
+                getEstado(),
+                binding.hasAscensor.isChecked,
+                binding.editPrecio.text.toString()
+                    .toInt() / binding.editSuperficie.text.toString().toInt(),
+                binding.editTitulo.text.toString(),
+                "",
+                binding.editDescripcion.text.toString()
+            )
+
             datasource.inmuebleDAO().insertAll(inmueble)
-            if(editorFichaViewModel.inmueble == null) {
-                editorFichaViewModel.inmuebleID = datasource.inmuebleDAO().getAll().last().inmuebleId
+            if (editorFichaViewModel.inmueble == null) {
+                editorFichaViewModel.inmuebleID =
+                    datasource.inmuebleDAO().getAll().last().inmuebleId
             }
             editorFichaViewModel.imagesList.value?.forEach {
                 datasource.fotoDAO().insertAll(Foto(editorFichaViewModel.inmuebleID!!, it))
@@ -192,26 +193,37 @@ class EditorFichaFragment : Fragment() {
 
     fun getLatitude(): Double {
         val geocoder = Geocoder(context, Locale.getDefault())
-        return geocoder.getFromLocationName("${binding.editCP.text.toString()} spain", 1)
-            .get(0).latitude
+        return geocoder.getFromLocationName(
+            binding.editDireccion.text.toString() + binding.editCP.text.toString(),
+            1
+        ).get(0).latitude
     }
 
     fun getLongitude(): Double {
         val geocoder = Geocoder(context, Locale.getDefault())
-        return geocoder.getFromLocationName("${binding.editCP.text.toString()} spain", 1)
+        return geocoder.getFromLocationName(
+            binding.editDireccion.text.toString() + binding.editCP.text.toString(),
+            1
+        )
             .get(0).longitude
     }
 
     fun getMunicipio(): String {
         val geocoder = Geocoder(context, Locale.getDefault())
-        return geocoder.getFromLocationName("${binding.editCP.text.toString()} spain", 1)
+        return geocoder.getFromLocationName(
+            binding.editDireccion.text.toString() + binding.editCP.text.toString(),
+            1
+        )
             .get(0).locality
     }
 
     fun getProvincia(): String {
         val geocoder = Geocoder(context, Locale.getDefault())
-        val dir = geocoder.getFromLocationName("${binding.editCP.text.toString()} spain", 1)
-        return if(!dir.isEmpty()) dir.get(0).adminArea else ""
+        val dir = geocoder.getFromLocationName(
+            binding.editDireccion.text.toString() + binding.editCP.text.toString(),
+            1
+        )
+        return if (!dir.isEmpty()) dir.get(0).adminArea else ""
     }
 
     fun tipoOperacion(): String {
@@ -246,13 +258,14 @@ class EditorFichaFragment : Fragment() {
     }
 
     fun setDireccion(latitud: Double, longitud: Double) {
-        val geocoder: Geocoder = Geocoder(context, Locale.getDefault())
+        val geocoder = Geocoder(context, Locale.getDefault())
         var direccion: List<Address> = geocoder.getFromLocation(
             latitud,
             longitud,
             1
         )
         binding.editDireccion.setText(direccion[0].getAddressLine(0).toString())
+        binding.editCP.setText(direccion[0].postalCode.toString())
     }
 
     private fun selectImages() {
