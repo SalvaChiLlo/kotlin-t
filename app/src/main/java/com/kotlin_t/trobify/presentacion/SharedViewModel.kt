@@ -15,8 +15,14 @@ import com.kotlin_t.trobify.logica.Usuario
 import com.kotlin_t.trobify.presentacion.ordenacion.EstrategiaOrdenacion
 
 class SharedViewModel(@NonNull application: Application) : AndroidViewModel(application) {
+    var database = AppDatabase.getDatabase(application)
 
-    val inmuebles = MutableLiveData<List<Inmueble>>()
+    ///////////////////////////////////////////////
+    // USUARIO QUE ESTÁ UTILIZANDO LA APLICACIÓN //
+    ///////////////////////////////////////////////
+    var usuario: Usuario? = null
+
+    val inmuebles = MutableLiveData<MutableList<Inmueble>>()
     var estrategiaOrdenacion: EstrategiaOrdenacion? = null
     private var usuarioActual: Usuario? = null;
     lateinit var binding: FragmentRegistrarseBinding
@@ -29,13 +35,29 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     var banosOpciones = MutableLiveData<MutableSet<Int>>()
     var estadoOpciones = MutableLiveData<MutableSet<String>>()
     var plantaOpciones = MutableLiveData<MutableSet<String>>()
-    var database = AppDatabase.getDatabase(application)
 
     // Variables de busqueda
     var busquedaString = "";
-  
+
     init {
-        inmuebles.value = database.inmuebleDAO().getAll()
+        if (database.usuarioDAO().getAll().isEmpty()) {
+            usuario = Usuario(
+                "$2345678E",
+                "username",
+                "contraseña",
+                "nombre",
+                "appellido$",
+                "999888777",
+                "iban",
+                null
+            )
+            database.usuarioDAO().insertAll(usuario!!)
+
+        } else {
+            usuario = database.usuarioDAO().getAll().first()
+        }
+
+        updateInmuebles()
         operacionesOpciones.value = mutableSetOf<String>()
         tiposOpciones.value = mutableSetOf<String>()
         preciosOpciones.value = IntArray(2)
@@ -46,7 +68,11 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     }
 
     fun setInmuebles(inmuebles: List<Inmueble>) {
-        this.inmuebles.value = inmuebles
+        this.inmuebles.value = inmuebles.toMutableList()
+    }
+
+    fun updateInmuebles() {
+        inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
     }
 
 
@@ -55,7 +81,8 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         val latitud = localizacion.latitude
         val longitud = localizacion.longitude
 
-        val inmueble: Inmueble? = inmuebles.value!!.find { it.latitud == latitud && it.longitud == longitud }
+        val inmueble: Inmueble? =
+            inmuebles.value!!.find { it.latitud == latitud && it.longitud == longitud }
 
         if (inmueble != null) {
             return inmueble.inmuebleId
@@ -65,15 +92,14 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     }
 
     fun getFirstInmueble(): Inmueble? {
-        if(!inmuebles.value.isNullOrEmpty()) {
+        if (!inmuebles.value.isNullOrEmpty()) {
             return inmuebles.value?.get(0)
-        }
-        else return null
+        } else return null
     }
 
 
     fun resetFiltro() {
-        inmuebles.value = database.inmuebleDAO().getAll()
+        inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
         operacionesOpciones.value = mutableSetOf<String>()
         tiposOpciones.value = mutableSetOf<String>()
         preciosOpciones.value = IntArray(2)

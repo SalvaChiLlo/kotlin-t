@@ -9,7 +9,8 @@
         android:id="@+id/nav_home"
         android:name="com.kotlin_t.trobify.presentacion.home.HomeFragment"
         android:label="@string/inicio_titulo"
-        tools:layout="@layout/fragment_home">
+        tools:layout="@layout/fragment_home"
+        app:startDestination="@id/action_nav_home_to_ordenacionFragment">
         <action
             android:id="@+id/action_nav_home_to_filtrarFragment"
             app:destination="@id/filtrarFragment" />
@@ -82,6 +83,14 @@
         tools:layout="@layout/fragment_busqueda" >
         <action
             android:id="@+id/action_busquedaFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/editorFichaFragment"
+        android:name="com.kotlin_t.trobify.presentacion.editorFicha.EditorFichaFragment"
+        android:label="EditorFichaFragment" >
+        <action
+            android:id="@+id/action_editorFichaFragment_to_nav_home"
             app:destination="@id/nav_home" />
     </fragment>
     <!---Añadir acciones hacia atrás-->

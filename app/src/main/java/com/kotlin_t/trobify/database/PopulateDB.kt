@@ -71,7 +71,6 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
         var posterBitmap: Bitmap? = null
         posterBitmap = getBitmapFromURL(url)
         posterBitmap = processImage(posterBitmap!!)
-        Log.e("AAAA", posterBitmap.toString())
         saveImage(posterBitmap!!, inmuebleId)
     }
 
@@ -172,7 +171,6 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
     private fun saveImage(bitmap: Bitmap, inmuebleId: Int) {
         val image = Foto(inmuebleId, bitmap)
         database.fotoDAO().insertAll(image)
-        Log.e("SAVED", "SAVED")
     }
 
     fun getBitmapFromURL(src: String?): Bitmap? {

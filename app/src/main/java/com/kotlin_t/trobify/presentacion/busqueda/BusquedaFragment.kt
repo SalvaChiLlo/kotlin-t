@@ -10,7 +10,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.app.ActivityCompat
+import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -21,6 +23,7 @@ import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentBusquedaBinding
 import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.filtrar.FiltrarViewModel
+import com.kotlin_t.trobify.presentacion.filtrar.criteria.Busqueda.BusquedaCriteria
 import java.util.*
 
 class BusquedaFragment : Fragment() {
@@ -45,7 +48,7 @@ class BusquedaFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
         sharedModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        val viewModelFactory = BusquedaViewModelFactory(datasource, application, sharedModel)
+        val viewModelFactory = BusquedaViewModelFactory(datasource, application,sharedModel, viewLifecycleOwner)
         busquedaViewModel =
             ViewModelProvider(this, viewModelFactory).get(BusquedaViewModel::class.java)
         binding.viewModel = busquedaViewModel
@@ -54,7 +57,8 @@ class BusquedaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.campoBusqueda.setText(sharedModel.busquedaString)
+        busquedaViewModel.search("")
+
         recyclerView = binding.historialBusquedas
 
         recyclerView.adapter = BusquedaAdapter(
@@ -67,13 +71,23 @@ class BusquedaFragment : Fragment() {
             findNavController().navigate(action)
         }
 
+        binding.campoBusqueda.doAfterTextChanged {
+            if (binding.campoBusqueda.text.toString() == "") {
+                recyclerView.adapter = BusquedaAdapter(
+                    requireContext(), busquedaViewModel.listaBusquedas.reversed(), busquedaViewModel
+                )
+            } else {
+                recyclerView.adapter = BusquedaAdapter(
+                    requireContext(),
+                    BusquedaCriteria(binding.campoBusqueda.text.toString()).meetCriteriaBusqueda(
+                        busquedaViewModel.listaMunicipios.toList()
+                    ),
+                    busquedaViewModel
+                )
+            }
+        }
+
         binding.miUbicacionButton.setOnClickListener {
-            Log.e("EEEEEEEEEEEE", "Entra")
-
-            //Direccion
-            val geocoder: Geocoder = Geocoder(context, Locale.getDefault())
-            var dir: String = ""
-
             locationManager =
                 requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
             if (ActivityCompat.checkSelfPermission(
@@ -95,6 +109,7 @@ class BusquedaFragment : Fragment() {
                     101
                 )
             }
+
             locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
                 0,
@@ -107,7 +122,6 @@ class BusquedaFragment : Fragment() {
                 0.toFloat(),
                 locationListener
             )
-            Log.e("EEEEEEEEEEEE", "Sale")
         }
     }
 
@@ -119,14 +133,12 @@ class BusquedaFragment : Fragment() {
     }
 
     fun setDireccion(latitud: Double, longitud: Double) {
-        val geocoder : Geocoder = Geocoder(context, Locale.getDefault())
-        var dir : String = ""
+        val geocoder: Geocoder = Geocoder(context, Locale.getDefault())
         var direccion: List<Address> = geocoder.getFromLocation(
             latitud,
             longitud,
             1
         )
-        Log.e("EEEEEEEEEE",direccion[0].toString())
         binding.campoBusqueda.setText(direccion[0].locality.toString())
     }
 }
