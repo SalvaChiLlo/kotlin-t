@@ -47,16 +47,19 @@
                         android:layout_height="wrap_content">
 
                         <RadioButton
+                            android:id="@+id/radioVenta"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/venta" />
 
                         <RadioButton
+                            android:id="@+id/radioAlquiler"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/alquiler" />
 
                         <RadioButton
+                            android:id="@+id/radioIntercambio"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/intercambio_de_viviendas" />
@@ -85,21 +88,25 @@
                         android:layout_height="wrap_content">
 
                         <RadioButton
+                            android:id="@+id/radioAtico"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/tico" />
 
                         <RadioButton
+                            android:id="@+id/radioCasa"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/casa_chalet" />
 
                         <RadioButton
+                            android:id="@+id/radioHabitacion"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/habitaci_n" />
 
                         <RadioButton
+                            android:id="@+id/radioPiso"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/piso" />
@@ -343,16 +350,19 @@
                         android:orientation="horizontal">
 
                         <RadioButton
+                            android:id="@+id/radioNuevo"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/obra_nueva" />
 
                         <RadioButton
+                            android:id="@+id/radioBuenEstado"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/buen_estado" />
 
                         <RadioButton
+                            android:id="@+id/radioReformar"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/a_reformar" />

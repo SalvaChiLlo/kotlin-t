@@ -68,6 +68,7 @@ class EditorFichaFragment : Fragment() {
     private lateinit var titulo: String
     private lateinit var subtitulo: String
     private lateinit var descripcion: String
+    private var codigoPostalInm: Int = -1
 
     companion object {
         const val PICK_IMAGE = 1
@@ -94,20 +95,17 @@ class EditorFichaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         if (editorFichaViewModel.inmueble == null) {
             (activity as AppCompatActivity).supportActionBar?.title = "Crear Inmueble"
+            binding.radioVenta.isChecked = true
+            binding.radioAtico.isChecked = true
+            binding.radioNuevo.isChecked = true
         } else {
             (activity as AppCompatActivity).supportActionBar?.title = "Editar Inmueble"
+            rellenarCamposEditables()
         }
         imagesRecyclerView = binding.imagesRecyclerView
         binding.anadirImagen.setOnClickListener {
             selectImages()
         }
-
-        val radioButton1: RadioButton = binding.radioGroupEstado.getChildAt(0) as RadioButton
-        radioButton1.isChecked = true
-        val radioButton2: RadioButton = binding.radioGroupOperacion.getChildAt(0) as RadioButton
-        radioButton2.isChecked = true
-        val radioButton3: RadioButton = binding.radioGroupTipoInmueble.getChildAt(0) as RadioButton
-        radioButton3.isChecked = true
 
         editorFichaViewModel.imagesList.observe(viewLifecycleOwner, {
             binding.imagesRecyclerView.adapter = ImageAdapter(
@@ -164,6 +162,71 @@ class EditorFichaFragment : Fragment() {
         }
     }
 
+    private fun updateInmueble() {
+        TODO("Not yet implemented")
+    }
+
+    private fun rellenarCamposEditables() {
+        val inmueble = editorFichaViewModel.inmueble!!
+        dniPropietario = inmueble.dniPropietario
+        direccion = inmueble.direccion!!
+        nuevoDesarrollo = inmueble.nuevoDesarrollo!!
+        miniatura = inmueble.miniatura
+        URLminiatura = ""
+        altura = inmueble.altura!!
+        precio = inmueble.precio!!
+        tipoDeInmueble = inmueble.tipoDeInmueble!!
+        operacion = inmueble.operacion!!
+        tamano = inmueble.tamano!!
+        exterior = inmueble.exterior!!
+        habitaciones = inmueble.habitaciones!!
+        banos = inmueble.banos!!
+        provinciaInmueble = inmueble.provincia!!
+        municipioInmueble = inmueble.municipio!!
+        barrio = inmueble.barrio!!
+        pais = inmueble.pais!!
+        latitud = inmueble.latitud!!
+        longitud = inmueble.longitud!!
+        estadoInmueble = inmueble.estado!!
+        tieneAscensor = inmueble.tieneAscensor!!
+        precioPorMetro = inmueble.precioPorMetro!!
+        titulo = inmueble.titulo!!
+        subtitulo = inmueble.subtitulo!!
+        descripcion = inmueble.descripcion!!
+
+        when (operacion) {
+            Constantes.VENTA -> binding.radioVenta.isChecked = true
+            Constantes.ALQUILER -> binding.radioAlquiler.isChecked = true
+            Constantes.INTERCAMBIO_VIVIENDA -> binding.radioIntercambio.isChecked = true
+        }
+
+        when (tipoDeInmueble) {
+            Constantes.ATICO -> binding.radioAtico.isChecked = true
+            Constantes.CASA_CHALET -> binding.radioCasa.isChecked = true
+            Constantes.HABITACION -> binding.radioHabitacion.isChecked = true
+            Constantes.PISO -> binding.radioPiso.isChecked = true
+        }
+
+        when (estadoInmueble) {
+            Constantes.NUEVA_CONSTRUCCION -> binding.radioNuevo.isChecked = true
+            Constantes.BUEN_ESTADO -> binding.radioBuenEstado.isChecked = true
+            Constantes.REFORMAR -> binding.radioReformar.isChecked = true
+        }
+
+        binding.editDireccion.setText(inmueble.direccion)
+        binding.editPrecio.setText(inmueble.precio!!.toString())
+        binding.editSuperficie.setText(inmueble.tamano!!.toString())
+        binding.editHabitaciones.setText(inmueble.habitaciones!!.toString())
+        binding.editBanos.setText(inmueble.banos!!.toString())
+        binding.editPlanta.setText(inmueble.altura!!.toString())
+        binding.hasAscensor.isChecked = inmueble.tieneAscensor!!
+        binding.editTitulo.setText(inmueble.titulo)
+        binding.editCP.setText(inmueble.codigoPostal.toString())
+        binding.editDescripcion.setText(inmueble.descripcion)
+        editorFichaViewModel.imagesList.value =
+            datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId).toMutableList()
+    }
+
     private fun setError(view: TextInputEditText, error: String) {
         view.error = error
     }
@@ -182,23 +245,36 @@ class EditorFichaFragment : Fragment() {
         tieneAscensor = binding.hasAscensor.isChecked
         subtitulo = "" // OK
 
-        miniatura = if (editorFichaViewModel.imagesList.value!!.isEmpty()) null else editorFichaViewModel.imagesList.value!![0]  // OK
+        miniatura =
+            if (editorFichaViewModel.imagesList.value!!.isEmpty()) null else editorFichaViewModel.imagesList.value!![0].imagen  // OK
 
-        if(binding.editPlanta.text.toString()=="" || binding.editPlanta.text.toString().toInt() < 0) {
+        if (binding.editPlanta.text.toString() == "" || binding.editPlanta.text.toString()
+                .toInt() < 0
+        ) {
             hasError = true
-            setError(binding.editPlanta, "Este campo no puede estar vacio. Numeros mayores o iguales a 0")
+            setError(
+                binding.editPlanta,
+                "Este campo no puede estar vacio. Numeros mayores o iguales a 0"
+            )
         } else {
             altura = binding.editPlanta.text.toString().toInt()
         }
 
-        if(binding.editPrecio.text.toString()=="" || binding.editPrecio.text.toString().toInt() < 0) {
+        if (binding.editPrecio.text.toString() == "" || binding.editPrecio.text.toString()
+                .toInt() < 0
+        ) {
             hasError = true
-            setError(binding.editPrecio, "Este campo no puede estar vacio. Numeros mayores o iguales a 0")
+            setError(
+                binding.editPrecio,
+                "Este campo no puede estar vacio. Numeros mayores o iguales a 0"
+            )
         } else {
             precio = binding.editPrecio.text.toString().toInt()
         }
 
-        if(binding.editSuperficie.text.toString()=="" || binding.editSuperficie.text.toString().toInt() <= 0) {
+        if (binding.editSuperficie.text.toString() == "" || binding.editSuperficie.text.toString()
+                .toInt() <= 0
+        ) {
             hasError = true
             setError(binding.editSuperficie, "Este campo no puede estar vacio. Numeros mayores a 0")
         } else {
@@ -206,21 +282,28 @@ class EditorFichaFragment : Fragment() {
             precioPorMetro = precio / tamano // OK
         }
 
-        if(binding.editHabitaciones.text.toString()=="" || binding.editHabitaciones.text.toString().toInt() <= 0) {
+        if (binding.editHabitaciones.text.toString() == "" || binding.editHabitaciones.text.toString()
+                .toInt() <= 0
+        ) {
             hasError = true
-            setError(binding.editHabitaciones, "Este campo no puede estar vacio. Numeros mayores a 0")
+            setError(
+                binding.editHabitaciones,
+                "Este campo no puede estar vacio. Numeros mayores a 0"
+            )
         } else {
             habitaciones = binding.editHabitaciones.text.toString().toInt()
         }
 
-        if(binding.editBanos.text.toString()=="" || binding.editBanos.text.toString().toInt() <= 0) {
+        if (binding.editBanos.text.toString() == "" || binding.editBanos.text.toString()
+                .toInt() <= 0
+        ) {
             hasError = true
             setError(binding.editBanos, "Este campo no puede estar vacio. Numeros mayores a 0")
         } else {
-            habitaciones = binding.editBanos.text.toString().toInt()
+            banos = binding.editBanos.text.toString().toInt()
         }
 
-        if(binding.editDireccion.text.toString()=="") {
+        if (binding.editDireccion.text.toString() == "") {
             hasError = true
             setError(binding.editDireccion, "Este campo no puede estar vacio.")
         } else {
@@ -233,7 +316,14 @@ class EditorFichaFragment : Fragment() {
             longitud = getLongitude()
         }
 
-        if(binding.editTitulo.text.toString()=="") {
+        if (binding.editCP.text.toString() == "") {
+            hasError = true
+            setError(binding.editCP, "Este campo no puede estar vacio.")
+        } else {
+            codigoPostalInm = binding.editCP.text.toString().toInt()
+        }
+
+        if (binding.editTitulo.text.toString() == "") {
             hasError = true
             setError(binding.editTitulo, "Este campo no puede estar vacio.")
 
@@ -241,16 +331,64 @@ class EditorFichaFragment : Fragment() {
             titulo = binding.editTitulo.text.toString()
         }
 
-        if(binding.editDescripcion.text.toString()=="") {
+        if (binding.editDescripcion.text.toString() == "") {
             hasError = true
             binding.editDescripcion.error = "Este campo no puede estar vacio."
         } else {
             descripcion = binding.editDescripcion.text.toString()
         }
 
-        if(!hasError) {
+        if (!hasError && editorFichaViewModel.inmueble == null) {
             crearInmueble()
+        } else {
+            actualizarInmueble()
         }
+    }
+
+    private fun actualizarInmueble() {
+        val inmueble = editorFichaViewModel.inmueble!!
+        inmueble.dniPropietario = dniPropietario
+        inmueble.direccion = direccion
+        inmueble.nuevoDesarrollo = nuevoDesarrollo
+        inmueble.miniatura = miniatura
+        inmueble.URLminiatura = URLminiatura
+        inmueble.altura = altura
+        inmueble.precio = precio
+        inmueble.tipoDeInmueble = tipoDeInmueble
+        inmueble.operacion = operacion
+        inmueble.tamano = tamano
+        inmueble.exterior = exterior
+        inmueble.habitaciones = habitaciones
+        inmueble.banos = banos
+        inmueble.provincia = provinciaInmueble
+        inmueble.municipio = municipioInmueble
+        inmueble.barrio = barrio
+        inmueble.pais = pais
+        inmueble.latitud = latitud
+        inmueble.longitud = longitud
+        inmueble.estado = estadoInmueble
+        inmueble.tieneAscensor = tieneAscensor
+        inmueble.precioPorMetro = precioPorMetro
+        inmueble.titulo = titulo
+        inmueble.subtitulo = subtitulo
+        inmueble.descripcion = descripcion
+        inmueble.codigoPostal = codigoPostalInm
+
+        datasource.inmuebleDAO().delete(inmueble)
+        datasource.inmuebleDAO().insertAll(inmueble)
+        sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
+
+        editorFichaViewModel.imagesList.value!!.forEach {
+            if (datasource.fotoDAO().findById(it.fotoId.toString()) != null) {
+                datasource.fotoDAO().delete(it)
+            }
+            datasource.fotoDAO().insertAll(it)
+        }
+
+        val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
+        sharedModel.updateInmuebles()
+        sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
+        findNavController().navigate(action)
     }
 
     private fun crearInmueble() {
@@ -279,16 +417,16 @@ class EditorFichaFragment : Fragment() {
             precioPorMetro,
             titulo,
             subtitulo,
-            descripcion
+            descripcion,
+            codigoPostalInm
         )
 
         datasource.inmuebleDAO().insertAll(inmueble)
         if (editorFichaViewModel.inmueble == null) {
-            editorFichaViewModel.inmuebleID =
-                datasource.inmuebleDAO().getAll().last().inmuebleId
+            editorFichaViewModel.inmuebleID = datasource.inmuebleDAO().getAll().last().inmuebleId
         }
         editorFichaViewModel.imagesList.value?.forEach {
-            datasource.fotoDAO().insertAll(Foto(editorFichaViewModel.inmuebleID!!, it))
+            datasource.fotoDAO().insertAll(Foto(editorFichaViewModel.inmuebleID!!, it.imagen))
         }
 
         val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
@@ -414,7 +552,7 @@ class EditorFichaFragment : Fragment() {
         val inputStream = context?.contentResolver?.openInputStream(imageUri)
         var bitmap = BitmapFactory.decodeStream(inputStream)
         bitmap = Bitmap.createScaledBitmap(bitmap!!, 300, 300, true)
-        editorFichaViewModel.addImageToList(bitmap)
+        editorFichaViewModel.addImageToList(Foto(editorFichaViewModel.inmuebleID!!, bitmap))
     }
 
 

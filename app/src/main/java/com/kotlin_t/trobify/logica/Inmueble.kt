@@ -42,7 +42,8 @@ data class Inmueble(
     var precioPorMetro: Int?,
     var titulo: String?,
     var subtitulo: String,
-    var descripcion: String?
+    var descripcion: String?,
+    var codigoPostal: Int
 ) {
     @PrimaryKey(autoGenerate = true) var inmuebleId: Int = 0
 }
