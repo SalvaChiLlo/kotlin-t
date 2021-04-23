@@ -6,11 +6,9 @@ import android.content.ClipData
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.location.*
-import android.media.Image
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -19,30 +17,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.RadioButton
-import android.widget.Toolbar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.databinding.FragmentBusquedaBinding
 import com.kotlin_t.trobify.databinding.FragmentEditorFichaBinding
 import com.kotlin_t.trobify.logica.Foto
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.presentacion.Constantes
 import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.busqueda.BusquedaAdapter
-import com.kotlin_t.trobify.presentacion.busqueda.BusquedaFragmentDirections
-import com.kotlin_t.trobify.presentacion.busqueda.BusquedaViewModel
-import com.kotlin_t.trobify.presentacion.busqueda.BusquedaViewModelFactory
-import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModel
-import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModelFactory
-import com.kotlin_t.trobify.presentacion.filtrar.FiltrarViewModel
-import com.kotlin_t.trobify.presentacion.filtrar.criteria.Busqueda.BusquedaCriteria
 import java.util.*
 
 class EditorFichaFragment : Fragment() {
@@ -52,6 +39,33 @@ class EditorFichaFragment : Fragment() {
     lateinit var sharedModel: SharedViewModel
     lateinit var imagesRecyclerView: RecyclerView
     lateinit var locationManager: LocationManager
+
+
+    private lateinit var dniPropietario: String
+    private lateinit var direccion: String
+    private var nuevoDesarrollo: Boolean = false
+    private var miniatura: Bitmap? = null
+    private lateinit var URLminiatura: String
+    private var altura: Int = -1
+    private var precio: Int = -1
+    private lateinit var tipoDeInmueble: String
+    private lateinit var operacion: String
+    private var tamano: Int = -1
+    private var exterior: Boolean = false
+    private var habitaciones: Int = -1
+    private var banos: Int = -1
+    private lateinit var provinciaInmueble: String
+    private lateinit var municipioInmueble: String
+    private lateinit var barrio: String
+    private lateinit var pais: String
+    private var latitud: Double = -1.0
+    private var longitud: Double = -1.0
+    private lateinit var estadoInmueble: String
+    private var tieneAscensor: Boolean = false
+    private var precioPorMetro: Int = -1
+    private lateinit var titulo: String
+    private lateinit var subtitulo: String
+    private lateinit var descripcion: String
 
     companion object {
         const val PICK_IMAGE = 1
@@ -137,61 +151,138 @@ class EditorFichaFragment : Fragment() {
         }
 
         binding.guardarInmueble.setOnClickListener {
-//            datasource.inmuebleDAO().insertAll(
-            val inmueble = Inmueble(
-                sharedModel.usuario!!.dni,
-                binding.editDireccion.text.toString(),
-                false,
-                if (editorFichaViewModel.imagesList.value!!.isEmpty()) null else editorFichaViewModel.imagesList.value!![0],
-                null,
-                binding.editPlanta.text.toString().toInt(),
-                binding.editPrecio.text.toString().toInt(),
-                tipoInmueble(),
-                tipoOperacion(),
-                binding.editSuperficie.text.toString().toInt(),
-                false,
-                binding.editHabitaciones.text.toString().toInt(),
-                binding.editBanos.text.toString().toInt(),
-                getProvincia(),
-                getMunicipio(),
-                getMunicipio(),
-                "España",
-                getLatitude(),
-                getLongitude(),
-                getEstado(),
-                binding.hasAscensor.isChecked,
-                binding.editPrecio.text.toString()
-                    .toInt() / binding.editSuperficie.text.toString().toInt(),
-                binding.editTitulo.text.toString(),
-                "",
-                binding.editDescripcion.text.toString()
-            )
-
-            datasource.inmuebleDAO().insertAll(inmueble)
-            if (editorFichaViewModel.inmueble == null) {
-                editorFichaViewModel.inmuebleID =
-                    datasource.inmuebleDAO().getAll().last().inmuebleId
-            }
-            editorFichaViewModel.imagesList.value?.forEach {
-                datasource.fotoDAO().insertAll(Foto(editorFichaViewModel.inmuebleID!!, it))
-            }
-
-            val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
-            sharedModel.updateInmuebles()
-            sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
-            findNavController().navigate(action)
+            verificarDatos()
         }
     }
 
-    var locationListener: LocationListener = object : LocationListener {
+    private fun verificarDatos() {
+        var hasError = false;
+        // TODO --> Aplicar extract method a los distintos if
+
+        nuevoDesarrollo = false // OK
+        URLminiatura = "" // OK
+        dniPropietario = sharedModel.usuario!!.dni // OK
+        exterior = false // OK
+        tipoDeInmueble = tipoInmueble() // OK
+        operacion = tipoOperacion() // OK
+        provinciaInmueble = getProvincia() // OK
+        municipioInmueble = getMunicipio() // OK
+        barrio = getMunicipio() // OK
+        pais = "España" // OK
+        latitud = getLatitude() // OK
+        longitud = getLongitude() // OK
+        estadoInmueble = getEstado() // OK
+        tieneAscensor = binding.hasAscensor.isChecked
+        precioPorMetro = precio / tamano // OK
+        subtitulo = "" // OK
+
+        miniatura = if (editorFichaViewModel.imagesList.value!!.isEmpty()) null else editorFichaViewModel.imagesList.value!![0]  // OK
+
+        if(binding.editPlanta.text.toString()=="" || binding.editPlanta.text.toString().toInt() < 0) {
+            hasError = true
+        } else {
+            altura = binding.editPlanta.text.toString().toInt()
+        }
+
+        if(binding.editPrecio.text.toString()=="" || binding.editPrecio.text.toString().toInt() < 0) {
+            hasError = true
+        } else {
+            precio = binding.editPrecio.text.toString().toInt()
+        }
+
+        if(binding.editSuperficie.text.toString()=="" || binding.editSuperficie.text.toString().toInt() <= 0) {
+            hasError = true
+        } else {
+            tamano = binding.editSuperficie.text.toString().toInt()
+        }
+
+        if(binding.editHabitaciones.text.toString()=="" || binding.editHabitaciones.text.toString().toInt() <= 0) {
+            hasError = true
+        } else {
+            habitaciones = binding.editHabitaciones.text.toString().toInt()
+        }
+
+        if(binding.editBanos.text.toString()=="" || binding.editBanos.text.toString().toInt() <= 0) {
+            hasError = true
+        } else {
+            habitaciones = binding.editBanos.text.toString().toInt()
+        }
+
+        if(binding.editDireccion.text.toString()=="") {
+            hasError = true
+        } else {
+            direccion = binding.editDireccion.text.toString()
+        }
+
+        if(binding.editTitulo.text.toString()=="") {
+            hasError = true
+        } else {
+            titulo = binding.editTitulo.text.toString()
+        }
+
+        if(binding.editDescripcion.text.toString()=="") {
+            hasError = true
+        } else {
+            descripcion = binding.editDescripcion.text.toString()
+        }
+
+        if(!hasError) {
+            crearInmueble()
+        }
+    }
+
+    private fun crearInmueble() {
+        val inmueble = Inmueble(
+            dniPropietario,
+            direccion,
+            nuevoDesarrollo,
+            miniatura,
+            URLminiatura,
+            altura,
+            precio,
+            tipoDeInmueble,
+            operacion,
+            tamano,
+            exterior,
+            habitaciones,
+            banos,
+            provinciaInmueble,
+            municipioInmueble,
+            barrio,
+            pais,
+            latitud,
+            longitud,
+            estadoInmueble,
+            tieneAscensor,
+            precioPorMetro,
+            titulo,
+            subtitulo,
+            descripcion
+        )
+
+        datasource.inmuebleDAO().insertAll(inmueble)
+        if (editorFichaViewModel.inmueble == null) {
+            editorFichaViewModel.inmuebleID =
+                datasource.inmuebleDAO().getAll().last().inmuebleId
+        }
+        editorFichaViewModel.imagesList.value?.forEach {
+            datasource.fotoDAO().insertAll(Foto(editorFichaViewModel.inmuebleID!!, it))
+        }
+
+        val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
+        sharedModel.updateInmuebles()
+        sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
+        findNavController().navigate(action)
+    }
+
+    private var locationListener: LocationListener = object : LocationListener {
         override fun onLocationChanged(location: Location) {
             setDireccion(location.latitude, location.longitude)
             locationManager.removeUpdates(this)
         }
     }
 
-
-    fun getLatitude(): Double {
+    private fun getLatitude(): Double {
         val geocoder = Geocoder(context, Locale.getDefault())
         return geocoder.getFromLocationName(
             binding.editDireccion.text.toString() + binding.editCP.text.toString(),
@@ -199,7 +290,7 @@ class EditorFichaFragment : Fragment() {
         ).get(0).latitude
     }
 
-    fun getLongitude(): Double {
+    private fun getLongitude(): Double {
         val geocoder = Geocoder(context, Locale.getDefault())
         return geocoder.getFromLocationName(
             binding.editDireccion.text.toString() + binding.editCP.text.toString(),
@@ -208,7 +299,7 @@ class EditorFichaFragment : Fragment() {
             .get(0).longitude
     }
 
-    fun getMunicipio(): String {
+    private fun getMunicipio(): String {
         val geocoder = Geocoder(context, Locale.getDefault())
         return geocoder.getFromLocationName(
             binding.editDireccion.text.toString() + binding.editCP.text.toString(),
@@ -217,7 +308,7 @@ class EditorFichaFragment : Fragment() {
             .get(0).locality
     }
 
-    fun getProvincia(): String {
+    private fun getProvincia(): String {
         val geocoder = Geocoder(context, Locale.getDefault())
         val dir = geocoder.getFromLocationName(
             binding.editDireccion.text.toString() + binding.editCP.text.toString(),
@@ -226,7 +317,7 @@ class EditorFichaFragment : Fragment() {
         return if (!dir.isEmpty()) dir.get(0).adminArea else ""
     }
 
-    fun tipoOperacion(): String {
+    private fun tipoOperacion(): String {
         val selectedID = binding.radioGroupOperacion.checkedRadioButtonId
         return when (binding.radioGroupOperacion.findViewById<RadioButton>(selectedID).text) {
             getString(R.string.venta) -> Constantes.VENTA
@@ -236,7 +327,7 @@ class EditorFichaFragment : Fragment() {
         }
     }
 
-    fun tipoInmueble(): String {
+    private fun tipoInmueble(): String {
         val selectedID = binding.radioGroupTipoInmueble.checkedRadioButtonId
         return when (binding.radioGroupTipoInmueble.findViewById<RadioButton>(selectedID).text) {
             getString(R.string.tico) -> Constantes.ATICO
@@ -247,7 +338,7 @@ class EditorFichaFragment : Fragment() {
         }
     }
 
-    fun getEstado(): String {
+    private fun getEstado(): String {
         val selectedID = binding.radioGroupEstado.checkedRadioButtonId
         return when (binding.radioGroupEstado.findViewById<RadioButton>(selectedID).text) {
             getString(R.string.obra_nueva) -> Constantes.NUEVA_CONSTRUCCION
@@ -257,9 +348,9 @@ class EditorFichaFragment : Fragment() {
         }
     }
 
-    fun setDireccion(latitud: Double, longitud: Double) {
+    private fun setDireccion(latitud: Double, longitud: Double) {
         val geocoder = Geocoder(context, Locale.getDefault())
-        var direccion: List<Address> = geocoder.getFromLocation(
+        val direccion: List<Address> = geocoder.getFromLocation(
             latitud,
             longitud,
             1

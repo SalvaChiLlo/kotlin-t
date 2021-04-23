@@ -18,8 +18,8 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -42,13 +42,14 @@
                         android:textStyle="bold" />
 
                     <RadioGroup
+                        android:id="@+id/radioGroupOperacion"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/radioGroupOperacion">
+                        android:layout_height="wrap_content">
 
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:checked="true"
                             android:text="@string/venta" />
 
                         <RadioButton
@@ -80,13 +81,14 @@
                         android:textStyle="bold" />
 
                     <RadioGroup
+                        android:id="@+id/radioGroupTipoInmueble"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/radioGroupTipoInmueble">
+                        android:layout_height="wrap_content">
 
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:checked="true"
                             android:text="@string/tico" />
 
                         <RadioButton
@@ -293,11 +295,11 @@
                     android:id="@+id/AscensorLayout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
                     android:layout_marginTop="8dp"
                     android:orientation="horizontal"
                     app:layout_constraintStart_toEndOf="@id/HabitacionesLayout"
-                    app:layout_constraintTop_toBottomOf="@id/HabitacionesLayout"
-                    android:layout_marginStart="40dp">
+                    app:layout_constraintTop_toBottomOf="@id/HabitacionesLayout">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/textAscensor"
@@ -314,10 +316,10 @@
                         android:id="@+id/hasAscensor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintStart_toEndOf="@id/textAscensor"
-                        app:layout_constraintTop_toTopOf="@id/textAscensor"
+                        android:layout_marginStart="8dp"
                         app:layout_constraintBottom_toBottomOf="@id/textAscensor"
-                        android:layout_marginStart="8dp"/>
+                        app:layout_constraintStart_toEndOf="@id/textAscensor"
+                        app:layout_constraintTop_toTopOf="@id/textAscensor" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <LinearLayout
@@ -337,14 +339,15 @@
                         android:textStyle="bold" />
 
                     <RadioGroup
+                        android:id="@+id/radioGroupEstado"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:id="@+id/radioGroupEstado">
+                        android:orientation="horizontal">
 
                         <RadioButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:checked="true"
                             android:text="@string/obra_nueva" />
 
                         <RadioButton
@@ -545,24 +548,25 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:layout_width="wrap_content"
-            android:importantForAccessibility="no"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_save_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_margin="8dp"
-            android:id="@+id/guardarInmueble"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/guardarInmueble"
             android:layout_width="wrap_content"
-            android:importantForAccessibility="no"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_baseline_clear_24"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/guardarInmueble"
             android:layout_margin="8dp"
-            android:id="@+id/descartar"/>
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_baseline_save_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/descartar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:importantForAccessibility="no"
+            android:src="@drawable/ic_baseline_clear_24"
+            app:layout_constraintBottom_toTopOf="@id/guardarInmueble"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
