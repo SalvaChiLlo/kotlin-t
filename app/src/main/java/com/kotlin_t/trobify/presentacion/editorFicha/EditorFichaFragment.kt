@@ -19,10 +19,12 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.textfield.TextInputEditText
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentEditorFichaBinding
@@ -100,6 +102,13 @@ class EditorFichaFragment : Fragment() {
             selectImages()
         }
 
+        val radioButton1: RadioButton = binding.radioGroupEstado.getChildAt(0) as RadioButton
+        radioButton1.isChecked = true
+        val radioButton2: RadioButton = binding.radioGroupOperacion.getChildAt(0) as RadioButton
+        radioButton2.isChecked = true
+        val radioButton3: RadioButton = binding.radioGroupTipoInmueble.getChildAt(0) as RadioButton
+        radioButton3.isChecked = true
+
         editorFichaViewModel.imagesList.observe(viewLifecycleOwner, {
             binding.imagesRecyclerView.adapter = ImageAdapter(
                 requireContext(),
@@ -155,73 +164,86 @@ class EditorFichaFragment : Fragment() {
         }
     }
 
+    private fun setError(view: TextInputEditText, error: String) {
+        view.error = error
+    }
+
     private fun verificarDatos() {
         var hasError = false;
         // TODO --> Aplicar extract method a los distintos if
 
-        nuevoDesarrollo = false // OK
-        URLminiatura = "" // OK
-        dniPropietario = sharedModel.usuario!!.dni // OK
-        exterior = false // OK
-        tipoDeInmueble = tipoInmueble() // OK
-        operacion = tipoOperacion() // OK
-        provinciaInmueble = getProvincia() // OK
-        municipioInmueble = getMunicipio() // OK
-        barrio = getMunicipio() // OK
-        pais = "España" // OK
-        latitud = getLatitude() // OK
-        longitud = getLongitude() // OK
+        nuevoDesarrollo = false
+        URLminiatura = ""
+        dniPropietario = sharedModel.usuario!!.dni
+        exterior = false
+        tipoDeInmueble = tipoInmueble()
+        operacion = tipoOperacion()
         estadoInmueble = getEstado() // OK
         tieneAscensor = binding.hasAscensor.isChecked
-        precioPorMetro = precio / tamano // OK
         subtitulo = "" // OK
 
         miniatura = if (editorFichaViewModel.imagesList.value!!.isEmpty()) null else editorFichaViewModel.imagesList.value!![0]  // OK
 
         if(binding.editPlanta.text.toString()=="" || binding.editPlanta.text.toString().toInt() < 0) {
             hasError = true
+            setError(binding.editPlanta, "Este campo no puede estar vacio. Numeros mayores o iguales a 0")
         } else {
             altura = binding.editPlanta.text.toString().toInt()
         }
 
         if(binding.editPrecio.text.toString()=="" || binding.editPrecio.text.toString().toInt() < 0) {
             hasError = true
+            setError(binding.editPrecio, "Este campo no puede estar vacio. Numeros mayores o iguales a 0")
         } else {
             precio = binding.editPrecio.text.toString().toInt()
         }
 
         if(binding.editSuperficie.text.toString()=="" || binding.editSuperficie.text.toString().toInt() <= 0) {
             hasError = true
+            setError(binding.editSuperficie, "Este campo no puede estar vacio. Numeros mayores a 0")
         } else {
             tamano = binding.editSuperficie.text.toString().toInt()
+            precioPorMetro = precio / tamano // OK
         }
 
         if(binding.editHabitaciones.text.toString()=="" || binding.editHabitaciones.text.toString().toInt() <= 0) {
             hasError = true
+            setError(binding.editHabitaciones, "Este campo no puede estar vacio. Numeros mayores a 0")
         } else {
             habitaciones = binding.editHabitaciones.text.toString().toInt()
         }
 
         if(binding.editBanos.text.toString()=="" || binding.editBanos.text.toString().toInt() <= 0) {
             hasError = true
+            setError(binding.editBanos, "Este campo no puede estar vacio. Numeros mayores a 0")
         } else {
             habitaciones = binding.editBanos.text.toString().toInt()
         }
 
         if(binding.editDireccion.text.toString()=="") {
             hasError = true
+            setError(binding.editDireccion, "Este campo no puede estar vacio.")
         } else {
             direccion = binding.editDireccion.text.toString()
+            provinciaInmueble = getProvincia()
+            municipioInmueble = getMunicipio()
+            barrio = getMunicipio()
+            pais = "España" // OK
+            latitud = getLatitude()
+            longitud = getLongitude()
         }
 
         if(binding.editTitulo.text.toString()=="") {
             hasError = true
+            setError(binding.editTitulo, "Este campo no puede estar vacio.")
+
         } else {
             titulo = binding.editTitulo.text.toString()
         }
 
         if(binding.editDescripcion.text.toString()=="") {
             hasError = true
+            binding.editDescripcion.error = "Este campo no puede estar vacio."
         } else {
             descripcion = binding.editDescripcion.text.toString()
         }
@@ -284,28 +306,29 @@ class EditorFichaFragment : Fragment() {
 
     private fun getLatitude(): Double {
         val geocoder = Geocoder(context, Locale.getDefault())
-        return geocoder.getFromLocationName(
+        val result = geocoder.getFromLocationName(
             binding.editDireccion.text.toString() + binding.editCP.text.toString(),
             1
-        ).get(0).latitude
+        )
+        return if (result.isEmpty()) 0.0 else result.get(0).latitude
     }
 
     private fun getLongitude(): Double {
         val geocoder = Geocoder(context, Locale.getDefault())
-        return geocoder.getFromLocationName(
+        val result = geocoder.getFromLocationName(
             binding.editDireccion.text.toString() + binding.editCP.text.toString(),
             1
         )
-            .get(0).longitude
+        return if (result.isEmpty()) 0.0 else result.get(0).longitude
     }
 
     private fun getMunicipio(): String {
         val geocoder = Geocoder(context, Locale.getDefault())
-        return geocoder.getFromLocationName(
+        val result = geocoder.getFromLocationName(
             binding.editDireccion.text.toString() + binding.editCP.text.toString(),
             1
         )
-            .get(0).locality
+        return if (result.isEmpty()) "" else result.get(0).locality
     }
 
     private fun getProvincia(): String {
