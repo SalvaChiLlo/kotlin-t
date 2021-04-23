@@ -139,6 +139,8 @@ class MapsFragment : Fragment() {
 
     fun setZoomToFitMarkers(map: GoogleMap) {
 
+        if(markers.isEmpty()) return
+
         var boundsBuilder = LatLngBounds.builder()
 
         markers.forEach{ boundsBuilder.include(it.position) }
