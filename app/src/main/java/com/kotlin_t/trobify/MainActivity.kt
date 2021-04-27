@@ -3,7 +3,9 @@ package com.kotlin_t.trobify
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -19,6 +21,7 @@ import com.google.android.material.navigation.NavigationView
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.database.PopulateDB
 import com.kotlin_t.trobify.presentacion.SharedViewModel
+import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,6 +37,13 @@ class MainActivity : AppCompatActivity() {
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
+        val headerView = navView.getHeaderView(0)
+        val loginButton = headerView.findViewById<Button>(R.id.iniciaSesionButton)
+        if(loginButton != null) {
+            loginButton.setOnClickListener {
+                findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeToLoginFragment())
+            }
+        }
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -44,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
         val model = ViewModelProvider(this).get(SharedViewModel::class.java)
         model.preciosOpciones.value!!.set(
             0,

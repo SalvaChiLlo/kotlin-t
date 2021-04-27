@@ -15,26 +15,30 @@ class EditorFichaViewModel(
     application: Application,
     val model: SharedViewModel,
 ) : AndroidViewModel(application) {
-    var inmueble: Inmueble? = null
+    var inmueble: Inmueble? = database.inmuebleDAO().getAll().last()
     var inmuebleID: Int? = null
-    var imagesList = MutableLiveData<MutableList<Bitmap>>()
-
+    var imagesList = MutableLiveData<MutableList<Foto>>()
 
     init {
         if (inmueble != null) {
             inmuebleID = inmueble!!.inmuebleId
+        } else {
+            inmuebleID = database.inmuebleDAO().getAll().last().inmuebleId + 1
         }
 
         imagesList.value = mutableListOf()
     }
 
-    fun addImageToList(image: Bitmap) {
+    fun addImageToList(image: Foto) {
         imagesList.value?.add(image)
         imagesList.value = imagesList.value
     }
 
-    fun removeImageFromList(image: Bitmap) {
+    fun removeImageFromList(image: Foto) {
         imagesList.value?.remove(image)
+        if(database.fotoDAO().findById(image.fotoId.toString()) != null) {
+            database.fotoDAO().delete(image)
+        }
         imagesList.value = imagesList.value
     }
 
