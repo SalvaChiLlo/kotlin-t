@@ -11,13 +11,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.textview.MaterialTextView
 import com.kotlin_t.trobify.R
@@ -32,6 +35,7 @@ class FichaFragment : Fragment() {
     var inmuebleId by Delegates.notNull<Int>()
     private lateinit var map: GoogleMap
     private val zoomLevel = 10f
+    private lateinit var listView : ScrollView
 
     private val callback = OnMapReadyCallback { googleMap ->
 
@@ -46,6 +50,11 @@ class FichaFragment : Fragment() {
         setMarkers(map)
         //setMarkersListeners(map)
         setZoomOnFirstInmueble(map)
+
+        googleMap.setOnCameraMoveListener {
+            listView.smoothScrollBy(0,0)
+
+        }
     }
 
     companion object {
@@ -68,6 +77,7 @@ class FichaFragment : Fragment() {
         }
         fichaViewModel.setHouse(inmuebleId)
 
+
         return inflater.inflate(R.layout.ficha_fragment, container, false)
     }
 
@@ -82,6 +92,8 @@ class FichaFragment : Fragment() {
             inmuebleId = it.getInt("InmuebleID")!!
         }
         updateMedia(view)
+
+        listView = view.findViewById<ScrollView>(R.id.scrollView)
 
         val mapButton : ImageButton = view.findViewById(R.id.mapa)
 
@@ -100,6 +112,9 @@ class FichaFragment : Fragment() {
         }
 
         setFavouriteIcon(view.findViewById<ImageView>(R.id.favImage))
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.mapLocation) as SupportMapFragment?
+        mapFragment?.getMapAsync(callback)
     }
 
 /*
@@ -328,14 +343,21 @@ class FichaFragment : Fragment() {
     fun setZoomOnFirstInmueble(map: GoogleMap) {
 
         val inmueble = fichaViewModel.inmueble
-        val localizacion: LatLng
+        val boundsBuilder = LatLngBounds.builder()
+
+        val localizacion : LatLng
         if(inmueble != null) {
             localizacion = LatLng(inmueble.latitud!!, inmueble.longitud!!)
         } else {
             localizacion = LatLng(39.46854170253597, -0.376975419650787) // Valencia Centro
         }
+        boundsBuilder.include(localizacion)
+        val bounds = boundsBuilder.build()
 
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(localizacion, zoomLevel))
-
+        val cu = CameraUpdateFactory.newLatLng(localizacion)
+        map.moveCamera(cu)
+        map.animateCamera(cu)
+        map.setMinZoomPreference(13f)
+        map.setMaxZoomPreference(15f)
     }
 }
