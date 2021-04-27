@@ -6,9 +6,6 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
-import android.text.SpannableStringBuilder
-import android.text.Spanned
-import android.text.style.SuperscriptSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,18 +14,39 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.gms.maps.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.textview.MaterialTextView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Favorito
-import org.w3c.dom.Text
+import com.kotlin_t.trobify.presentacion.mapa.CustomInfoWindowForGoogleMap
 import java.util.*
 import kotlin.properties.Delegates
 
 
 class FichaFragment : Fragment() {
     var inmuebleId by Delegates.notNull<Int>()
+    private lateinit var map: GoogleMap
+    private val zoomLevel = 10f
+
+    private val callback = OnMapReadyCallback { googleMap ->
+
+        map = googleMap
+        map.mapType = GoogleMap.MAP_TYPE_NORMAL
+        map.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireContext()))
+
+        /*
+        val sydney = LatLng(fichaViewModel.inmueble.latitud!!, fichaViewModel.inmueble.latitud!!)
+        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
+        setMarkers(map)
+        //setMarkersListeners(map)
+        setZoomOnFirstInmueble(map)
+    }
 
     companion object {
         fun newInstance() = FichaFragment()
@@ -74,8 +92,16 @@ class FichaFragment : Fragment() {
 
         }
 
+        val phoneButton : ImageButton = view.findViewById(R.id.llamada)
+
+        phoneButton.setOnClickListener {
+            val phone = view.findViewById<TextView>(R.id.textoTelefono)
+            phoneClickHandler(phone.text.toString())
+        }
+
         setFavouriteIcon(view.findViewById<ImageView>(R.id.favImage))
     }
+
 /*
     override fun onMapReady(googleMap: GoogleMap?) {
         //configura el mapa
@@ -146,6 +172,7 @@ class FichaFragment : Fragment() {
         //mapView = container!!.findViewById<MapView>(R.id.mapView)
         //mapView?.getMapAsync(this)
 
+
     }
 
     private fun mapClickHandler() {
@@ -159,28 +186,60 @@ class FichaFragment : Fragment() {
         }
     }
 
-    private fun setCaracteristicas(container: View) {
-        var addText : String = "Desconocido"
-        setText(container!!.findViewById<TextView>(R.id.textoEstado), fichaViewModel.inmueble.estado!!)
-        setText(container!!.findViewById<TextView>(R.id.textoNuevo),
-                if (fichaViewModel.inmueble.nuevoDesarrollo!!) "Si" else "No")
-        setText(container!!.findViewById<TextView>(R.id.textoDimensiones), fichaViewModel.inmueble.tamano!!.toString())
-        setM2(container!!.findViewById<TextView>(R.id.textoDimensiones), "")
-        setText(container!!.findViewById<TextView>(R.id.textoTipo), fichaViewModel.inmueble.tipoDeInmueble!!)
-        setText(container!!.findViewById<TextView>(R.id.textoAltura), fichaViewModel.inmueble.altura!!.toString())
-        setText(container!!.findViewById<TextView>(R.id.textoHabitaciones), fichaViewModel.inmueble.habitaciones!!.toString())
-        setText(container!!.findViewById<TextView>(R.id.textoBanos), fichaViewModel.inmueble.banos!!.toString())
-        setText(container!!.findViewById<TextView>(R.id.textoAscensor),
-            if (fichaViewModel.inmueble.tieneAscensor!!) "Si" else "No")
-        setText(container!!.findViewById<TextView>(R.id.textoExterior),
-            if (fichaViewModel.inmueble.exterior!!) "Si" else "No")
-        container!!.findViewById<TextView>(R.id.textoPrecioMetro).text = "- Precio por "
-        setM2(container!!.findViewById<TextView>(R.id.textoPrecioMetro),": ")
-        //container!!.findViewById<TextView>(R.id.textoPrecioMetro).text = "- Precio por m"
-        setText(container!!.findViewById<TextView>(R.id.textoPrecioMetro), fichaViewModel.inmueble.precioPorMetro!!.toString() + "€")
+    private fun phoneClickHandler(phone : String) {
+        val intent = Intent(Intent.ACTION_DIAL, Uri.parse("tel:$phone"))
+        startActivity(intent)
     }
 
-    private fun setText(textView : TextView, text : String) {
+    private fun setCaracteristicas(container: View) {
+        var addText : String = "Desconocido"
+        setText(
+            container!!.findViewById<TextView>(R.id.textoEstado),
+            fichaViewModel.inmueble.estado!!
+        )
+        setText(
+            container!!.findViewById<TextView>(R.id.textoNuevo),
+            if (fichaViewModel.inmueble.nuevoDesarrollo!!) "Si" else "No"
+        )
+        setText(
+            container!!.findViewById<TextView>(R.id.textoDimensiones),
+            fichaViewModel.inmueble.tamano!!.toString()
+        )
+        setM2(container!!.findViewById<TextView>(R.id.textoDimensiones), "")
+        setText(
+            container!!.findViewById<TextView>(R.id.textoTipo),
+            fichaViewModel.inmueble.tipoDeInmueble!!
+        )
+        setText(
+            container!!.findViewById<TextView>(R.id.textoAltura),
+            fichaViewModel.inmueble.altura!!.toString()
+        )
+        setText(
+            container!!.findViewById<TextView>(R.id.textoHabitaciones),
+            fichaViewModel.inmueble.habitaciones!!.toString()
+        )
+        setText(
+            container!!.findViewById<TextView>(R.id.textoBanos),
+            fichaViewModel.inmueble.banos!!.toString()
+        )
+        setText(
+            container!!.findViewById<TextView>(R.id.textoAscensor),
+            if (fichaViewModel.inmueble.tieneAscensor!!) "Si" else "No"
+        )
+        setText(
+            container!!.findViewById<TextView>(R.id.textoExterior),
+            if (fichaViewModel.inmueble.exterior!!) "Si" else "No"
+        )
+        container!!.findViewById<TextView>(R.id.textoPrecioMetro).text = "- Precio por "
+        setM2(container!!.findViewById<TextView>(R.id.textoPrecioMetro), ": ")
+        //container!!.findViewById<TextView>(R.id.textoPrecioMetro).text = "- Precio por m"
+        setText(
+            container!!.findViewById<TextView>(R.id.textoPrecioMetro),
+            fichaViewModel.inmueble.precioPorMetro!!.toString() + "€"
+        )
+    }
+
+    private fun setText(textView: TextView, text: String) {
         textView.append(text)
     }
 
@@ -196,14 +255,19 @@ class FichaFragment : Fragment() {
                 fav = R.drawable.ic_baseline_favorite_border_24
             }
             else{
-                fichaViewModel.favoritoDatabase.insertAll(Favorito(fichaViewModel.inmueble.inmuebleId, null))
+                fichaViewModel.favoritoDatabase.insertAll(
+                    Favorito(
+                        fichaViewModel.inmueble.inmuebleId,
+                        null
+                    )
+                )
                 fav = R.drawable.ic_baseline_favorite_24
             }
             favorito.setImageResource(fav)
         }
     }
 
-    private fun setM2(textView : TextView, secondWord : String) {
+    private fun setM2(textView: TextView, secondWord: String) {
         /*val superscriptSpan = SuperscriptSpan()
         val builder = SpannableStringBuilder(text)
         builder.setSpan(
@@ -219,11 +283,59 @@ class FichaFragment : Fragment() {
         val html = "m<sup>2</sup>"
         //textView.setText(firstWord)
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            textView.append(Html.fromHtml(html,Html.FROM_HTML_MODE_LEGACY))
+            textView.append(Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY))
         }
         else{
             textView.append(Html.fromHtml(html))
         }
         textView.append(secondWord)
+    }
+
+    fun setMarkers(map: GoogleMap) {
+        /*
+        // Obtener lista de inmuebles
+        val listaInmuebles: List<Inmueble>? = sharedViewModel.inmuebles.value
+        if (listaInmuebles != null) {
+
+
+            var latitud: Double;
+            var longitud: Double;
+            var localizacion: LatLng;
+            var marker: Marker
+
+            // Crear un marcador en el mapa por cada inmueble
+            for (inmueble in listaInmuebles) {
+
+                latitud = inmueble.latitud!!
+                longitud = inmueble.longitud!!
+                localizacion = LatLng(latitud, longitud)
+
+                marker = map.addMarker(MarkerOptions().position(localizacion))
+
+                // Información adicional para el CustomInfoWindow
+                marker.tag = inmueble
+
+            }
+        }*/
+        val localizacion = LatLng(
+            fichaViewModel.inmueble.latitud!!,
+            fichaViewModel.inmueble.longitud!!
+        )
+        val marker = map.addMarker(MarkerOptions().position(localizacion))
+
+    }
+
+    fun setZoomOnFirstInmueble(map: GoogleMap) {
+
+        val inmueble = fichaViewModel.inmueble
+        val localizacion: LatLng
+        if(inmueble != null) {
+            localizacion = LatLng(inmueble.latitud!!, inmueble.longitud!!)
+        } else {
+            localizacion = LatLng(39.46854170253597, -0.376975419650787) // Valencia Centro
+        }
+
+        map.moveCamera(CameraUpdateFactory.newLatLngZoom(localizacion, zoomLevel))
+
     }
 }
