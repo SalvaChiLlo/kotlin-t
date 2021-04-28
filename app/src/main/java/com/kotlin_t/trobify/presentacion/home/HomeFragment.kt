@@ -80,6 +80,11 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionNavHomeToBusquedaFragment())
         }
 
+        binding.addInmueble.setOnClickListener {
+            val action = HomeFragmentDirections.actionNavHomeToEditorFichaFragment(-1)
+            findNavController().navigate(action)
+        }
+
     }
 
 
