@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.ScrollView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -34,8 +33,8 @@ import kotlin.properties.Delegates
 class FichaFragment : Fragment() {
     var inmuebleId by Delegates.notNull<Int>()
     private lateinit var map: GoogleMap
-    private val zoomLevel = 10f
-    private lateinit var listView : ScrollView
+    private lateinit var fichaViewModel: FichaViewModel
+    lateinit var datasource: AppDatabase
 
     private val callback = OnMapReadyCallback { googleMap ->
 
@@ -43,26 +42,10 @@ class FichaFragment : Fragment() {
         map.mapType = GoogleMap.MAP_TYPE_NORMAL
         map.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireContext()))
 
-        /*
-        val sydney = LatLng(fichaViewModel.inmueble.latitud!!, fichaViewModel.inmueble.latitud!!)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
         setMarkers(map)
         //setMarkersListeners(map)
-        setZoomOnFirstInmueble(map)
-
-        googleMap.setOnCameraMoveListener {
-            listView.smoothScrollBy(0,0)
-
-        }
+        setZoom(map)
     }
-
-    companion object {
-        fun newInstance() = FichaFragment()
-    }
-
-    private lateinit var fichaViewModel: FichaViewModel
-    lateinit var datasource: AppDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,7 +60,6 @@ class FichaFragment : Fragment() {
         }
         fichaViewModel.setHouse(inmuebleId)
 
-
         return inflater.inflate(R.layout.ficha_fragment, container, false)
     }
 
@@ -91,22 +73,14 @@ class FichaFragment : Fragment() {
         arguments?.let {
             inmuebleId = it.getInt("InmuebleID")!!
         }
+
         updateMedia(view)
 
-        listView = view.findViewById<ScrollView>(R.id.scrollView)
-
-        val mapButton : ImageButton = view.findViewById(R.id.mapa)
-
-
-        mapButton.setOnClickListener {
-
+        view.findViewById<ImageButton>(R.id.mapa).setOnClickListener {
             mapClickHandler()
-
         }
 
-        val phoneButton : ImageButton = view.findViewById(R.id.llamada)
-
-        phoneButton.setOnClickListener {
+        view.findViewById<ImageButton>(R.id.llamada).setOnClickListener {
             val phone = view.findViewById<TextView>(R.id.textoTelefono)
             phoneClickHandler(phone.text.toString())
         }
@@ -115,83 +89,6 @@ class FichaFragment : Fragment() {
 
         val mapFragment = childFragmentManager.findFragmentById(R.id.mapLocation) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
-    }
-
-/*
-    override fun onMapReady(googleMap: GoogleMap?) {
-        //configura el mapa
-        googleMap?.apply {
-            val mark : LatLng
-            if(fichaViewModel.inmueble.latitud != null)
-                mark = LatLng(fichaViewModel.inmueble.latitud!!, fichaViewModel.inmueble?.longitud!!)
-            else mark = LatLng(0.0, 0.0)
-            addMarker(
-                MarkerOptions().position(mark).title(fichaViewModel.inmueble.titulo)
-            )
-            moveCamera(CameraUpdateFactory.newLatLng(mark))
-            MapsInitializer.initialize(activity)
-        }
-    }
-    */
-
-    fun updateMedia(container: View) {
-        setText(container)
-        setPhotos(container)
-        setMap(container) //próxima versión
-    }
-
-    private fun setText(container: View) {
-        //update de todos los textos
-        container!!.findViewById<MaterialTextView>(R.id.textoTitulo).text = fichaViewModel.inmueble.titulo
-        container!!.findViewById<TextView>(R.id.textoPrecio).text =
-            if (fichaViewModel.inmueble.operacion == "alquiler")
-                getString(R.string.precioMes, fichaViewModel.inmueble.precio)
-            else
-                getString(R.string.precio, fichaViewModel.inmueble.precio)
-        container!!.findViewById<TextView>(R.id.textoCompra).text = fichaViewModel.inmueble.operacion
-        container!!.findViewById<TextView>(R.id.textoDescripcion).text = fichaViewModel.inmueble.descripcion
-        container!!.findViewById<TextView>(R.id.textoUsuario).text = fichaViewModel.usuario.nombre + " " + fichaViewModel.usuario.apellidos
-
-        //Direccion
-        val geocoder : Geocoder = Geocoder(context, Locale.getDefault())
-        var dir : String = ""
-        if (fichaViewModel.inmueble.latitud != null) {
-            var direccion: List<Address> = geocoder.getFromLocation(
-                fichaViewModel.inmueble.latitud!!,
-                fichaViewModel.inmueble.longitud!!,
-                1
-            )
-            if(!direccion.isEmpty()) {
-                dir += direccion.get(0).getAddressLine(0)
-            } else {
-                dir += fichaViewModel.inmueble.direccion
-            }
-        } else dir = "Dirección desconocida"
-
-        container!!.findViewById<TextView>(R.id.textoCalle).text = dir
-
-        setCaracteristicas(container)
-
-        container!!.findViewById<TextView>(R.id.textoTelefono).text = fichaViewModel.usuario.telefono
-
-    }
-
-    private fun setPhotos(container: View) {
-        //foto de la casa y de foto de perfil
-        container!!.findViewById<ImageView>(R.id.fotoPortal).setImageBitmap(fichaViewModel.inmueble.miniatura)
-        //container!!.findViewById<ImageView>(R.id.favImage).setImageResource(R.drawable.ic_baseline_favorite_24)
-        //Añadir cuando se haga el viewmodel completo
-
-        if (fichaViewModel.usuario.fotoPerfil != null)
-            container!!.findViewById<ImageView>(R.id.fotoUsuario).setImageBitmap(fichaViewModel.usuario.fotoPerfil)
-    }
-
-    private fun setMap(container: View) {
-        //inicializamos el mapa en esta sección
-        //mapView = container!!.findViewById<MapView>(R.id.mapView)
-        //mapView?.getMapAsync(this)
-
-
     }
 
     private fun mapClickHandler() {
@@ -210,39 +107,76 @@ class FichaFragment : Fragment() {
         startActivity(intent)
     }
 
+    fun updateMedia(container: View) {
+        setText(container)
+        setPhotos(container)
+    }
+
+    private fun setText(container: View) {
+        container!!.findViewById<MaterialTextView>(R.id.textoTitulo).text = fichaViewModel.inmueble.titulo
+        container!!.findViewById<TextView>(R.id.textoPrecio).text =
+            if (fichaViewModel.inmueble.operacion == "alquiler")
+                getString(R.string.precioMes, fichaViewModel.inmueble.precio)
+            else
+                getString(R.string.precio, fichaViewModel.inmueble.precio)
+        container!!.findViewById<TextView>(R.id.textoCompra).text = fichaViewModel.inmueble.operacion
+        container!!.findViewById<TextView>(R.id.textoDescripcion).text = fichaViewModel.inmueble.descripcion
+        container!!.findViewById<TextView>(R.id.textoUsuario).text = fichaViewModel.usuario.nombre + " " + fichaViewModel.usuario.apellidos
+
+        setCaracteristicas(container)
+
+        //Direccion
+        val geocoder = Geocoder(context, Locale.getDefault())
+        var dir = ""
+        if (fichaViewModel.inmueble.latitud != null) {
+            var direccion: List<Address> = geocoder.getFromLocation(
+                fichaViewModel.inmueble.latitud!!,
+                fichaViewModel.inmueble.longitud!!,
+                1
+            )
+            if(!direccion.isEmpty()) {
+                dir += direccion.get(0).getAddressLine(0)
+            } else {
+                dir += fichaViewModel.inmueble.direccion
+            }
+        } else dir = "Dirección desconocida"
+
+        container!!.findViewById<TextView>(R.id.textoCalle).text = dir
+        container!!.findViewById<TextView>(R.id.textoTelefono).text = fichaViewModel.usuario.telefono
+    }
+
     private fun setCaracteristicas(container: View) {
-        var addText : String = "Desconocido"
         setText(
-            container!!.findViewById<TextView>(R.id.textoEstado),
+            container!!.findViewById(R.id.textoEstado),
             fichaViewModel.inmueble.estado!!
         )
         setText(
-            container!!.findViewById<TextView>(R.id.textoNuevo),
+            container!!.findViewById(R.id.textoNuevo),
             if (fichaViewModel.inmueble.nuevoDesarrollo!!) "Si" else "No"
         )
         setText(
-            container!!.findViewById<TextView>(R.id.textoDimensiones),
+            container!!.findViewById(R.id.textoDimensiones),
             fichaViewModel.inmueble.tamano!!.toString()
         )
-        setM2(container!!.findViewById<TextView>(R.id.textoDimensiones), "")
+        setM2(container!!.findViewById(R.id.textoDimensiones), "")
         setText(
-            container!!.findViewById<TextView>(R.id.textoTipo),
+            container!!.findViewById(R.id.textoTipo),
             fichaViewModel.inmueble.tipoDeInmueble!!
         )
         setText(
-            container!!.findViewById<TextView>(R.id.textoAltura),
+            container!!.findViewById(R.id.textoAltura),
             fichaViewModel.inmueble.altura!!.toString()
         )
         setText(
-            container!!.findViewById<TextView>(R.id.textoHabitaciones),
+            container!!.findViewById(R.id.textoHabitaciones),
             fichaViewModel.inmueble.habitaciones!!.toString()
         )
         setText(
-            container!!.findViewById<TextView>(R.id.textoBanos),
+            container!!.findViewById(R.id.textoBanos),
             fichaViewModel.inmueble.banos!!.toString()
         )
         setText(
-            container!!.findViewById<TextView>(R.id.textoAscensor),
+            container!!.findViewById(R.id.textoAscensor),
             if (fichaViewModel.inmueble.tieneAscensor!!) "Si" else "No"
         )
         setText(
@@ -250,16 +184,34 @@ class FichaFragment : Fragment() {
             if (fichaViewModel.inmueble.exterior!!) "Si" else "No"
         )
         container!!.findViewById<TextView>(R.id.textoPrecioMetro).text = "- Precio por "
-        setM2(container!!.findViewById<TextView>(R.id.textoPrecioMetro), ": ")
-        //container!!.findViewById<TextView>(R.id.textoPrecioMetro).text = "- Precio por m"
+        setM2(container!!.findViewById(R.id.textoPrecioMetro), ": ")
         setText(
-            container!!.findViewById<TextView>(R.id.textoPrecioMetro),
+            container!!.findViewById(R.id.textoPrecioMetro),
             fichaViewModel.inmueble.precioPorMetro!!.toString() + "€"
         )
     }
 
+
     private fun setText(textView: TextView, text: String) {
         textView.append(text)
+    }
+
+    private fun setM2(textView: TextView, secondWord: String) {
+        val html = "m<sup>2</sup>"
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            textView.append(Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY))
+        }
+        else{
+            textView.append(Html.fromHtml(html))
+        }
+        textView.append(secondWord)
+    }
+
+    private fun setPhotos(container: View) {
+        container!!.findViewById<ImageView>(R.id.fotoPortal).setImageBitmap(fichaViewModel.inmueble.miniatura)
+
+        if (fichaViewModel.usuario.fotoPerfil != null)
+            container!!.findViewById<ImageView>(R.id.fotoUsuario).setImageBitmap(fichaViewModel.usuario.fotoPerfil)
     }
 
     private fun setFavouriteIcon(favorito: ImageView) {
@@ -286,65 +238,16 @@ class FichaFragment : Fragment() {
         }
     }
 
-    private fun setM2(textView: TextView, secondWord: String) {
-        /*val superscriptSpan = SuperscriptSpan()
-        val builder = SpannableStringBuilder(text)
-        builder.setSpan(
-            superscriptSpan,
-            text.indexOf("2"),
-            text.indexOf("2") + 1,
-            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-        )
-        textView.setText(firstWord)
-        textView.append(builder)
-        textView.append(secondWord)*/
-
-        val html = "m<sup>2</sup>"
-        //textView.setText(firstWord)
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            textView.append(Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY))
-        }
-        else{
-            textView.append(Html.fromHtml(html))
-        }
-        textView.append(secondWord)
-    }
-
     fun setMarkers(map: GoogleMap) {
-        /*
-        // Obtener lista de inmuebles
-        val listaInmuebles: List<Inmueble>? = sharedViewModel.inmuebles.value
-        if (listaInmuebles != null) {
-
-
-            var latitud: Double;
-            var longitud: Double;
-            var localizacion: LatLng;
-            var marker: Marker
-
-            // Crear un marcador en el mapa por cada inmueble
-            for (inmueble in listaInmuebles) {
-
-                latitud = inmueble.latitud!!
-                longitud = inmueble.longitud!!
-                localizacion = LatLng(latitud, longitud)
-
-                marker = map.addMarker(MarkerOptions().position(localizacion))
-
-                // Información adicional para el CustomInfoWindow
-                marker.tag = inmueble
-
-            }
-        }*/
         val localizacion = LatLng(
             fichaViewModel.inmueble.latitud!!,
             fichaViewModel.inmueble.longitud!!
         )
-        val marker = map.addMarker(MarkerOptions().position(localizacion))
+        map.addMarker(MarkerOptions().position(localizacion))
 
     }
 
-    fun setZoomOnFirstInmueble(map: GoogleMap) {
+    fun setZoom(map: GoogleMap) {
 
         val inmueble = fichaViewModel.inmueble
         val boundsBuilder = LatLngBounds.builder()
@@ -353,10 +256,9 @@ class FichaFragment : Fragment() {
         if(inmueble != null) {
             localizacion = LatLng(inmueble.latitud!!, inmueble.longitud!!)
         } else {
-            localizacion = LatLng(39.46854170253597, -0.376975419650787) // Valencia Centro
+            localizacion = LatLng(39.46854170253597, -0.376975419650787) //Valencia Centro
         }
         boundsBuilder.include(localizacion)
-        val bounds = boundsBuilder.build()
 
         val cu = CameraUpdateFactory.newLatLng(localizacion)
         map.moveCamera(cu)
