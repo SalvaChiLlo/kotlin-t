@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -26,6 +27,7 @@ import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Favorito
 import com.kotlin_t.trobify.presentacion.mapa.CustomInfoWindowForGoogleMap
+import com.kotlin_t.trobify.presentacion.mapa.MapsFragmentDirections
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -245,6 +247,10 @@ class FichaFragment : Fragment() {
         )
         map.addMarker(MarkerOptions().position(localizacion))
 
+        map.setOnMarkerClickListener { marker ->
+            mapClickHandler()
+            true
+        }
     }
 
     fun setZoom(map: GoogleMap) {
@@ -265,5 +271,7 @@ class FichaFragment : Fragment() {
         map.animateCamera(cu)
         map.setMinZoomPreference(13f)
         map.setMaxZoomPreference(15f)
+
+        map.uiSettings.isScrollGesturesEnabled = false
     }
 }
