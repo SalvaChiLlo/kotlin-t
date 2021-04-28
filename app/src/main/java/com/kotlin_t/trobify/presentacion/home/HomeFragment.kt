@@ -3,6 +3,7 @@ package com.kotlin_t.trobify.presentacion.home
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -79,6 +80,10 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionNavHomeToBusquedaFragment())
         }
 
+        binding.addInmueble.setOnClickListener {
+            val action = HomeFragmentDirections.actionNavHomeToEditorFichaFragment(-1)
+            findNavController().navigate(action)
+        }
 
     }
 

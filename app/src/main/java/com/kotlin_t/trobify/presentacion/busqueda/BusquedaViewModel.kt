@@ -159,9 +159,7 @@ class BusquedaViewModel(
                 )
             )
         )
-        database.inmuebleDAO().getAll().forEach {
-            Log.e("eee", it.inmuebleId.toString())
-        }
+
         this.listaInmuebles = miBusqueda.meetCriteria(database.inmuebleDAO().getAll())
 
         model.setInmuebles(this.listaInmuebles)

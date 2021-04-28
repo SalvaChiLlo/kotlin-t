@@ -26,6 +26,12 @@
         <action
             android:id="@+id/action_nav_home_to_busquedaFragment"
             app:destination="@id/busquedaFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_loginFragment"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_editorFichaFragment"
+            app:destination="@id/editorFichaFragment" />
     </fragment>
 
     <fragment
@@ -88,10 +94,20 @@
     <fragment
         android:id="@+id/editorFichaFragment"
         android:name="com.kotlin_t.trobify.presentacion.editorFicha.EditorFichaFragment"
-        android:label="EditorFichaFragment" >
+        android:label="EditorFichaFragment"
+        app:startDestination="@id/action_editorFichaFragment_to_nav_home">
         <action
             android:id="@+id/action_editorFichaFragment_to_nav_home"
             app:destination="@id/nav_home" />
+        <argument
+            android:name="inmuebleID"
+            app:argType="integer"
+            android:defaultValue="-1" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.kotlin_t.trobify.presentacion.login.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
     <!---Añadir acciones hacia atrás-->
 </navigation>

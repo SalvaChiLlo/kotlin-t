@@ -155,7 +155,8 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
                 10,
                 direccion,
                 "Subtitulo",
-                descripciones.random()
+                descripciones.random(),
+                46000 + (i * 10)
             )
         )
 
