@@ -161,7 +161,11 @@ class FichaFragment : Fragment() {
                 fichaViewModel.inmueble.longitud!!,
                 1
             )
-            dir += direccion.get(0).getAddressLine(0)
+            if(!direccion.isEmpty()) {
+                dir += direccion.get(0).getAddressLine(0)
+            } else {
+                dir += fichaViewModel.inmueble.direccion
+            }
         } else dir = "Dirección desconocida"
 
         container!!.findViewById<TextView>(R.id.textoCalle).text = dir
