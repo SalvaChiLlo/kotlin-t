@@ -15,7 +15,7 @@ class EditorFichaViewModel(
     application: Application,
     val model: SharedViewModel,
 ) : AndroidViewModel(application) {
-    var inmueble: Inmueble? = database.inmuebleDAO().getAll().last()
+    var inmueble: Inmueble? = null
     var inmuebleID: Int? = null
     var imagesList = MutableLiveData<MutableList<Foto>>()
 

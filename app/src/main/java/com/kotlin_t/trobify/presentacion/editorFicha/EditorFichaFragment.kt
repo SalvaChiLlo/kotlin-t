@@ -23,6 +23,7 @@ import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.textfield.TextInputEditText
 import com.kotlin_t.trobify.R
@@ -41,7 +42,7 @@ class EditorFichaFragment : Fragment() {
     lateinit var sharedModel: SharedViewModel
     lateinit var imagesRecyclerView: RecyclerView
     lateinit var locationManager: LocationManager
-
+    val args: EditorFichaFragmentArgs by navArgs()
 
     private lateinit var dniPropietario: String
     private lateinit var direccion: String
@@ -93,6 +94,12 @@ class EditorFichaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        if (args.inmuebleID == -1) {
+            editorFichaViewModel.inmueble = null
+        } else {
+            editorFichaViewModel.inmueble =
+                datasource.inmuebleDAO().findById(args.inmuebleID.toString())
+        }
         if (editorFichaViewModel.inmueble == null) {
             (activity as AppCompatActivity).supportActionBar?.title = "Crear Inmueble"
             binding.radioVenta.isChecked = true
@@ -160,10 +167,6 @@ class EditorFichaFragment : Fragment() {
         binding.guardarInmueble.setOnClickListener {
             verificarDatos()
         }
-    }
-
-    private fun updateInmueble() {
-        TODO("Not yet implemented")
     }
 
     private fun rellenarCamposEditables() {
@@ -338,10 +341,12 @@ class EditorFichaFragment : Fragment() {
             descripcion = binding.editDescripcion.text.toString()
         }
 
-        if (!hasError && editorFichaViewModel.inmueble == null) {
-            crearInmueble()
-        } else {
-            actualizarInmueble()
+        if (!hasError) {
+            if (editorFichaViewModel.inmueble == null) {
+                crearInmueble()
+            } else {
+                actualizarInmueble()
+            }
         }
     }
 
