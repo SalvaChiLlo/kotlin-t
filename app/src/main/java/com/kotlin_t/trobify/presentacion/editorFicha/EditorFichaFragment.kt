@@ -94,10 +94,11 @@ class EditorFichaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if(args.inmuebleID == -1) {
+        if (args.inmuebleID == -1) {
             editorFichaViewModel.inmueble = null
         } else {
-            editorFichaViewModel.inmueble = datasource.inmuebleDAO().findById(args.inmuebleID.toString())
+            editorFichaViewModel.inmueble =
+                datasource.inmuebleDAO().findById(args.inmuebleID.toString())
         }
         if (editorFichaViewModel.inmueble == null) {
             (activity as AppCompatActivity).supportActionBar?.title = "Crear Inmueble"
@@ -166,10 +167,6 @@ class EditorFichaFragment : Fragment() {
         binding.guardarInmueble.setOnClickListener {
             verificarDatos()
         }
-    }
-
-    private fun updateInmueble() {
-        TODO("Not yet implemented")
     }
 
     private fun rellenarCamposEditables() {
@@ -344,10 +341,12 @@ class EditorFichaFragment : Fragment() {
             descripcion = binding.editDescripcion.text.toString()
         }
 
-        if (!hasError && editorFichaViewModel.inmueble == null) {
-            crearInmueble()
-        } else {
-            actualizarInmueble()
+        if (!hasError) {
+            if (editorFichaViewModel.inmueble == null) {
+                crearInmueble()
+            } else {
+                actualizarInmueble()
+            }
         }
     }
 
