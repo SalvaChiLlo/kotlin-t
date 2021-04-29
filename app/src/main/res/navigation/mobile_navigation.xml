@@ -28,10 +28,7 @@
             app:destination="@id/busquedaFragment" />
         <action
             android:id="@+id/action_nav_home_to_loginFragment"
-            app:destination="@id/loginFragment" />
-        <action
-            android:id="@+id/action_nav_home_to_editorFichaFragment"
-            app:destination="@id/editorFichaFragment" />
+            app:destination="@id/nav_login" />
     </fragment>
 
     <fragment
@@ -105,10 +102,13 @@
             android:defaultValue="-1" />
     </fragment>
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/nav_login"
         android:name="com.kotlin_t.trobify.presentacion.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_nav_home"
+            app:destination="@id/nav_home" />
         <action
             android:id="@+id/action_loginFragment_to_registrarseFragment"
             app:destination="@id/registrarseFragment" />
