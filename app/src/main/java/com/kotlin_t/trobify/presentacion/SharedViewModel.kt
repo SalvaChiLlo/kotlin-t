@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
 import com.kotlin_t.trobify.database.AppDatabase
+import com.kotlin_t.trobify.databinding.FragmentRegistrarseBinding
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.logica.Usuario
 import com.kotlin_t.trobify.presentacion.ordenacion.EstrategiaOrdenacion
@@ -24,6 +25,8 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     val inmuebles = MutableLiveData<MutableList<Inmueble>>()
     val usuarios = MutableLiveData<MutableList<Usuario>>()
     var estrategiaOrdenacion: EstrategiaOrdenacion? = null
+    private var usuarioActual: Usuario? = null;
+    lateinit var binding: FragmentRegistrarseBinding
 
     // Variables de filtro
     var operacionesOpciones = MutableLiveData<MutableSet<String>>()
@@ -126,5 +129,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         preciosOpciones.value!!.set(0, database.inmuebleDAO().getMinPrecio())
         preciosOpciones.value!!.set(1, database.inmuebleDAO().getMaxPrecio())
     }
+
+
 
 }

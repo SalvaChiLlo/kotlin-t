@@ -49,7 +49,17 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_login, container, false)
+
+    }
+
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+        val button: Button = view.findViewById(R.id.registrarseButton)
+        button.setOnClickListener{
+            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegistrarseFragment())
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

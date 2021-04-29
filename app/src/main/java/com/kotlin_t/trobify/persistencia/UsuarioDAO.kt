@@ -14,6 +14,12 @@ interface UsuarioDAO {
     @Query("SELECT * FROM Usuarios WHERE dni like :dni")
     fun findById(dni: String): Usuario
 
+    @Query("SELECT * FROM Usuarios WHERE username like :nick")
+    fun existsUsername(nick: String): Boolean
+
+    @Query("SELECT * FROM Usuarios WHERE dni like :dni")
+    fun existsId(dni: String): Boolean
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAll(vararg usuarios: Usuario)
 

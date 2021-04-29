@@ -9,5 +9,6 @@
     <dimen name="orden_separador">2dp</dimen>
     <dimen name="orden_padding_start">20dp</dimen>
     <dimen name="orden_padding_end">0dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
 
 </resources>

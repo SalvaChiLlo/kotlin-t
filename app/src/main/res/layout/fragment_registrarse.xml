@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.kotlin_t.trobify.presentacion.registrar.RegistrarseViewModel" />
+    </data>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentacion.registrar.RegistrarseFragment">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical">
+
+
+            <TextView
+                android:id="@+id/datosRegistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/datos_de_registro"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/separadordatosRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/datosRegistro" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/usuario"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/usuario"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separadordatosRegistro">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textNoSuggestions"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/contrasena"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/contrasena"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/usuario">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputContrasena"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/repetirContrasena"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/repetir_contrasena"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contrasena">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputRepetirContrasena"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/datosUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/datos_del_usuario"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/repetirContrasena" />
+
+            <View
+                android:id="@+id/separadordatosUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/datosUsuario" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dni"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/dni"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separadordatosUsuario">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputDni"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nombre"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/nombre"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dni">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName|textCapWords"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/apellidos"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/apellidos"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nombre">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputApellidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName|textCapWords"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/telefono"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/telefono"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/apellidos">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/fotoPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/foto_de_perfil"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/telefono" />
+
+
+            <ImageView
+                android:id="@+id/imagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="10dp"
+                android:contentDescription="@string/usuario_generico"
+                android:src="@drawable/anonymous_user"
+                app:layout_constraintHeight_max="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/fotoPerfil"
+                app:layout_constraintWidth_max="100dp">
+
+            </ImageView>
+
+            <Button
+                android:id="@+id/nuevaImagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="@string/nueva_imagen"
+                app:layout_constraintBottom_toBottomOf="@+id/imagen"
+                app:layout_constraintStart_toEndOf="@+id/imagen">
+
+            </Button>
+
+            <ImageView
+                android:id="@+id/eliminarImagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_baseline_clear_24"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/imagen"
+                app:layout_constraintTop_toTopOf="@id/imagen">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/datosBancarios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/datos_bancarios"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imagen" />
+
+            <View
+                android:id="@+id/separadordatosBancarios"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/datosBancarios" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/iban"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/iban"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separadordatosBancarios">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputIban"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/registrarse"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/registrarse"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/iban"
+                android:onClick="@{()-> viewModel.registrarse()}"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>
