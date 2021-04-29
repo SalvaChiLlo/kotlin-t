@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Widget.Trobify.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeErrorColor">@color/error</item>
+        <item name="errorIconTint">@color/error</item>
+        <item name="errorTextColor">@color/error</item>
+        <item name="errorIconDrawable">@drawable/ic_baseline_error_24</item>
+        <item name="helperTextTextAppearance">@style/TextAppearance.MaterialComponents.Subtitle1</item>
+    </style>
+</resources>

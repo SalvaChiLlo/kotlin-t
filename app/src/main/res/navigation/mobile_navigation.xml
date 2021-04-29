@@ -108,6 +108,18 @@
         android:id="@+id/loginFragment"
         android:name="com.kotlin_t.trobify.presentacion.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_registrarseFragment"
+            app:destination="@id/registrarseFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/registrarseFragment"
+        android:name="com.kotlin_t.trobify.presentacion.registrar.RegistrarseFragment"
+        android:label="RegistrarseFragment" >
+        <action
+            android:id="@+id/action_registrarseFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <!---Añadir acciones hacia atrás-->
 </navigation>

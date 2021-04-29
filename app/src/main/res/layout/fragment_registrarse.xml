@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
-    <data>
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.kotlin_t.trobify.presentacion.registrar.RegistrarseViewModel" />
     </data>
+
     <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -16,179 +20,222 @@
             android:layout_height="wrap_content"
             android:scrollbars="vertical">
 
+
             <TextView
-                android:id="@+id/dni"
+                android:id="@+id/datosRegistro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="40dp"
-                android:text="@string/dni"
+                android:text="@string/datos_de_registro"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" />
 
-            </TextView>
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputDni"
+            <View
+                android:id="@+id/separadordatosRegistro"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/dni">
+                app:layout_constraintTop_toBottomOf="@id/datosRegistro" />
 
-            </com.google.android.material.textfield.TextInputEditText>
-
-            <TextView
-                android:id="@+id/nombre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/nombre"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputDni">
-
-            </TextView>
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputNombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nombre">
-
-            </com.google.android.material.textfield.TextInputEditText>
-
-            <TextView
-                android:id="@+id/apellidos"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/apellidos"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputNombre">
-
-            </TextView>
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputApellidos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/apellidos">
-
-            </com.google.android.material.textfield.TextInputEditText>
-
-            <TextView
-                android:id="@+id/telefono"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/telefono"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputApellidos">
-
-            </TextView>
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputTelefono"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/telefono">
-
-            </com.google.android.material.textfield.TextInputEditText>
-
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/usuario"
-                android:layout_width="wrap_content"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/usuario"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/usuario"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputTelefono">
+                app:layout_constraintTop_toBottomOf="@id/separadordatosRegistro">
 
-            </TextView>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputUsuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="text|textNoSuggestions"
+                    android:maxLines="1" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputUsuario"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/usuario">
-
-            </com.google.android.material.textfield.TextInputEditText>
-
-            <TextView
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/contrasena"
-                android:layout_width="wrap_content"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginHorizontal="30dp"
                 android:layout_marginTop="15dp"
-                android:text="@string/contrasena"
+                android:hint="@string/contrasena"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputUsuario">
+                app:layout_constraintTop_toBottomOf="@id/usuario">
 
-            </TextView>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputContrasena"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputContrasena"
-                android:layout_width="match_parent"
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/repetirContrasena"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:inputType="textPassword"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/repetir_contrasena"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/contrasena">
+                app:layout_constraintTop_toBottomOf="@id/contrasena">
 
-            </com.google.android.material.textfield.TextInputEditText>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputRepetirContrasena"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
-                android:id="@+id/repetirContrasena"
+                android:id="@+id/datosUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="15dp"
-                android:text="@string/repetir_contrasena"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/datos_del_usuario"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputContrasena">
+                app:layout_constraintTop_toBottomOf="@id/repetirContrasena" />
 
-            </TextView>
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputRepetirContrasena"
+            <View
+                android:id="@+id/separadordatosUsuario"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="10dp"
-                android:inputType="textPassword"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/repetirContrasena">
+                app:layout_constraintTop_toBottomOf="@id/datosUsuario" />
 
-            </com.google.android.material.textfield.TextInputEditText>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/dni"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/dni"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separadordatosUsuario">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputDni"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/nombre"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/nombre"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dni">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName|textCapWords"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/apellidos"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/apellidos"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/nombre">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputApellidos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPersonName|textCapWords"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/telefono"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/telefono"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/apellidos">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="phone"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/fotoPerfil"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="15dp"
                 android:text="@string/foto_de_perfil"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputRepetirContrasena">
+                app:layout_constraintTop_toBottomOf="@id/telefono" />
 
-            </TextView>
 
             <ImageView
                 android:id="@+id/imagen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="30dp"
                 android:layout_marginTop="10dp"
                 android:contentDescription="@string/usuario_generico"
                 android:src="@drawable/anonymous_user"
@@ -216,26 +263,64 @@
                 android:layout_height="wrap_content"
                 android:importantForAccessibility="no"
                 android:src="@drawable/ic_baseline_clear_24"
-                android:visibility="invisible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@id/imagen"
                 app:layout_constraintTop_toTopOf="@id/imagen">
 
             </ImageView>
+
+            <TextView
+                android:id="@+id/datosBancarios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/datos_bancarios"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imagen" />
+
+            <View
+                android:id="@+id/separadordatosBancarios"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/datosBancarios" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/iban"
+                style="@style/Widget.Trobify.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="15dp"
+                android:hint="@string/iban"
+                app:errorIconDrawable="@drawable/ic_baseline_error_24"
+                app:helperTextTextAppearance="@style/TextAppearance.MaterialComponents.Subtitle1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separadordatosBancarios">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputIban"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/registrarse"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="15dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="25dp"
                 android:text="@string/registrarse"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imagen">
-
-            </Button>
-
-
+                app:layout_constraintTop_toBottomOf="@+id/iban"
+                android:onClick="@{()-> viewModel.registrarse()}"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
 </layout>

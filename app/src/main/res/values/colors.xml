@@ -16,4 +16,5 @@
     <color name="secondaryDarkColor">#1b0000</color>
     <color name="primaryTextColor">#fafafa</color>
     <color name="secondaryTextColor">#fafafa</color>
+    <color name="error">#FF0000</color>
 </resources>

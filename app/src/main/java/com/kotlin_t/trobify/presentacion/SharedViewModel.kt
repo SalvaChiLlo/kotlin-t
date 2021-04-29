@@ -111,6 +111,6 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         preciosOpciones.value!!.set(1, database.inmuebleDAO().getMaxPrecio())
     }
 
-    fun registrarUsuario()
+
 
 }

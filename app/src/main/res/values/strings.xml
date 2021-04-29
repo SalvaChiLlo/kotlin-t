@@ -73,5 +73,30 @@
     <string name="codigo_postal">Codigo Postal</string>
     <string name="_46000">46000</string>
     <string name="ascensor">Ascensor?</string>
+    <string name="nombre">Nombre</string>
+    <string name="dni">DNI</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="telefono">Teléfono</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="repetir_contrasena">Repetir Contraseña</string>
+    <string name="foto_de_perfil">Foto de Perfil</string>
+    <string name="usuario_generico">Usuario Genérico</string>
+    <string name="nueva_imagen">Nueva Imagen</string>
+    <string name="registrarse">Registrarse</string>
+    <string name="iban">IBAN</string>
+    <string name="datos_de_registro">Datos de Registro</string>
+    <string name="datos_del_usuario">Datos del Usuario</string>
+    <string name="datos_bancarios">Datos Bancarios</string>
+    <string name="completaCampo">Completa este Campo</string>
+    <string name="usuarioIncorrecto">El usuario tiene que estar compuesto de letras y números</string>
+    <string name="contrasenaCorta">La contraseña es muy corta. Mínimo 8 caracteres</string>
+    <string name="contrasenaNoCoinciden">Las Contraseñas no Coinciden</string>
+    <string name="usuarioCorrecto">El usuario debe estar compuesto por letras, número y caracteres especiales</string>
+    <string name="dniIncorrecto">El DNI no tiene un formato Correcto</string>
+    <string name="telefonoIncorrecto">el formato del Teléfono es incorrecto</string>
+    <string name="ibanIncorrecto">El formato del IBAN es incorrecto</string>
+    <string name="usuarioCogido">El Usuario está cogido</string>
+    <string name="dniCogido">Este DNI ya existe</string>
 
 </resources>
