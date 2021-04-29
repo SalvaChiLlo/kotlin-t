@@ -51,7 +51,9 @@ class RegistrarseFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         registrarseViewModel.usuario.observe(viewLifecycleOwner, {
             nuevoUsuario ->
+
                 registrarseViewModel.usuarioValido(nuevoUsuario)
+
         })
         registrarseViewModel.contrasena.observe(viewLifecycleOwner, {
             nuevaContrsena ->
