@@ -29,11 +29,11 @@
         android:id="@+id/nav_header_text"
         android:layout_width="wrap_content"
         android:layout_height="26dp"
+        android:layout_marginStart="26dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/nav_header_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintEnd_toEndOf="@+id/iniciaSesionButton"
-        app:layout_constraintStart_toStartOf="@+id/iniciaSesionButton"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView" />
 
     <Button

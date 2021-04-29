@@ -55,13 +55,6 @@ class LoginFragment : Fragment() {
     }
 
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
-        val button: Button = view.findViewById(R.id.registrarseButton)
-        button.setOnClickListener{
-            findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToRegistrarseFragment())
-        }
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         usernameField = view.findViewById(R.id.textFieldUsername)
@@ -77,7 +70,7 @@ class LoginFragment : Fragment() {
 
 
         registerButton.setOnClickListener {
-            registrarse()
+            findNavController().navigate(R.id.action_loginFragment_to_registrarseFragment, null)
         }
 
         val editTexts = listOf(usernameField, passwordField)
@@ -123,12 +116,6 @@ class LoginFragment : Fragment() {
             findNavController().navigate(R.id.action_loginFragment_to_nav_home, null)
 
         }
-
-    }
-
-    fun registrarse() {
-
-        // TODO: Navegar al fragment de Registrarse
 
     }
 

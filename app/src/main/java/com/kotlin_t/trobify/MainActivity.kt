@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.View
 import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -39,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
-        updateNavigationView()
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
@@ -58,13 +58,15 @@ class MainActivity : AppCompatActivity() {
                 nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(false)
                 nav_menu.findItem(R.id.nav_mi_cuenta)
                 nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(false)
-                headerView.findViewById<TextView>(R.id.nav_header_text).text = "Invitado"
+                headerView.findViewById<TextView>(R.id.nav_header_text).text = "No estás identificado"
 
             } else {
 
                 nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(true)
                 nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(true)
-                headerView.findViewById<TextView>(R.id.nav_header_text).text = "Hola!"
+                headerView.findViewById<TextView>(R.id.nav_header_text).text = "Bienvenido " + usuario.nombre
+                headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.GONE
+
 
             }
         }
@@ -177,35 +179,4 @@ class MainActivity : AppCompatActivity() {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
-    companion object {
-
-
-
-    }
-
-    fun updateNavigationView() {
-
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val nav_menu: Menu = navView.menu
-        val headerView = navView.getHeaderView(0)
-
-        val usuario = sharedViewModel.getCurrentUser()
-
-        if(usuario == null) {
-
-            nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(false)
-            nav_menu.findItem(R.id.nav_mi_cuenta)
-            nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(false)
-            headerView.findViewById<TextView>(R.id.nav_header_text).text = "Invitado"
-
-        } else {
-
-            nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(true)
-            nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(true)
-            headerView.findViewById<TextView>(R.id.nav_header_text).text = "Hola!"
-
-        }
-
-    }
 }

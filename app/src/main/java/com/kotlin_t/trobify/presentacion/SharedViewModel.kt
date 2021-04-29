@@ -25,7 +25,6 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     val inmuebles = MutableLiveData<MutableList<Inmueble>>()
     val usuarios = MutableLiveData<MutableList<Usuario>>()
     var estrategiaOrdenacion: EstrategiaOrdenacion? = null
-    private var usuarioActual: Usuario? = null;
     lateinit var binding: FragmentRegistrarseBinding
 
     // Variables de filtro

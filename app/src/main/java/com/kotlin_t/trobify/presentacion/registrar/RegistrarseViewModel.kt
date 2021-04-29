@@ -252,7 +252,7 @@ class RegistrarseViewModel(val database: AppDatabase,
                 telefono.value?.let { telefonoCorrecto(it) } == true && iban.value?.let { ibanCorrecto(it)} == true){
                     val usuario = Usuario(dni.value!!, usuario.value!!, contrasena.value!!, nombre.value!!, apellidos.value!!, telefono.value!!, iban.value!!, avatar)
                     database.usuarioDAO().insertAll(usuario)
-                    model.usuario = usuario
+                    model.usuarioActual.value = usuario
                     fragment.findNavController().navigate(RegistrarseFragmentDirections.actionRegistrarseFragmentToNavHome())
 
         }
