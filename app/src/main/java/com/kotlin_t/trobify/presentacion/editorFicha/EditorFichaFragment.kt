@@ -12,6 +12,7 @@ import android.location.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,6 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -33,6 +33,7 @@ import com.kotlin_t.trobify.logica.Foto
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.presentacion.Constantes
 import com.kotlin_t.trobify.presentacion.SharedViewModel
+import com.kotlin_t.trobify.presentacion.editorFicha.ObservableList.MyObserver
 import java.util.*
 
 class EditorFichaFragment : Fragment() {
@@ -71,6 +72,8 @@ class EditorFichaFragment : Fragment() {
     private lateinit var descripcion: String
     private var codigoPostalInm: Int = -1
 
+    private lateinit var imagesListObserver: MyObserver<Foto>
+
     companion object {
         const val PICK_IMAGE = 1
     }
@@ -94,11 +97,18 @@ class EditorFichaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        imagesListObserver = MyObserver(editorFichaViewModel.imagesList, binding.imagesRecyclerView, requireContext(), editorFichaViewModel)
+        editorFichaViewModel.imagesList.add(imagesListObserver)
+
+
         if (args.inmuebleID == -1) {
             editorFichaViewModel.inmueble = null
+            Log.e("EEEEEE", "INMUEBLE NULO")
         } else {
             editorFichaViewModel.inmueble =
                 datasource.inmuebleDAO().findById(args.inmuebleID.toString())
+            editorFichaViewModel.inmuebleID = editorFichaViewModel.inmueble!!.inmuebleId
+            Log.e("EEEEEE", "INMUEBLE CON ID ${editorFichaViewModel.inmueble!!.inmuebleId}")
         }
         if (editorFichaViewModel.inmueble == null) {
             (activity as AppCompatActivity).supportActionBar?.title = "Crear Inmueble"
@@ -113,14 +123,6 @@ class EditorFichaFragment : Fragment() {
         binding.anadirImagen.setOnClickListener {
             selectImages()
         }
-
-        editorFichaViewModel.imagesList.observe(viewLifecycleOwner, {
-            binding.imagesRecyclerView.adapter = ImageAdapter(
-                requireContext(),
-                it,
-                editorFichaViewModel
-            )
-        })
 
         binding.miUbicacionButton.setOnClickListener {
             locationManager =
@@ -226,8 +228,8 @@ class EditorFichaFragment : Fragment() {
         binding.editTitulo.setText(inmueble.titulo)
         binding.editCP.setText(inmueble.codigoPostal.toString())
         binding.editDescripcion.setText(inmueble.descripcion)
-        editorFichaViewModel.imagesList.value =
-            datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId).toMutableList()
+
+        editorFichaViewModel.imagesList.value.addAll(datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId))
     }
 
     private fun setError(view: TextInputEditText, error: String) {
@@ -236,7 +238,7 @@ class EditorFichaFragment : Fragment() {
 
     private fun verificarDatos() {
         var hasError = false;
-        // TODO --> Aplicar extract method a los distintos if
+        // TODO  ----> Aplicar extract method a los distintos if
 
         nuevoDesarrollo = false
         URLminiatura = ""
@@ -247,9 +249,8 @@ class EditorFichaFragment : Fragment() {
         estadoInmueble = getEstado() // OK
         tieneAscensor = binding.hasAscensor.isChecked
         subtitulo = "" // OK
-
         miniatura =
-            if (editorFichaViewModel.imagesList.value!!.isEmpty()) null else editorFichaViewModel.imagesList.value!![0].imagen  // OK
+            if (editorFichaViewModel.imagesList.value.isEmpty()) null else editorFichaViewModel.imagesList.value[0].imagen  // OK
 
         if (binding.editPlanta.text.toString() == "" || binding.editPlanta.text.toString()
                 .toInt() < 0
@@ -383,7 +384,8 @@ class EditorFichaFragment : Fragment() {
         datasource.inmuebleDAO().insertAll(inmueble)
         sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
 
-        editorFichaViewModel.imagesList.value!!.forEach {
+        editorFichaViewModel.imagesList.value.forEach {
+            Log.e("EEEE", "${editorFichaViewModel.inmuebleID} ${it.inmuebleId}")
             if (datasource.fotoDAO().findById(it.fotoId.toString()) != null) {
                 datasource.fotoDAO().delete(it)
             }
@@ -430,7 +432,8 @@ class EditorFichaFragment : Fragment() {
         if (editorFichaViewModel.inmueble == null) {
             editorFichaViewModel.inmuebleID = datasource.inmuebleDAO().getAll().last().inmuebleId
         }
-        editorFichaViewModel.imagesList.value?.forEach {
+
+        editorFichaViewModel.imagesList.value.forEach{
             datasource.fotoDAO().insertAll(Foto(editorFichaViewModel.inmuebleID!!, it.imagen))
         }
 
@@ -557,7 +560,7 @@ class EditorFichaFragment : Fragment() {
         val inputStream = context?.contentResolver?.openInputStream(imageUri)
         var bitmap = BitmapFactory.decodeStream(inputStream)
         bitmap = Bitmap.createScaledBitmap(bitmap!!, 300, 300, true)
-        editorFichaViewModel.addImageToList(Foto(editorFichaViewModel.inmuebleID!!, bitmap))
+        editorFichaViewModel.imagesList.value.add(Foto(editorFichaViewModel.inmuebleID!!, bitmap))
     }
 
 

@@ -1,24 +1,19 @@
 package com.kotlin_t.trobify.presentacion.editorFicha
 
 import android.content.Context
-import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.logica.Foto
-import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.favoritos.FavoritoAdapter
-import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModel
+import com.kotlin_t.trobify.presentacion.editorFicha.ObservableList.ExtendedList
 
 class ImageAdapter(
     val context: Context,
-    val dataset: List<Foto>,
+    val dataset: ExtendedList<Foto>,
     val editorFichaViewModel: EditorFichaViewModel
 ) : RecyclerView.Adapter<ImageAdapter.FotoViewHolder>() {
     class FotoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
