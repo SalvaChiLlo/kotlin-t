@@ -28,7 +28,7 @@
             app:destination="@id/busquedaFragment" />
         <action
             android:id="@+id/action_nav_home_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/nav_login" />
     </fragment>
 
     <fragment
@@ -98,9 +98,13 @@
             app:destination="@id/nav_home" />
     </fragment>
     <fragment
-        android:id="@+id/loginFragment"
+        android:id="@+id/nav_login"
         android:name="com.kotlin_t.trobify.presentacion.login.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_loginFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <!---Añadir acciones hacia atrás-->
 </navigation>

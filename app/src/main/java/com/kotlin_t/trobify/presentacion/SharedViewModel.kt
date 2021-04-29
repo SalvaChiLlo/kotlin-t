@@ -1,12 +1,9 @@
 package com.kotlin_t.trobify.presentacion
 
 import android.app.Application
-import android.util.Log
 import androidx.annotation.NonNull
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import com.google.android.gms.maps.model.LatLng
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Inmueble
@@ -19,9 +16,13 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     ///////////////////////////////////////////////
     // USUARIO QUE ESTÁ UTILIZANDO LA APLICACIÓN //
     ///////////////////////////////////////////////
-    var usuario: Usuario? = null
+    //var usuario: Usuario? = null
+    val usuarioActual: MutableLiveData<Usuario> by lazy {
+        MutableLiveData<Usuario>()
+    }
 
     val inmuebles = MutableLiveData<MutableList<Inmueble>>()
+    val usuarios = MutableLiveData<MutableList<Usuario>>()
     var estrategiaOrdenacion: EstrategiaOrdenacion? = null
 
     // Variables de filtro
@@ -38,7 +39,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
 
     init {
         if (database.usuarioDAO().getAll().isEmpty()) {
-            usuario = Usuario(
+            val usuarioPopulate = Usuario(
                 "$2345678E",
                 "username",
                 "contraseña",
@@ -48,12 +49,11 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
                 "iban",
                 null
             )
-            database.usuarioDAO().insertAll(usuario!!)
+            database.usuarioDAO().insertAll(usuarioPopulate!!)
 
-        } else {
-            usuario = database.usuarioDAO().getAll().first()
         }
 
+        updateUsuarios()
         updateInmuebles()
         operacionesOpciones.value = mutableSetOf<String>()
         tiposOpciones.value = mutableSetOf<String>()
@@ -62,6 +62,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         banosOpciones.value = mutableSetOf<Int>()
         estadoOpciones.value = mutableSetOf<String>()
         plantaOpciones.value = mutableSetOf<String>()
+        usuarioActual.value = null
     }
 
     fun setInmuebles(inmuebles: List<Inmueble>) {
@@ -88,12 +89,30 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         return -1
     }
 
-    fun getFirstInmueble(): Inmueble? {
-        if (!inmuebles.value.isNullOrEmpty()) {
-            return inmuebles.value?.get(0)
-        } else return null
+    fun updateUsuarios() {
+        usuarios.value = database.usuarioDAO().getAll().toMutableList()
     }
 
+    fun getUserFromCredentials(username: String, password: String) : Usuario? {
+
+        //Log.i("USERNAME", "First username: " + usuarios.value!!.get(0).username)
+        //Log.i("PASSWORD", "First password: " + usuarios.value!!.get(0).contrasena)
+        //Log.i("VARIABLES", "Provided info Username: " + username + " Contraseña: " + password)
+
+        val res: Usuario? = usuarios.value?.find { it.username == username && it.contrasena == password }
+
+        return res
+
+    }
+
+    fun getCurrentUser() : Usuario? {
+        return usuarioActual.value
+    }
+
+
+    fun updateCurrentUser(user: Usuario) {
+        this.usuarioActual.value = user
+    }
 
     fun resetFiltro() {
         inmuebles.value = database.inmuebleDAO().getAll().toMutableList()

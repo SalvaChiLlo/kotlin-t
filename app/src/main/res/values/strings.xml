@@ -73,5 +73,7 @@
     <string name="codigo_postal">Codigo Postal</string>
     <string name="_46000">46000</string>
     <string name="ascensor">Ascensor?</string>
+    <string name="mi_cuenta">Mi Cuenta</string>
+    <string name="mis_inmuebles">Mis Inmuebles</string>
 
 </resources>

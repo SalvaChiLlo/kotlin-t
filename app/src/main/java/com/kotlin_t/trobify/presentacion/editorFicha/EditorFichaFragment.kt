@@ -19,7 +19,6 @@ import android.view.ViewGroup
 import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -237,7 +236,7 @@ class EditorFichaFragment : Fragment() {
 
         nuevoDesarrollo = false
         URLminiatura = ""
-        dniPropietario = sharedModel.usuario!!.dni
+        dniPropietario = sharedModel.usuarioActual.value!!.dni
         exterior = false
         tipoDeInmueble = tipoInmueble()
         operacion = tipoOperacion()
