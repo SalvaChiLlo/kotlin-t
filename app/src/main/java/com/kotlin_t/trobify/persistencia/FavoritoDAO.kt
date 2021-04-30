@@ -14,6 +14,9 @@ interface FavoritoDAO {
     @Query("SELECT * FROM Favoritos WHERE inmuebleId like :inmuebleId")
     fun findById(inmuebleId: Int): Favorito?
 
+    @Query("SELECT * FROM Favoritos WHERE dni like :dni")
+    fun findByDNI(dni: String): List<Favorito>
+
     @Query("SELECT * FROM Favoritos WHERE inmuebleId like :inmuebleId and dni like :dni")
     fun findByIdandDni(inmuebleId: Int, dni: String): Favorito?
 

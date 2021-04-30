@@ -10,16 +10,14 @@ import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Favorito
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.persistencia.InmuebleDAO
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 
-class ListaFavoritosViewModel(val database: AppDatabase, application: Application) :
+class ListaFavoritosViewModel(val database: AppDatabase, application: Application, val sharedViewModel: SharedViewModel) :
     AndroidViewModel(application) {
-    fun getInmueblesFavoritos(): List<Inmueble> {
-        val listaFavoritos = database.favoritoDAO().getAll()
-        val listaInmuebles = mutableListOf<Inmueble>()
-        listaFavoritos.forEach {
-            listaInmuebles.add(database.inmuebleDAO().findById(it.inmuebleId.toString()))
-        }
-        return listaInmuebles
+    fun getInmueblesFavoritos(): List<Favorito> {
+        val dni = if(sharedViewModel.usuarioActual.value != null) sharedViewModel.usuarioActual.value!!.dni else "-1"
+        val listaFavoritos = database.favoritoDAO().findByDNI(dni)
+        return listaFavoritos
     }
 
     fun checkIfFavorito(inmueble: Inmueble, imageView: ImageView) {

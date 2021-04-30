@@ -24,8 +24,9 @@ import java.lang.Appendable
 
 class FavoritoAdapter(
     val context: Context,
-    val dataset: List<Inmueble>,
-    val viewModel: ListaFavoritosViewModel
+    val dataset: List<Favorito>,
+    val viewModel: ListaFavoritosViewModel,
+    val database: AppDatabase
 ) :
     RecyclerView.Adapter<FavoritoAdapter.FavoritoViewHolder>() {
     class FavoritoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -44,21 +45,22 @@ class FavoritoAdapter(
 
     override fun onBindViewHolder(holder: FavoritoViewHolder, position: Int) {
         // Set image
-        holder.imagen.setImageBitmap(dataset[position].miniatura)
+        val inmueble = database.inmuebleDAO().findById(dataset[position].inmuebleId!!.toString())
+        holder.imagen.setImageBitmap(inmueble.miniatura)
         holder.imagen.setOnClickListener{
-            val action = ListaFavoritosFragmentDirections.actionNavFavoritosToFichaFragment(dataset[position].inmuebleId)
+            val action = ListaFavoritosFragmentDirections.actionNavFavoritosToFichaFragment(inmueble.inmuebleId)
             holder.itemView.findNavController().navigate(action)
         }
         // Set direccion
-        holder.direccion.text = dataset[position].direccion
+        holder.direccion.text = inmueble.direccion
         // Set precio
         var type: Int
-        if (dataset[position].operacion == "alquiler") type = R.string.precioMes
+        if (inmueble.operacion == "alquiler") type = R.string.precioMes
         else type = R.string.precio
-        holder.precioMes.text = context.getString(type, dataset[position].precio)
-        viewModel.checkIfFavorito(dataset[position], holder.favorito)
+        holder.precioMes.text = context.getString(type, inmueble.precio)
+        viewModel.checkIfFavorito(inmueble, holder.favorito)
         holder.favorito.setOnClickListener{
-            viewModel.addOrRemoveFavorite(dataset[position], null, holder.favorito)
+            viewModel.addOrRemoveFavorite(inmueble, null, holder.favorito)
         }
 
     }

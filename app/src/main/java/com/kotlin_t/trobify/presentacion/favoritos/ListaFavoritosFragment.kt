@@ -13,6 +13,7 @@ import com.kotlin_t.trobify.databinding.FragmentHomeBinding
 import com.kotlin_t.trobify.databinding.FragmentListaFavoritosBinding
 import com.kotlin_t.trobify.logica.Favorito
 import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.favoritos.FavoritoAdapter
 import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModel
 import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModelFactory
@@ -23,6 +24,7 @@ class ListaFavoritosFragment : Fragment() {
     lateinit var binding: FragmentListaFavoritosBinding
     lateinit var listaFavoritosViewModel: ListaFavoritosViewModel
     private lateinit var recyclerView: RecyclerView
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,9 +33,10 @@ class ListaFavoritosFragment : Fragment() {
     ): View? {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_lista_favoritos, container, false)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         val application = requireNotNull(this.activity).application
         val datasource = AppDatabase.getDatabase(application)
-        val viewModelFactory = ListaFavoritosViewModelFactory(datasource, application)
+        val viewModelFactory = ListaFavoritosViewModelFactory(datasource, application, sharedViewModel)
         listaFavoritosViewModel =
             ViewModelProvider(this, viewModelFactory).get(ListaFavoritosViewModel::class.java)
         binding.viewModel = listaFavoritosViewModel
@@ -45,7 +48,7 @@ class ListaFavoritosFragment : Fragment() {
         recyclerView = binding.favoritosRecyclerView
 
         recyclerView.adapter = FavoritoAdapter(
-            requireContext(), listaFavoritosViewModel.getInmueblesFavoritos(), listaFavoritosViewModel
+            requireContext(), listaFavoritosViewModel.getInmueblesFavoritos(), listaFavoritosViewModel, listaFavoritosViewModel.database
         )
     }
 }
