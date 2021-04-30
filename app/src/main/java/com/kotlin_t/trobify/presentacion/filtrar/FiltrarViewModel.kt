@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.presentacion.filtrar
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.presentacion.Constantes
@@ -23,6 +24,10 @@ class FiltrarViewModel(
 ) :
     AndroidViewModel(application) {
     private var listaInmuebles = database.inmuebleDAO().getAll()
+
+    init {
+        Log.e("INMUEBLES", listaInmuebles.toString())
+    }
 
     fun filtrarInmuebles() {
         val tipoDeOperacion = if (model.operacionesOpciones.value!!.isEmpty()) {
@@ -159,8 +164,10 @@ class FiltrarViewModel(
     fun changePrecios(precio: Int, min: Boolean) {
         if (min) {
             model.preciosOpciones.value!![0] = precio
+            model.preciosOpciones.value = model.preciosOpciones.value
         } else {
             model.preciosOpciones.value!![1] = precio
+            model.preciosOpciones.value = model.preciosOpciones.value
         }
     }
 

@@ -228,14 +228,14 @@ class FiltrarFragment : Fragment() {
         binding.precioMaximoSlider.valueTo = datasource.inmuebleDAO().getMaxPrecio().toFloat()
         binding.precioMaximoSlider.valueFrom = datasource.inmuebleDAO().getMinPrecio().toFloat()
         binding.precioMaximoSlider.values =
-            mutableListOf(model.preciosOpciones.value!![0].toFloat(), model.preciosOpciones.value!![1].toFloat())
+            mutableListOf(binding.precioMaximoSlider.valueFrom, binding.precioMaximoSlider.valueTo)
 
 
         binding.precioMaximoSlider.addOnChangeListener(touchListener)
         binding.precioMaximoSlider.setMinSeparationValue(100f)
 
-        binding.precioMinimoTextview.text = formatter.format(model.preciosOpciones.value!![0])
-        binding.precioMaximoTextview.text = formatter.format(model.preciosOpciones.value!![1])
+        binding.precioMinimoTextview.text = formatter.format(binding.precioMaximoSlider.valueFrom)
+        binding.precioMaximoTextview.text = formatter.format(binding.precioMaximoSlider.valueTo)
     }
 
     private fun resetForm() {
