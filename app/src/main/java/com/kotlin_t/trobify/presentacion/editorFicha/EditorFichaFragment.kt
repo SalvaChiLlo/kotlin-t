@@ -242,7 +242,7 @@ class EditorFichaFragment : Fragment() {
 
         nuevoDesarrollo = false
         URLminiatura = ""
-        dniPropietario = sharedModel.usuarioActual__PRUEBA.dni
+        dniPropietario = sharedModel.usuarioActual.value!!.dni
         exterior = false
         tipoDeInmueble = tipoInmueble()
         operacion = tipoOperacion()
