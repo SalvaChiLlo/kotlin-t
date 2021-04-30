@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory
 import android.util.Log
 import com.kotlin_t.trobify.logica.*
 import com.kotlin_t.trobify.presentacion.Constantes
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
@@ -13,58 +14,58 @@ import java.net.URL
 import kotlin.random.Random
 
 
-class PopulateDB(val database: AppDatabase, val context: Context) {
+class PopulateDB(
+    val database: AppDatabase,
+    val context: Context,
+    val sharedViewModel: SharedViewModel
+) {
     fun populate() {
-        Thread {
-            //         Crear Usuarios
-            database.usuarioDAO().insertAll(
-                Usuario(
-                    "-1",
-                    "-1",
-                    "-1",
-                    "-1",
-                    "-1",
-                    "-1",
-                    "-1",
-                    null
-                )
+        //         Crear Usuarios
+        database.usuarioDAO().insertAll(
+            Usuario(
+                "-1",
+                "-1",
+                "-1",
+                "-1",
+                "-1",
+                "-1",
+                "-1",
+                null
             )
-            for (i in 0..5) {
-                database.usuarioDAO()
-                    .insertAll(
-                        Usuario(
-                            "${i}2345678E",
-                            "username${i}",
-                            "contraseña${i}",
-                            "nombre${i}",
-                            "appellido${i}",
-                            "999888777",
-                            "iban${i}",
-                            null
-                        )
+        )
+        for (i in 0..5) {
+            database.usuarioDAO()
+                .insertAll(
+                    Usuario(
+                        "${i}2345678E",
+                        "username${i}",
+                        "contraseña${i}",
+                        "nombre${i}",
+                        "appellido${i}",
+                        "999888777",
+                        "iban${i}",
+                        null
                     )
-            }
-
-            // Crear Inmuebles
-            for (i in 0..10) {
-                createInmueble(i)
-            }
-
-            val listaInmuebles = database.inmuebleDAO().getAll()
-            // Crear Favoritos
-            for (i in 0..6) {
-                database.favoritoDAO().insertAll(Favorito(listaInmuebles[i].inmuebleId, "-1"))
-            }
-
-            for (i in 0 until listaInmuebles.size - 1) {
-                processImageUris(
-                    "https://source.unsplash.com/300x300/?building",
-                    listaInmuebles[i].inmuebleId
                 )
-            }
-        }.start()
+        }
 
+        // Crear Inmuebles
+        for (i in 0..10) {
+            createInmueble(i)
+        }
 
+        val listaInmuebles = database.inmuebleDAO().getAll()
+        // Crear Favoritos
+        for (i in 0..6) {
+            database.favoritoDAO().insertAll(Favorito(listaInmuebles[i].inmuebleId, "-1"))
+        }
+
+        for (i in 0 until listaInmuebles.size - 1) {
+            processImageUris(
+                "https://source.unsplash.com/300x300/?building",
+                listaInmuebles[i].inmuebleId
+            )
+        }
     }
 
     private fun processImageUris(url: String, inmuebleId: Int) {
@@ -145,7 +146,7 @@ class PopulateDB(val database: AppDatabase, val context: Context) {
                 Random.nextInt(1, 10),
                 Random.nextInt(1, 10),
                 "Valencia",
-                if (i % 2 == 0)"Valencia" else "Madrid",
+                if (i % 2 == 0) "Valencia" else "Madrid",
                 "Benimaclet",
                 "España",
                 latitud,

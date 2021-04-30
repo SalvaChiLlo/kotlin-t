@@ -46,25 +46,27 @@ class MainActivity : AppCompatActivity() {
         val headerView = navView.getHeaderView(0)
         val nav_menu: Menu = navView.menu
         val loginButton = headerView.findViewById<Button>(R.id.iniciaSesionButton)
-        if(loginButton != null) {
+        if (loginButton != null) {
             loginButton.setOnClickListener {
                 findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeToLoginFragment())
             }
         }
 
         val usuarioObserver = Observer<Usuario> { usuario ->
-            if(usuario == null) {
+            if (usuario == null) {
 
                 nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(false)
                 nav_menu.findItem(R.id.nav_mi_cuenta)
                 nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(false)
-                headerView.findViewById<TextView>(R.id.nav_header_text).text = "No estás identificado"
+                headerView.findViewById<TextView>(R.id.nav_header_text).text =
+                    "No estás identificado"
 
             } else {
 
                 nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(true)
                 nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(true)
-                headerView.findViewById<TextView>(R.id.nav_header_text).text = "Bienvenido " + usuario.nombre
+                headerView.findViewById<TextView>(R.id.nav_header_text).text =
+                    "Bienvenido " + usuario.nombre
                 headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.GONE
 
 
@@ -162,9 +164,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun populate() {
         val database = AppDatabase.getDatabase(this)
-        if(database.usuarioDAO().getAll().isEmpty() || database.inmuebleDAO().getAll().isEmpty()) {
-            PopulateDB(database, this).populate()
-        }
+        var sharedViewModel: SharedViewModel =
+            ViewModelProvider(this).get(SharedViewModel::class.java)
+        Thread(Runnable {
+
+            if (database.usuarioDAO().getAll().isEmpty() || database.inmuebleDAO().getAll()
+                    .isEmpty()
+            ) {
+                PopulateDB(database, this, sharedViewModel).populate()
+            }
+
+            this@MainActivity.runOnUiThread {
+                sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
+            }
+        }).start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
