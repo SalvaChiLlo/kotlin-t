@@ -230,6 +230,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/telefono" />
 
+            <View
+                android:id="@+id/separadorFotoPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fotoPerfil" />
+
 
             <ImageView
                 android:id="@+id/imagen"
@@ -241,7 +251,7 @@
                 android:src="@drawable/anonymous_user"
                 app:layout_constraintHeight_max="100dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fotoPerfil"
+                app:layout_constraintTop_toBottomOf="@+id/separadorFotoPerfil"
                 app:layout_constraintWidth_max="100dp">
 
             </ImageView>

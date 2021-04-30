@@ -47,7 +47,6 @@ class HomeFragment : Fragment() {
             val estrategia = sharedViewModel.estrategiaOrdenacion
             sharedViewModel.inmuebles.observe(viewLifecycleOwner, Observer {
                 if (estrategia != null) {
-                    Log.d("estrategia", estrategia.toString())
                     recyclerView.adapter = HomeItemAdapter(requireContext(), estrategia.ordenar(it), homeViewModel)
                 }
                 else{

@@ -256,13 +256,10 @@ class RegistrarseViewModel(
     }
 
     fun registrarse() {
-        if (usuarioValido(usuario) && contrasenaValida(contrasena) && coincidenContrasenas(
-                repetirContrasena
-            ) && dniCorrecto(dni) && nombreCorrecto(nombre) &&
+        if (usuarioValido(usuario) && contrasenaValida(contrasena) && coincidenContrasenas(repetirContrasena) && dniCorrecto(dni) && nombreCorrecto(nombre) &&
             apellidosCorrectos(apellidos) && telefonoCorrecto(telefono) && ibanCorrecto(iban)
         ) {
-            val usuario =
-                Usuario(dni, usuario, contrasena, nombre, apellidos, telefono, iban, avatar)
+            val usuario = Usuario(dni, usuario, contrasena, nombre, apellidos, telefono, iban, avatar)
             database.usuarioDAO().insertAll(usuario)
             model.usuarioActual.value = usuario
             fragment.findNavController().navigate(RegistrarseFragmentDirections.actionRegistrarseFragmentToNavHome())
