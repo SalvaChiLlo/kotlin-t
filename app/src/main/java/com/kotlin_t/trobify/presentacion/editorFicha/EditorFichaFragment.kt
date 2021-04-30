@@ -25,6 +25,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.textfield.TextInputEditText
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
@@ -166,11 +167,21 @@ class EditorFichaFragment : Fragment() {
         }
 
         binding.descartar.setOnClickListener {
-            val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
-            findNavController().navigate(action)
-            datasource.inmuebleDAO().deleteById(editorFichaViewModel.inmuebleID.toString())
-            sharedModel.inmuebles.value!!.remove(editorFichaViewModel.inmueble)
-            sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
+
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle("¿Seguro que quieres salir?")
+                .setMessage("Si sales todos los cambios se perderán.")
+                .setNegativeButton("Sí") { dialog, which ->
+                    val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
+                    findNavController().navigate(action)
+                    datasource.inmuebleDAO().deleteById(editorFichaViewModel.inmuebleID.toString())
+                    sharedModel.inmuebles.value!!.remove(editorFichaViewModel.inmueble)
+                    sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
+                }
+                .setPositiveButton("No") { dialog, which ->
+
+                }
+                .show()
         }
 
         binding.guardarInmueble.setOnClickListener {
