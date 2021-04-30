@@ -144,7 +144,7 @@ class BusquedaViewModel(
             )
         )
 
-//        this.listaInmuebles = miBusqueda.meetCriteria(database.inmuebleDAO().getAll())
+        this.listaInmuebles = miBusqueda.meetCriteria(database.inmuebleDAO().getAll())
         sharedViewModel.setInmuebles(this.listaInmuebles)
     }
 }

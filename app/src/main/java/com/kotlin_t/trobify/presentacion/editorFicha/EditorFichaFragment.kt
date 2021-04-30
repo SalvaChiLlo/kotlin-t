@@ -108,12 +108,11 @@ class EditorFichaFragment : Fragment() {
 
         if (args.inmuebleID == -1) {
             editorFichaViewModel.inmueble = null
-            Log.e("EEEEEE", "INMUEBLE NULO")
         } else {
             editorFichaViewModel.inmueble =
                 datasource.inmuebleDAO().findById(args.inmuebleID.toString())
             editorFichaViewModel.inmuebleID = editorFichaViewModel.inmueble!!.inmuebleId
-            Log.e("EEEEEE", "INMUEBLE CON ID ${editorFichaViewModel.inmueble!!.inmuebleId}")
+            binding.descartar.setImageResource(R.drawable.ic_baseline_delete_24)
         }
         if (editorFichaViewModel.inmueble == null) {
             (activity as AppCompatActivity).supportActionBar?.title = "Crear Inmueble"
@@ -169,6 +168,9 @@ class EditorFichaFragment : Fragment() {
         binding.descartar.setOnClickListener {
             val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
             findNavController().navigate(action)
+            datasource.inmuebleDAO().deleteById(editorFichaViewModel.inmuebleID.toString())
+            sharedModel.inmuebles.value!!.remove(editorFichaViewModel.inmueble)
+            sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
         }
 
         binding.guardarInmueble.setOnClickListener {

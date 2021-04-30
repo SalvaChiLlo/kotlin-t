@@ -23,7 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var sharedViewModel: SharedViewModel
-
+    private lateinit var database: AppDatabase
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,8 +33,8 @@ class HomeFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         val application = requireNotNull(this.activity).application
-        val datasource = AppDatabase.getDatabase(application)
-        val viewModelFactory = HomeViewModelFactory(datasource, application, sharedViewModel)
+        database = AppDatabase.getDatabase(application)
+        val viewModelFactory = HomeViewModelFactory(database, application, sharedViewModel)
         homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 
@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.addInmueble.setOnClickListener {
-            val action = HomeFragmentDirections.actionNavHomeToEditorFichaFragment(-1)
+            val action = HomeFragmentDirections.actionNavHomeToEditorFichaFragment(database.inmuebleDAO().getAll().last().inmuebleId)
             findNavController().navigate(action)
         }
 
