@@ -25,7 +25,6 @@ import androidx.room.PrimaryKey
         )
     ),
     tableName = "Favoritos",
-    primaryKeys = ["primaryKey"]
 )
 data class Favorito(
     val inmuebleId: Int,

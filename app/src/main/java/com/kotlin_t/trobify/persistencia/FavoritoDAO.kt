@@ -33,4 +33,7 @@ interface FavoritoDAO {
 
     @Query("DELETE FROM Favoritos WHERE inmuebleId = :inmuebleId")
     fun deleteById(inmuebleId: Int)
+
+    @Query("DELETE FROM Favoritos WHERE primaryKey = :primaryKey")
+    fun deleteByPK(primaryKey: Int)
 }

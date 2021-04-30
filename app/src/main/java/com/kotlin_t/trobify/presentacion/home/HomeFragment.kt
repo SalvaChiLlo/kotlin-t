@@ -31,9 +31,10 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         val application = requireNotNull(this.activity).application
         val datasource = AppDatabase.getDatabase(application)
-        val viewModelFactory = HomeViewModelFactory(datasource, application)
+        val viewModelFactory = HomeViewModelFactory(datasource, application, sharedViewModel)
         homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
 

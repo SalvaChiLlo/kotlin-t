@@ -10,8 +10,9 @@ import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Favorito
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.persistencia.InmuebleDAO
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 
-class HomeViewModel(val database: AppDatabase, application: Application): AndroidViewModel(application) {
+class HomeViewModel(val database: AppDatabase, application: Application, val sharedViewModel: SharedViewModel): AndroidViewModel(application) {
     private val inmuebleDatabase = database.inmuebleDAO()
     private val favoritoDatabase = database.favoritoDAO()
 
@@ -25,21 +26,23 @@ class HomeViewModel(val database: AppDatabase, application: Application): Androi
         return listaInmuebles.value!!
     }
 
-    fun setFavoriteIcon(inmueble: Inmueble, favorito: ImageView){
+    fun setFavoriteIcon(inmueble: Inmueble, favoritoIMG: ImageView){
         var fav:Int
-        if(favoritoDatabase.findById(inmueble.inmuebleId) != null)fav = R.drawable.ic_baseline_favorite_24
+        val dni = if(sharedViewModel.usuarioActual.value != null) sharedViewModel.usuarioActual.value!!.dni else "-1"
+        val favorito = favoritoDatabase.findByIdandDni(inmueble.inmuebleId, dni)
+        if(favorito != null)fav = R.drawable.ic_baseline_favorite_24
         else fav = R.drawable.ic_baseline_favorite_border_24
-        favorito.setImageResource(fav)
-        favorito.setOnClickListener{
+        favoritoIMG.setImageResource(fav)
+        favoritoIMG.setOnClickListener{
             if(fav == R.drawable.ic_baseline_favorite_24){
-                favoritoDatabase.deleteById(inmueble.inmuebleId)
+                favoritoDatabase.deleteByPK(favorito!!.primaryKey)
                 fav = R.drawable.ic_baseline_favorite_border_24
             }
             else{
-                favoritoDatabase.insertAll(Favorito(inmueble.inmuebleId, null))
+                favoritoDatabase.insertAll(Favorito(inmueble.inmuebleId, dni))
                 fav = R.drawable.ic_baseline_favorite_24
             }
-            favorito.setImageResource(fav)
+            favoritoIMG.setImageResource(fav)
         }
     }
 
