@@ -26,6 +26,7 @@ import com.google.android.material.textview.MaterialTextView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Favorito
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.mapa.CustomInfoWindowForGoogleMap
 import com.kotlin_t.trobify.presentacion.mapa.MapsFragmentDirections
 import java.util.*
@@ -37,6 +38,7 @@ class FichaFragment : Fragment() {
     private lateinit var map: GoogleMap
     private lateinit var fichaViewModel: FichaViewModel
     lateinit var datasource: AppDatabase
+    private lateinit var sharedViewModel: SharedViewModel
 
     private val callback = OnMapReadyCallback { googleMap ->
 
@@ -55,6 +57,7 @@ class FichaFragment : Fragment() {
     ): View? {
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
+        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         val viewModelFactory =  FichaViewModelFactory(datasource, application)
         fichaViewModel = ViewModelProvider(this, viewModelFactory).get(FichaViewModel::class.java)
         arguments?.let {
@@ -216,27 +219,30 @@ class FichaFragment : Fragment() {
             container!!.findViewById<ImageView>(R.id.fotoUsuario).setImageBitmap(fichaViewModel.usuario.fotoPerfil)
     }
 
-    private fun setFavouriteIcon(favorito: ImageView) {
+    private fun setFavouriteIcon(favoritoIMG: ImageView) {
         var fav:Int
-        if(fichaViewModel.favoritoDatabase.findById(fichaViewModel.inmueble.inmuebleId) != null)
+        val dni = if(sharedViewModel.usuarioActual.value != null) sharedViewModel.usuarioActual.value!!.dni else "-1"
+        val favorito = datasource.favoritoDAO().findByIdandDni(inmuebleId, dni)
+
+        if(favorito != null)
             fav = R.drawable.ic_baseline_favorite_24
         else fav = R.drawable.ic_baseline_favorite_border_24
-        favorito.setImageResource(fav)
-        favorito.setOnClickListener{
+        favoritoIMG.setImageResource(fav)
+        favoritoIMG.setOnClickListener{
             if(fav == R.drawable.ic_baseline_favorite_24){
-                fichaViewModel.favoritoDatabase.deleteById(fichaViewModel.inmueble.inmuebleId)
+                fichaViewModel.favoritoDatabase.deleteByPK(favorito!!.primaryKey)
                 fav = R.drawable.ic_baseline_favorite_border_24
             }
             else{
                 fichaViewModel.favoritoDatabase.insertAll(
                     Favorito(
                         fichaViewModel.inmueble.inmuebleId,
-                        null
+                        dni
                     )
                 )
                 fav = R.drawable.ic_baseline_favorite_24
             }
-            favorito.setImageResource(fav)
+            favoritoIMG.setImageResource(fav)
         }
     }
 
