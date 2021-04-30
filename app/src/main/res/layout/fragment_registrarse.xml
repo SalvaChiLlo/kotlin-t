@@ -246,7 +246,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:contentDescription="@string/usuario_generico"
                 android:src="@drawable/anonymous_user"
                 app:layout_constraintHeight_max="100dp"
