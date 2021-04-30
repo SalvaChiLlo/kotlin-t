@@ -14,10 +14,10 @@ interface UsuarioDAO {
     @Query("SELECT * FROM Usuarios WHERE dni like :dni")
     fun findById(dni: String): Usuario
 
-    @Query("SELECT * FROM Usuarios WHERE username like :nick")
+    @Query("SELECT CASE WHEN EXISTS(SELECT * FROM Usuarios WHERE username like :nick) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END")
     fun existsUsername(nick: String): Boolean
 
-    @Query("SELECT * FROM Usuarios WHERE dni like :dni")
+    @Query("SELECT CASE WHEN EXISTS(SELECT * FROM Usuarios WHERE dni like :dni) THEN CAST(1 AS BIT) ELSE CAST(0 AS BIT) END")
     fun existsId(dni: String): Boolean
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)

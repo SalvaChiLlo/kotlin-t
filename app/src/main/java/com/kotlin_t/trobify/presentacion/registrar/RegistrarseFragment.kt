@@ -6,6 +6,8 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -35,12 +37,15 @@ class RegistrarseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_registrarse, container, false);
+        binding =
+            DataBindingUtil.inflate(inflater, R.layout.fragment_registrarse, container, false);
         val application = requireNotNull(this.activity).application
         val datasource = AppDatabase.getDatabase(application)
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        val viewModelFactory = RegistrarseViewModelFactory(datasource, application, sharedViewModel, binding, this)
-        registrarseViewModel = ViewModelProvider(this, viewModelFactory).get(RegistrarseViewModel::class.java)
+        val viewModelFactory =
+            RegistrarseViewModelFactory(datasource, application, sharedViewModel, binding, this)
+        registrarseViewModel =
+            ViewModelProvider(this, viewModelFactory).get(RegistrarseViewModel::class.java)
 
 
         return binding.root
@@ -49,57 +54,134 @@ class RegistrarseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.viewModel = registrarseViewModel
         binding.lifecycleOwner = viewLifecycleOwner
-        registrarseViewModel.usuario.observe(viewLifecycleOwner, {
-            nuevoUsuario ->
 
-                registrarseViewModel.usuarioValido(nuevoUsuario)
+        binding.inputUsuario.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
-        })
-        registrarseViewModel.contrasena.observe(viewLifecycleOwner, {
-            nuevaContrsena ->
-                registrarseViewModel.contrasenaValida(nuevaContrsena)
-        })
+            }
 
-        registrarseViewModel.repetirContrasena.observe(viewLifecycleOwner, {
-                nuevaContrsena ->
-            registrarseViewModel.coincidenContrasenas(nuevaContrsena)
-        })
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                registrarseViewModel.usuarioValido(p0.toString())
+            }
 
-        registrarseViewModel.dni.observe(viewLifecycleOwner, {
-                nuevoDni ->
-            registrarseViewModel.dniCorrecto(nuevoDni)
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
         })
 
-        registrarseViewModel.nombre.observe(viewLifecycleOwner, {
-                nuevoNombre ->
-            registrarseViewModel.nombreCorrecto(nuevoNombre)
+        binding.inputContrasena.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                registrarseViewModel.contrasenaValida(p0.toString())
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
         })
 
-        registrarseViewModel.apellidos.observe(viewLifecycleOwner, {
-                nuevosApellidos ->
-            registrarseViewModel.apellidosCorrectos(nuevosApellidos)
+        binding.inputRepetirContrasena.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                registrarseViewModel.coincidenContrasenas(p0.toString())
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
         })
 
-        registrarseViewModel.telefono.observe(viewLifecycleOwner, {
-                nuevoTelefono ->
-            registrarseViewModel.telefonoCorrecto(nuevoTelefono)
+        binding.inputDni.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                registrarseViewModel.dniCorrecto(p0.toString())
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
         })
 
-        registrarseViewModel.iban.observe(viewLifecycleOwner, {
-            nuevoIban ->
-                registrarseViewModel.ibanCorrecto(nuevoIban)
+        binding.inputNombre.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                registrarseViewModel.nombreCorrecto(p0.toString())
+            }
+
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
         })
 
-        binding.nuevaImagen.setOnClickListener{
+        binding.inputApellidos.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                registrarseViewModel.apellidosCorrectos(p0.toString())
+            }
+
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
+        binding.inputTelefono.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                registrarseViewModel.telefonoCorrecto(p0.toString())
+            }
+
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
+        binding.inputIban.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                registrarseViewModel.ibanCorrecto(p0.toString())
+            }
+
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
+        binding.nuevaImagen.setOnClickListener {
             nuevaImagen()
             binding.eliminarImagen.visibility = View.VISIBLE
         }
-        binding.eliminarImagen.setOnClickListener{
+        binding.eliminarImagen.setOnClickListener {
             eliminarImagen()
             binding.eliminarImagen.visibility = View.GONE
         }
-        registrarseViewModel.usuario.value?.let { Log.d("usuario", it) }
+
     }
+
     private fun nuevaImagen() {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
@@ -108,7 +190,7 @@ class RegistrarseFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
             if (data != null) {
                 data.data?.let { procesarImagen(it) }
                 binding.imagen.setImageURI(data.data)
@@ -118,6 +200,7 @@ class RegistrarseFragment : Fragment() {
 
 
     }
+
     private fun procesarImagen(imageUri: Uri) {
         val inputStream = context?.contentResolver?.openInputStream(imageUri)
         var bitmap = BitmapFactory.decodeStream(inputStream)
@@ -125,7 +208,7 @@ class RegistrarseFragment : Fragment() {
         registrarseViewModel.avatar = bitmap
     }
 
-    private fun eliminarImagen(){
+    private fun eliminarImagen() {
         binding.imagen.setImageResource(R.drawable.anonymous_user)
         registrarseViewModel.avatar = null
     }
