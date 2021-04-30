@@ -73,6 +73,9 @@
     <string name="codigo_postal">Codigo Postal</string>
     <string name="_46000">46000</string>
     <string name="ascensor">Ascensor?</string>
+    <string name="mi_cuenta">Mi Cuenta</string>
+    <string name="mis_inmuebles">Mis Inmuebles</string>
+
     <string name="nombre">Nombre</string>
     <string name="dni">DNI</string>
     <string name="apellidos">Apellidos</string>
@@ -98,5 +101,6 @@
     <string name="ibanIncorrecto">El formato del IBAN es incorrecto</string>
     <string name="usuarioCogido">El Usuario está cogido</string>
     <string name="dniCogido">Este DNI ya existe</string>
+
 
 </resources>

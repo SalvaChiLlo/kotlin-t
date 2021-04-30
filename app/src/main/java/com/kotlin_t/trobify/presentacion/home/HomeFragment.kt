@@ -81,7 +81,7 @@ class HomeFragment : Fragment() {
         }
 
         binding.addInmueble.setOnClickListener {
-            val action = HomeFragmentDirections.actionNavHomeToEditorFichaFragment(17)
+            val action = HomeFragmentDirections.actionNavHomeToEditorFichaFragment(-1)
             findNavController().navigate(action)
         }
 

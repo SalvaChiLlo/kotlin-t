@@ -5,12 +5,16 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -20,6 +24,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.database.PopulateDB
+import com.kotlin_t.trobify.logica.Usuario
 import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 
@@ -27,29 +32,53 @@ import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-
+    private lateinit var sharedViewModel: SharedViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val headerView = navView.getHeaderView(0)
+        val nav_menu: Menu = navView.menu
         val loginButton = headerView.findViewById<Button>(R.id.iniciaSesionButton)
         if(loginButton != null) {
             loginButton.setOnClickListener {
                 findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeToLoginFragment())
             }
         }
+
+        val usuarioObserver = Observer<Usuario> { usuario ->
+            if(usuario == null) {
+
+                nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(false)
+                nav_menu.findItem(R.id.nav_mi_cuenta)
+                nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(false)
+                headerView.findViewById<TextView>(R.id.nav_header_text).text = "No estás identificado"
+
+            } else {
+
+                nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(true)
+                nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(true)
+                headerView.findViewById<TextView>(R.id.nav_header_text).text = "Bienvenido " + usuario.nombre
+                headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.GONE
+
+
+            }
+        }
+
+        sharedViewModel.usuarioActual.observe(this, usuarioObserver)
+
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_favoritos
+                R.id.nav_home, R.id.nav_favoritos, R.id.nav_mi_cuenta, R.id.nav_mis_inmuebles
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -149,4 +178,5 @@ class MainActivity : AppCompatActivity() {
 
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
+
 }

@@ -5,6 +5,10 @@
 
     <group android:checkableBehavior="single">
         <item
+            android:id="@+id/nav_mi_cuenta"
+            android:icon="@drawable/ic_round_account_circle_24"
+            android:title="@string/mi_cuenta" />
+        <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
@@ -12,5 +16,9 @@
             android:id="@+id/nav_favoritos"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/favoritos" />
+        <item
+            android:id="@+id/nav_mis_inmuebles"
+            android:icon="@drawable/ic_baseline_format_list_bulleted_24"
+            android:title="@string/mis_inmuebles" />
     </group>
 </menu>
