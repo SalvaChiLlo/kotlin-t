@@ -264,7 +264,7 @@ class RegistrarseViewModel(
             val usuario =
                 Usuario(dni, usuario, contrasena, nombre, apellidos, telefono, iban, avatar)
             database.usuarioDAO().insertAll(usuario)
-            model.usuario = usuario
+            model.usuarioActual.value = usuario
             fragment.findNavController().navigate(RegistrarseFragmentDirections.actionRegistrarseFragmentToNavHome())
             Toast.makeText(fragment.context, "Usuario registrado correctamente", Toast.LENGTH_LONG).show()
         }
