@@ -62,6 +62,11 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         operacionesOpciones.value = mutableSetOf<String>()
         tiposOpciones.value = mutableSetOf<String>()
         preciosOpciones.value = IntArray(2)
+
+        preciosOpciones.value!!.set(0, database.inmuebleDAO().getMinPrecio())
+        preciosOpciones.value!!.set(1, database.inmuebleDAO().getMaxPrecio())
+        preciosOpciones.value = preciosOpciones.value
+
         habitacionesOpciones.value = mutableSetOf<Int>()
         banosOpciones.value = mutableSetOf<Int>()
         estadoOpciones.value = mutableSetOf<String>()

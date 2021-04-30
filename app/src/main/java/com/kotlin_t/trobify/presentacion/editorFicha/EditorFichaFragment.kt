@@ -97,7 +97,12 @@ class EditorFichaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        imagesListObserver = MyObserver(editorFichaViewModel.imagesList, binding.imagesRecyclerView, requireContext(), editorFichaViewModel)
+        imagesListObserver = MyObserver(
+            editorFichaViewModel.imagesList,
+            binding.imagesRecyclerView,
+            requireContext(),
+            editorFichaViewModel
+        )
         editorFichaViewModel.imagesList.add(imagesListObserver)
 
 
@@ -229,7 +234,9 @@ class EditorFichaFragment : Fragment() {
         binding.editCP.setText(inmueble.codigoPostal.toString())
         binding.editDescripcion.setText(inmueble.descripcion)
 
-        editorFichaViewModel.imagesList.value.addAll(datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId))
+        editorFichaViewModel.imagesList.value.addAll(
+            datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId)
+        )
     }
 
     private fun setError(view: TextInputEditText, error: String) {
@@ -242,7 +249,8 @@ class EditorFichaFragment : Fragment() {
 
         nuevoDesarrollo = false
         URLminiatura = ""
-        dniPropietario = sharedModel.usuarioActual.value!!.dni
+        dniPropietario =
+            if (sharedModel.usuarioActual.value != null) sharedModel.usuarioActual.value!!.dni else "-1"
         exterior = false
         tipoDeInmueble = tipoInmueble()
         operacion = tipoOperacion()
@@ -433,7 +441,7 @@ class EditorFichaFragment : Fragment() {
             editorFichaViewModel.inmuebleID = datasource.inmuebleDAO().getAll().last().inmuebleId
         }
 
-        editorFichaViewModel.imagesList.value.forEach{
+        editorFichaViewModel.imagesList.value.forEach {
             datasource.fotoDAO().insertAll(Foto(editorFichaViewModel.inmuebleID!!, it.imagen))
         }
 
