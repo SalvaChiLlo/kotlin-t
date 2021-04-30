@@ -22,6 +22,8 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         MutableLiveData<Usuario>()
     }
 
+    val usuarioActual__PRUEBA = database.usuarioDAO().findById("-1")
+
     val inmuebles = MutableLiveData<MutableList<Inmueble>>()
     val usuarios = MutableLiveData<MutableList<Usuario>>()
     var estrategiaOrdenacion: EstrategiaOrdenacion? = null
