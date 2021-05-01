@@ -166,7 +166,7 @@ class MainActivity : AppCompatActivity() {
         val database = AppDatabase.getDatabase(this)
         var sharedViewModel: SharedViewModel =
             ViewModelProvider(this).get(SharedViewModel::class.java)
-        Thread(Runnable {
+        Thread {
 
             if (database.usuarioDAO().getAll().isEmpty() || database.inmuebleDAO().getAll()
                     .isEmpty()
@@ -177,7 +177,7 @@ class MainActivity : AppCompatActivity() {
             this@MainActivity.runOnUiThread {
                 sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
             }
-        }).start()
+        }.start()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

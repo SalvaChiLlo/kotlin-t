@@ -3,6 +3,10 @@ package com.kotlin_t.trobify.database
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.location.Address
+import android.location.Geocoder
+import android.location.Location
+import android.location.LocationListener
 import android.util.Log
 import com.kotlin_t.trobify.logica.*
 import com.kotlin_t.trobify.presentacion.Constantes
@@ -11,6 +15,7 @@ import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.*
 import kotlin.random.Random
 
 
@@ -50,7 +55,7 @@ class PopulateDB(
         }
 
         // Crear Inmuebles
-        for (i in 0..10) {
+        for (i in 0..40) {
             createInmueble(i)
         }
 
@@ -88,12 +93,71 @@ class PopulateDB(
             "Estudio en venta en Zona de Mascarat",
             "Piso en venta en calle Camp Preciós",
             "Estudio en venta en calle Sorell",
-            "Piso en venta en Llavador, 1",
             "Piso en venta en calle Metge Adolfo Quiles, 5",
-            "Casa o chalet en venta en calle Forat",
             "Casa o chalet en venta en calle Forat, 23",
             "Piso en venta en calle Camp Preciós, 15",
-            "Piso en venta en calle Ascar, 24"
+            "Piso en venta en calle Ascar, 24",
+            "Casa o chalet independiente en venta en calle de Juan Martorell, 10\n",
+            "Piso en venta en MARQUES DE DOS AGUAS\n",
+            "Piso en venta en Ciutat Universitària\n",
+            "Piso en venta en paseo Ciudadela\n",
+            "Piso en venta en calle de Joaquín Costa\n",
+            "Chalet adosado en venta en calle Mar de Marmara\n",
+            "Piso en venta en avenida Vicente Blasco Ibáñez Novelista\n",
+            "Piso en venta en avenida de les Corts Valencianes\n",
+            "Dúplex en venta en plaza Mayor Port Saplaya, Alboraya",
+            "Chalet pareado en venta en beniferri\n",
+            "Chalet adosado en venta en Els Orriols\n",
+            "Piso en venta en calle de Daroca s/n\n",
+            "Piso en venta en CADIZ\n",
+            "Piso en venta en Plaza Elíptica-República Argentina\n",
+            "Casa o chalet independiente en venta en Entrepinos\n",
+            "Casa o chalet independiente en venta en Urb. URBANIZACIÓN LA SIMA, La Conarda-Montesano\n",
+            "Piso en venta en Zona Parc Central-Hort de Trenor\n",
+            "Casa o chalet independiente en venta en Torre en Conill-Cumbres de San Antonio\n",
+            "Casa o chalet independiente en venta en Entrepinos\n",
+            "Piso en venta en Benicalap\n",
+            "Piso en venta en Mestalla, València",
+            "Piso en venta en Ibiza Retiro, Madrid  ",
+            "Chalet adosado en venta en Peñagrande\n",
+            "Piso en venta en avenida de Rafael Nadal\n",
+            "Chalet pareado en venta en Urb. El Encinar de los Reyes, Encinar de los Reyes\n",
+            "Piso en venta en Almagro\n",
+            "Piso en venta en calle de la Hiedra\n",
+            "Piso en venta en vereda de Palacio\n",
+            "Chalet pareado en venta en camino de la Huerta\n",
+            "Casa o chalet independiente en venta en camino de Mesoncillos\n",
+            "Piso en venta en Sol\n",
+            "Piso en venta en Malasaña-Universidad\n",
+            "Piso en venta en avenida de Rafael Nadal\n",
+            "Piso en venta en carretera del Mediodía\n",
+            "Casa o chalet independiente en venta en camino del Golf\n",
+            "Chalet adosado en venta en calle del Camino Ancho\n",
+            "Chalet adosado en venta en calle de la Begonia\n",
+            "Casa o chalet independiente en venta en calle del Camino Alto\n",
+            "Ático en venta en calle de Luis Martinez Feduchi\n",
+            "Casa adosada en venta en Marina de Casares\n",
+            "Piso en venta en Enric Hernandez Centre - Zona Alta\n",
+            "Apartamento en venta en Calle la Habana Moncófar Playa\n",
+            "Piso en venta en Calle Enric Hernandez 22 4 Centre - Zona Alta\n",
+            "Casa o chalet en venta en Chullera\n",
+            "Piso en venta en San Lázaro - Meixonfrío\n",
+            "Piso en venta en Conxo\n",
+            "Piso en venta en Sant Gervasi- Galvany\n",
+            "Piso en venta en Calle de Modesto Lafuente, 46 Ríos Rosas - Nuevos Ministerios\n",
+            "Piso en venta en Sanxenxo pueblo\n",
+            "Planta baja en venta en Carrer Poeta Trinitat Catasus Can Girona - Terramar - Vinyet\n",
+            "Dúplex en venta en Avenida Ángel Nieto Valdepastores - Las Encinas\n",
+            "Piso en venta en Calle Maquinilla, 13d Palomeras Sureste\n",
+            "Piso en venta en Calle de Méndez Álvaro Delicias\n",
+            "Piso en venta en Espartales\n",
+            "Piso en venta en Calle de Cantalejo Fuentelarreina\n",
+            "Piso en venta en Callejón de la Alcoholera, 24a Las Villas - Valparaiso\n",
+            "Piso en venta en Calle de Alejandro Dumas, 20 Imperial\n",
+            "Piso en venta en San Antonio\n",
+            "Casa adosada en venta en Calle Fuente de la Fama, 71 Laguna de Duero\n",
+            "Casa adosada en venta en Laguna de Duero\n",
+            "Piso en venta en Recesvinto, 4 Venta de Baños\n",
         )
         val tipoOperacion = listOf(
             Constantes.ALQUILER,
@@ -128,8 +192,44 @@ class PopulateDB(
             "Piso de 70 m2. Tiene 3 habitaciones, 2 cuartos de baño, 1 salón con balcón, 1 cocina comedor. Todas las habitaciones incluida la cocina, con ventanas al exterior, por lo que tiene mucha luz natural Con armarios empotrados en habitaciones y cocina comedor. 2º Piso sin ascensor. Comunidad de 6 viviendas. Zona tranquila a 3 min del casco antiguo de Altea.",
             "Loft totalmente reformado y amueblado. La comunidad dispone de pista de tenis. Playa y puerto deportivo a 200 metros.",
         )
-
         val direccion = direcciones.random()
+
+        fun getLatitude(): Double {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            val result = geocoder.getFromLocationName(
+                direccion,
+                1
+            )
+            return if (result.isEmpty()) 0.0 else result.get(0).latitude
+        }
+
+        fun getLongitude(): Double {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            val result = geocoder.getFromLocationName(
+                direccion,
+                1
+            )
+            return if (result.isEmpty()) 0.0 else result.get(0).longitude
+        }
+
+        fun getMunicipio(): String {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            val result = geocoder.getFromLocationName(
+                direccion,
+                1
+            )
+            return if (result.isEmpty()) "" else result.get(0)?.locality+""
+        }
+
+        fun getProvincia(): String {
+            val geocoder = Geocoder(context, Locale.getDefault())
+            val dir = geocoder.getFromLocationName(
+                direccion,
+                1
+            )
+            return if (!dir.isEmpty()) dir.get(0)?.adminArea+"" else ""
+        }
+
         database.inmuebleDAO().insertAll(
             Inmueble(
                 "12345678E",
@@ -145,12 +245,12 @@ class PopulateDB(
                 i % 2 == 0,
                 Random.nextInt(1, 10),
                 Random.nextInt(1, 10),
-                "Valencia",
-                if (i % 2 == 0) "Valencia" else "Madrid",
+                getProvincia(),
+                getMunicipio(),
                 "Benimaclet",
                 "España",
-                latitud,
-                longitud,
+                getLatitude(),
+                getLongitude(),
                 estados.random(),
                 i % 2 == 0,
                 10,
@@ -165,7 +265,7 @@ class PopulateDB(
 
     private fun processImage(bitmap_: Bitmap): Bitmap {
         var bitmap =
-            Bitmap.createScaledBitmap(bitmap_, 600, 600, true)
+            Bitmap.createScaledBitmap(bitmap_, 350, 350, true)
         return bitmap
     }
 

@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -53,6 +54,8 @@ class HomeFragment : Fragment() {
                 else{
                     recyclerView.adapter = HomeItemAdapter(requireContext(), it, homeViewModel)
                 }
+
+                setAviso()
             })
         }
         return binding.root
@@ -63,6 +66,8 @@ class HomeFragment : Fragment() {
         val orderButton = view.findViewById<ImageView>(R.id.order_button)
         val locationButton = view.findViewById<ImageView>(R.id.location_button)
         val busquedaButton = view.findViewById<ImageView>(R.id.busqueda_button)
+
+        setAviso()
 
         filterButton.setOnClickListener {
             val action = HomeFragmentDirections.actionNavHomeToFiltrarFragment()
@@ -86,6 +91,14 @@ class HomeFragment : Fragment() {
         }
 
     }
-
+    private fun setAviso() {
+        if(database.inmuebleDAO().getAll().isEmpty()) {
+            binding.aviso.text = "Espere... Cargando Inmuebles...\nEn unos segundos cargarán los inmuebles"
+        } else if(sharedViewModel.inmuebles.value!!.isEmpty()){
+            binding.aviso.text = "No hay inmuebles para los\ncriterios de búsqueda seleccionados"
+        } else {
+            binding.aviso.text = ""
+        }
+    }
 
 }
