@@ -34,7 +34,7 @@ import com.kotlin_t.trobify.logica.Foto
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.presentacion.Constantes
 import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.editorFicha.ObservableList.MyObserver
+import com.kotlin_t.trobify.presentacion.editorFicha.ObservableList.RecyclerViewObserver
 import java.util.*
 
 class EditorFichaFragment : Fragment() {
@@ -73,7 +73,7 @@ class EditorFichaFragment : Fragment() {
     private lateinit var descripcion: String
     private var codigoPostalInm: Int = -1
 
-    private lateinit var imagesListObserver: MyObserver<Foto>
+    private lateinit var imagesListObserver: RecyclerViewObserver<Foto>
 
     companion object {
         const val PICK_IMAGE = 1
@@ -98,13 +98,12 @@ class EditorFichaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        imagesListObserver = MyObserver(
-            editorFichaViewModel.imagesList,
+        imagesListObserver = RecyclerViewObserver(
             binding.imagesRecyclerView,
             requireContext(),
             editorFichaViewModel
         )
-        editorFichaViewModel.imagesList.add(imagesListObserver)
+        editorFichaViewModel.imagesList.addObserver(imagesListObserver)
 
 
         if (args.inmuebleID == -1) {
@@ -214,7 +213,7 @@ class EditorFichaFragment : Fragment() {
         tieneAscensor = inmueble.tieneAscensor!!
         precioPorMetro = inmueble.precioPorMetro!!
         titulo = inmueble.titulo!!
-        subtitulo = inmueble.subtitulo!!
+        subtitulo = inmueble.subtitulo
         descripcion = inmueble.descripcion!!
 
         when (operacion) {
@@ -247,7 +246,7 @@ class EditorFichaFragment : Fragment() {
         binding.editCP.setText(inmueble.codigoPostal.toString())
         binding.editDescripcion.setText(inmueble.descripcion)
 
-        editorFichaViewModel.imagesList.value.addAll(
+        editorFichaViewModel.imagesList.addAllItem(
             datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId)
         )
     }
@@ -258,7 +257,6 @@ class EditorFichaFragment : Fragment() {
 
     private fun verificarDatos() {
         var hasError = false;
-        // TODO  ----> Aplicar extract method a los distintos if
 
         nuevoDesarrollo = false
         URLminiatura = ""
@@ -271,7 +269,7 @@ class EditorFichaFragment : Fragment() {
         tieneAscensor = binding.hasAscensor.isChecked
         subtitulo = "" // OK
         miniatura =
-            if (editorFichaViewModel.imagesList.value.isEmpty()) null else editorFichaViewModel.imagesList.value[0].imagen  // OK
+            if (editorFichaViewModel.imagesList.getValue().isEmpty()) null else editorFichaViewModel.imagesList.getValue()[0].imagen  // OK
 
         if (binding.editPlanta.text.toString() == "" || binding.editPlanta.text.toString()
                 .toInt() < 0
@@ -405,7 +403,7 @@ class EditorFichaFragment : Fragment() {
         datasource.inmuebleDAO().insertAll(inmueble)
         sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
 
-        editorFichaViewModel.imagesList.value.forEach {
+        editorFichaViewModel.imagesList.getValue().forEach {
             Log.e("EEEE", "${editorFichaViewModel.inmuebleID} ${it.inmuebleId}")
             if (datasource.fotoDAO().findById(it.fotoId.toString()) != null) {
                 datasource.fotoDAO().delete(it)
@@ -454,7 +452,7 @@ class EditorFichaFragment : Fragment() {
             editorFichaViewModel.inmuebleID = datasource.inmuebleDAO().getAll().last().inmuebleId
         }
 
-        editorFichaViewModel.imagesList.value.forEach {
+        editorFichaViewModel.imagesList.getValue().forEach {
             datasource.fotoDAO().insertAll(Foto(editorFichaViewModel.inmuebleID!!, it.imagen))
         }
 
@@ -581,7 +579,7 @@ class EditorFichaFragment : Fragment() {
         val inputStream = context?.contentResolver?.openInputStream(imageUri)
         var bitmap = BitmapFactory.decodeStream(inputStream)
         bitmap = Bitmap.createScaledBitmap(bitmap!!, 300, 300, true)
-        editorFichaViewModel.imagesList.value.add(Foto(editorFichaViewModel.inmuebleID!!, bitmap))
+        editorFichaViewModel.imagesList.addItem(Foto(editorFichaViewModel.inmuebleID!!, bitmap))
     }
 
 

@@ -26,7 +26,7 @@ class EditorFichaViewModel(
     }
 
     fun removeImageFromList(image: Foto) {
-        imagesList.value.remove(image)
+        imagesList.removeItem(image)
         if(database.fotoDAO().findById(image.fotoId.toString()) != null) {
             database.fotoDAO().delete(image)
         }

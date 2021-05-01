@@ -1,17 +1,19 @@
 package com.kotlin_t.trobify.presentacion.editorFicha.ObservableList
 
-interface IObservable {
-    val observers: ArrayList<IObserver>
+import java.util.*
+import kotlin.collections.ArrayList
 
-    fun add(observer: IObserver) {
+interface IObservable<E> {
+    val observers: ArrayList<IObserver<E>>
+
+
+    fun addObserver(observer: IObserver<E>) {
         observers.add(observer)
     }
 
-    fun remove(observer: IObserver) {
+    fun removeObserver(observer: IObserver<E>) {
         observers.remove(observer)
     }
 
-    fun sendUpdateEvent() {
-        observers.forEach { it.update() }
-    }
+    fun sendUpdateEvent()
 }

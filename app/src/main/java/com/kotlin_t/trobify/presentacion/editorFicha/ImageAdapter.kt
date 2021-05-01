@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.logica.Foto
-import com.kotlin_t.trobify.presentacion.editorFicha.ObservableList.ExtendedList
 
 class ImageAdapter(
     val context: Context,
-    val dataset: ExtendedList<Foto>,
+    val dataset: List<Foto>,
     val editorFichaViewModel: EditorFichaViewModel
 ) : RecyclerView.Adapter<ImageAdapter.FotoViewHolder>() {
     class FotoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

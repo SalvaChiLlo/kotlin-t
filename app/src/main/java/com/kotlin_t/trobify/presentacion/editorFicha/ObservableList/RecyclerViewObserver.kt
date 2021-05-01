@@ -7,12 +7,12 @@ import com.kotlin_t.trobify.logica.Foto
 import com.kotlin_t.trobify.presentacion.editorFicha.EditorFichaViewModel
 import com.kotlin_t.trobify.presentacion.editorFicha.ImageAdapter
 
-class MyObserver<E>(val observable: ObservableList<E>, val recyclerView: RecyclerView, val context: Context, val editorFichaViewModel: EditorFichaViewModel): IObserver {
-    override fun update() {
-        println("Observable has changed to: ${observable.value.map{(it as Foto).inmuebleId}}")
+class RecyclerViewObserver<E>(val recyclerView: RecyclerView, val context: Context, val editorFichaViewModel: EditorFichaViewModel): IObserver<E> {
+    override fun update(value: MutableList<E>) {
+        println("Observable has changed to: ${value.map{(it as Foto).inmuebleId}}")
         recyclerView.adapter = ImageAdapter(
             context,
-            observable.value as ExtendedList<Foto>,
+            value as List<Foto>,
             editorFichaViewModel
         )
     }
