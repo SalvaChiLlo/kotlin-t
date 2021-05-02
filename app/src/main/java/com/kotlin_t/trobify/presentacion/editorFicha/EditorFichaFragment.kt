@@ -101,7 +101,7 @@ class EditorFichaFragment : Fragment() {
             .setTitle("¿Seguro que quieres salir?")
             .setMessage("Si sales todos los cambios se perderán.")
             .setNegativeButton("Sí") { dialog, which ->
-                val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
+                val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavMisInmuebles2()
                 findNavController().navigate(action)
                 datasource.inmuebleDAO().deleteById(editorFichaViewModel.inmuebleID.toString())
                 sharedModel.inmuebles.value!!.remove(editorFichaViewModel.inmueble)
@@ -241,7 +241,7 @@ class EditorFichaFragment : Fragment() {
     }
 
     private fun terminarEdicionCreacion() {
-        val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
+        val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavMisInmuebles2()
         sharedModel.updateInmuebles()
         sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
         findNavController().navigate(action)
