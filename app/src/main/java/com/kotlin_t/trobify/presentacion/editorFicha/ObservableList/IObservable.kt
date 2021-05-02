@@ -1,6 +1,5 @@
 package com.kotlin_t.trobify.presentacion.editorFicha.ObservableList
 
-import java.util.*
 import kotlin.collections.ArrayList
 
 interface IObservable<E> {

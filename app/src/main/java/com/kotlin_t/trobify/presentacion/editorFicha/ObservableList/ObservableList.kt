@@ -1,6 +1,6 @@
 package com.kotlin_t.trobify.presentacion.editorFicha.ObservableList
 
-class ObservableList<E>: IObservable<E> {
+class ObservableList<E> : IObservable<E> {
     override val observers: ArrayList<IObserver<E>> = ArrayList<IObserver<E>>()
 
 

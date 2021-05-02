@@ -73,8 +73,6 @@ class EditorFichaFragment : Fragment() {
     private lateinit var descripcion: String
     private var codigoPostalInm: Int = -1
 
-    private lateinit var imagesListObserver: RecyclerViewObserver<Foto>
-
     companion object {
         const val PICK_IMAGE = 1
     }
@@ -98,12 +96,11 @@ class EditorFichaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        imagesListObserver = RecyclerViewObserver(
+        editorFichaViewModel.imagesList.addObserver(RecyclerViewObserver(
             binding.imagesRecyclerView,
             requireContext(),
             editorFichaViewModel
-        )
-        editorFichaViewModel.imagesList.addObserver(imagesListObserver)
+        ))
 
 
         if (args.inmuebleID == -1) {
