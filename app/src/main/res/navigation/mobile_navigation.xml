@@ -32,6 +32,9 @@
         <action
             android:id="@+id/action_nav_home_to_editorFichaFragment"
             app:destination="@id/editorFichaFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_misInmueblesFragment"
+            app:destination="@id/nav_mis_inmuebles" />
     </fragment>
 
     <fragment
@@ -125,6 +128,14 @@
         <action
             android:id="@+id/action_registrarseFragment_to_nav_home"
             app:destination="@id/nav_home" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_mis_inmuebles"
+        android:name="com.kotlin_t.trobify.presentacion.misInmuebles.MisInmueblesFragment"
+        android:label="MisInmueblesFragment" >
+        <action
+            android:id="@+id/action_nav_mis_inmuebles_to_editorFichaFragment"
+            app:destination="@id/editorFichaFragment" />
     </fragment>
     <!---Añadir acciones hacia atrás-->
 </navigation>
