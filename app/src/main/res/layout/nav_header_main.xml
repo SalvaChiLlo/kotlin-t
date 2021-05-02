@@ -14,7 +14,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/nav_header_picture"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginStart="5dp"
@@ -33,8 +33,8 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="@string/nav_header_title"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView" />
+        app:layout_constraintStart_toEndOf="@+id/nav_header_picture"
+        app:layout_constraintTop_toTopOf="@+id/nav_header_picture" />
 
     <Button
         android:id="@+id/iniciaSesionButton"
@@ -42,8 +42,8 @@
         android:layout_height="0dp"
         android:layout_marginStart="20dp"
         android:text="Inicia Sesión"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintBottom_toBottomOf="@+id/nav_header_picture"
+        app:layout_constraintStart_toEndOf="@+id/nav_header_picture"
         app:layout_constraintTop_toBottomOf="@+id/nav_header_text" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
