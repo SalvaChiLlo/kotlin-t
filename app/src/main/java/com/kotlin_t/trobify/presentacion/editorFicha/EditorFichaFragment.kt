@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.presentacion.editorFicha
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ClipData
 import android.content.Context
@@ -46,35 +47,9 @@ class EditorFichaFragment : Fragment() {
     lateinit var locationManager: LocationManager
     val args: EditorFichaFragmentArgs by navArgs()
 
-    private lateinit var dniPropietario: String
-    private lateinit var direccion: String
-    private var nuevoDesarrollo: Boolean = false
-    private var miniatura: Bitmap? = null
-    private lateinit var URLminiatura: String
-    private var altura: Int = -1
-    private var precio: Int = -1
-    private lateinit var tipoDeInmueble: String
-    private lateinit var operacion: String
-    private var tamano: Int = -1
-    private var exterior: Boolean = false
-    private var habitaciones: Int = -1
-    private var banos: Int = -1
-    private lateinit var provinciaInmueble: String
-    private lateinit var municipioInmueble: String
-    private lateinit var barrio: String
-    private lateinit var pais: String
-    private var latitud: Double = -1.0
-    private var longitud: Double = -1.0
-    private lateinit var estadoInmueble: String
-    private var tieneAscensor: Boolean = false
-    private var precioPorMetro: Int = -1
-    private lateinit var titulo: String
-    private lateinit var subtitulo: String
-    private lateinit var descripcion: String
-    private var codigoPostalInm: Int = -1
-
     companion object {
         const val PICK_IMAGE = 1
+        const val NO_VACIO_ERR_MSG = "Este campo no puede estar vacio."
     }
 
     override fun onCreateView(
@@ -87,7 +62,8 @@ class EditorFichaFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
         sharedModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        val viewModelFactory = EditorFichaViewModelFactory(datasource, application, sharedModel)
+
+        val viewModelFactory = EditorFichaViewModelFactory(datasource, application, sharedModel, binding, requireContext())
         editorFichaViewModel =
             ViewModelProvider(this, viewModelFactory).get(EditorFichaViewModel::class.java)
         binding.viewModel = editorFichaViewModel
@@ -96,363 +72,175 @@ class EditorFichaFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        editorFichaViewModel.imagesList.addObserver(RecyclerViewObserver(
-            binding.imagesRecyclerView,
-            requireContext(),
-            editorFichaViewModel
-        ))
+        imagesRecyclerView = binding.imagesRecyclerView
+        setEditorOrCreator()
+        setAñadirImagenesAction()
+        setDescartarAction()
+        setGuardarInmuebleAction()
+        setRecyclerViewObserver()
+        setUbicacionButtonAction()
+    }
 
+    private fun setGuardarInmuebleAction() {
+        binding.guardarInmueble.setOnClickListener {
+            if(!editorFichaViewModel.verificarDatos()) {
+                editorFichaViewModel.guardarInmueble()
+                terminarEdicionCreacion()
+            }
+        }
+    }
 
+    private fun setDescartarAction() {
+        binding.descartar.setOnClickListener {
+            showDiscardAlert()
+        }
+    }
+
+    private fun showDiscardAlert() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("¿Seguro que quieres salir?")
+            .setMessage("Si sales todos los cambios se perderán.")
+            .setNegativeButton("Sí") { dialog, which ->
+                val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
+                findNavController().navigate(action)
+                datasource.inmuebleDAO().deleteById(editorFichaViewModel.inmuebleID.toString())
+                sharedModel.inmuebles.value!!.remove(editorFichaViewModel.inmueble)
+                sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
+            }
+            .setPositiveButton("No") { dialog, which ->
+
+            }
+            .show()
+    }
+
+    private fun setUbicacionButtonAction() {
+        binding.miUbicacionButton.setOnClickListener {
+            requestLocation()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun requestLocation() {
+        locationManager =
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        checkPermissions()
+        locationManager.requestLocationUpdates(
+            LocationManager.GPS_PROVIDER,
+            0,
+            0.toFloat(),
+            locationListener
+        )
+        locationManager.requestLocationUpdates(
+            LocationManager.NETWORK_PROVIDER,
+            0,
+            0.toFloat(),
+            locationListener
+        )
+    }
+
+    private fun checkPermissions() {
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                101
+            )
+            ActivityCompat.requestPermissions(
+                requireActivity(),
+                arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
+                101
+            )
+        }
+    }
+
+    private fun setAñadirImagenesAction() {
+        binding.anadirImagen.setOnClickListener {
+            selectImages()
+        }
+    }
+
+    private fun setEditorOrCreator() {
         if (args.inmuebleID == -1) {
             editorFichaViewModel.inmueble = null
-        } else {
-            editorFichaViewModel.inmueble =
-                datasource.inmuebleDAO().findById(args.inmuebleID.toString())
-            editorFichaViewModel.inmuebleID = editorFichaViewModel.inmueble!!.inmuebleId
-            binding.descartar.setImageResource(R.drawable.ic_baseline_delete_24)
-        }
-        if (editorFichaViewModel.inmueble == null) {
             (activity as AppCompatActivity).supportActionBar?.title = "Crear Inmueble"
             binding.radioVenta.isChecked = true
             binding.radioAtico.isChecked = true
             binding.radioNuevo.isChecked = true
         } else {
+            editorFichaViewModel.inmueble =
+                datasource.inmuebleDAO().findById(args.inmuebleID.toString())
+            editorFichaViewModel.inmuebleID = editorFichaViewModel.inmueble!!.inmuebleId
+            setBinIcon()
             (activity as AppCompatActivity).supportActionBar?.title = "Editar Inmueble"
             rellenarCamposEditables()
         }
-        imagesRecyclerView = binding.imagesRecyclerView
-        binding.anadirImagen.setOnClickListener {
-            selectImages()
-        }
+    }
 
-        binding.miUbicacionButton.setOnClickListener {
-            locationManager =
-                requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            if (ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    101
-                )
-                ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION),
-                    101
-                )
-            }
+    private fun setBinIcon() {
+        binding.descartar.setImageResource(R.drawable.ic_baseline_delete_24)
+    }
 
-            locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                0,
-                0.toFloat(),
-                locationListener
+    private fun setRecyclerViewObserver() {
+        editorFichaViewModel.imagesList.addObserver(
+            RecyclerViewObserver(
+                imagesRecyclerView,
+                requireContext(),
+                editorFichaViewModel
             )
-            locationManager.requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
-                0,
-                0.toFloat(),
-                locationListener
-            )
-        }
-
-        binding.descartar.setOnClickListener {
-
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle("¿Seguro que quieres salir?")
-                .setMessage("Si sales todos los cambios se perderán.")
-                .setNegativeButton("Sí") { dialog, which ->
-                    val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
-                    findNavController().navigate(action)
-                    datasource.inmuebleDAO().deleteById(editorFichaViewModel.inmuebleID.toString())
-                    sharedModel.inmuebles.value!!.remove(editorFichaViewModel.inmueble)
-                    sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
-                }
-                .setPositiveButton("No") { dialog, which ->
-
-                }
-                .show()
-        }
-
-        binding.guardarInmueble.setOnClickListener {
-            verificarDatos()
-        }
+        )
     }
 
     private fun rellenarCamposEditables() {
         val inmueble = editorFichaViewModel.inmueble!!
-        dniPropietario = inmueble.dniPropietario
-        direccion = inmueble.direccion!!
-        nuevoDesarrollo = inmueble.nuevoDesarrollo!!
-        miniatura = inmueble.miniatura
-        URLminiatura = ""
-        altura = inmueble.altura!!
-        precio = inmueble.precio!!
-        tipoDeInmueble = inmueble.tipoDeInmueble!!
-        operacion = inmueble.operacion!!
-        tamano = inmueble.tamano!!
-        exterior = inmueble.exterior!!
-        habitaciones = inmueble.habitaciones!!
-        banos = inmueble.banos!!
-        provinciaInmueble = inmueble.provincia!!
-        municipioInmueble = inmueble.municipio!!
-        barrio = inmueble.barrio!!
-        pais = inmueble.pais!!
-        latitud = inmueble.latitud!!
-        longitud = inmueble.longitud!!
-        estadoInmueble = inmueble.estado!!
-        tieneAscensor = inmueble.tieneAscensor!!
-        precioPorMetro = inmueble.precioPorMetro!!
-        titulo = inmueble.titulo!!
-        subtitulo = inmueble.subtitulo
-        descripcion = inmueble.descripcion!!
 
-        when (operacion) {
+        when (inmueble.operacion) {
             Constantes.VENTA -> binding.radioVenta.isChecked = true
             Constantes.ALQUILER -> binding.radioAlquiler.isChecked = true
             Constantes.INTERCAMBIO_VIVIENDA -> binding.radioIntercambio.isChecked = true
         }
 
-        when (tipoDeInmueble) {
+        when (inmueble.tipoDeInmueble) {
             Constantes.ATICO -> binding.radioAtico.isChecked = true
             Constantes.CASA_CHALET -> binding.radioCasa.isChecked = true
             Constantes.HABITACION -> binding.radioHabitacion.isChecked = true
             Constantes.PISO -> binding.radioPiso.isChecked = true
         }
 
-        when (estadoInmueble) {
+        when (inmueble.estado) {
             Constantes.NUEVA_CONSTRUCCION -> binding.radioNuevo.isChecked = true
             Constantes.BUEN_ESTADO -> binding.radioBuenEstado.isChecked = true
             Constantes.REFORMAR -> binding.radioReformar.isChecked = true
         }
 
-        binding.editDireccion.setText(inmueble.direccion)
-        binding.editPrecio.setText(inmueble.precio!!.toString())
-        binding.editSuperficie.setText(inmueble.tamano!!.toString())
-        binding.editHabitaciones.setText(inmueble.habitaciones!!.toString())
         binding.editBanos.setText(inmueble.banos!!.toString())
-        binding.editPlanta.setText(inmueble.altura!!.toString())
-        binding.hasAscensor.isChecked = inmueble.tieneAscensor!!
-        binding.editTitulo.setText(inmueble.titulo)
         binding.editCP.setText(inmueble.codigoPostal.toString())
         binding.editDescripcion.setText(inmueble.descripcion)
+        binding.editDireccion.setText(inmueble.direccion)
+        binding.editHabitaciones.setText(inmueble.habitaciones!!.toString())
+        binding.editPlanta.setText(inmueble.altura!!.toString())
+        binding.editPrecio.setText(inmueble.precio!!.toString())
+        binding.editSuperficie.setText(inmueble.tamano!!.toString())
+        binding.editTitulo.setText(inmueble.titulo)
+        binding.hasAscensor.isChecked = inmueble.tieneAscensor!!
 
         editorFichaViewModel.imagesList.addAllItem(
             datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId)
         )
+
+        imagesRecyclerView.adapter = ImageAdapter(requireContext(), editorFichaViewModel.imagesList.getValue(),editorFichaViewModel)
+
+        Log.e("WEEEEE", datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId).map{it.inmuebleId}.toString())
     }
 
-    private fun setError(view: TextInputEditText, error: String) {
-        view.error = error
-    }
-
-    private fun verificarDatos() {
-        var hasError = false;
-
-        nuevoDesarrollo = false
-        URLminiatura = ""
-        dniPropietario =
-            if (sharedModel.usuarioActual.value != null) sharedModel.usuarioActual.value!!.dni else "-1"
-        exterior = false
-        tipoDeInmueble = tipoInmueble()
-        operacion = tipoOperacion()
-        estadoInmueble = getEstado() // OK
-        tieneAscensor = binding.hasAscensor.isChecked
-        subtitulo = "" // OK
-        miniatura =
-            if (editorFichaViewModel.imagesList.getValue().isEmpty()) null else editorFichaViewModel.imagesList.getValue()[0].imagen  // OK
-
-        if (binding.editPlanta.text.toString() == "" || binding.editPlanta.text.toString()
-                .toInt() < 0
-        ) {
-            hasError = true
-            setError(
-                binding.editPlanta,
-                "Este campo no puede estar vacio. Numeros mayores o iguales a 0"
-            )
-        } else {
-            altura = binding.editPlanta.text.toString().toInt()
-        }
-
-        if (binding.editPrecio.text.toString() == "" || binding.editPrecio.text.toString()
-                .toInt() < 0
-        ) {
-            hasError = true
-            setError(
-                binding.editPrecio,
-                "Este campo no puede estar vacio. Numeros mayores o iguales a 0"
-            )
-        } else {
-            precio = binding.editPrecio.text.toString().toInt()
-        }
-
-        if (binding.editSuperficie.text.toString() == "" || binding.editSuperficie.text.toString()
-                .toInt() <= 0
-        ) {
-            hasError = true
-            setError(binding.editSuperficie, "Este campo no puede estar vacio. Numeros mayores a 0")
-        } else {
-            tamano = binding.editSuperficie.text.toString().toInt()
-            precioPorMetro = precio / tamano // OK
-        }
-
-        if (binding.editHabitaciones.text.toString() == "" || binding.editHabitaciones.text.toString()
-                .toInt() <= 0
-        ) {
-            hasError = true
-            setError(
-                binding.editHabitaciones,
-                "Este campo no puede estar vacio. Numeros mayores a 0"
-            )
-        } else {
-            habitaciones = binding.editHabitaciones.text.toString().toInt()
-        }
-
-        if (binding.editBanos.text.toString() == "" || binding.editBanos.text.toString()
-                .toInt() <= 0
-        ) {
-            hasError = true
-            setError(binding.editBanos, "Este campo no puede estar vacio. Numeros mayores a 0")
-        } else {
-            banos = binding.editBanos.text.toString().toInt()
-        }
-
-        if (binding.editDireccion.text.toString() == "") {
-            hasError = true
-            setError(binding.editDireccion, "Este campo no puede estar vacio.")
-        } else {
-            direccion = binding.editDireccion.text.toString()
-            provinciaInmueble = getProvincia()
-            municipioInmueble = getMunicipio()
-            barrio = getMunicipio()
-            pais = "España" // OK
-            latitud = getLatitude()
-            longitud = getLongitude()
-        }
-
-        if (binding.editCP.text.toString() == "") {
-            hasError = true
-            setError(binding.editCP, "Este campo no puede estar vacio.")
-        } else {
-            codigoPostalInm = binding.editCP.text.toString().toInt()
-        }
-
-        if (binding.editTitulo.text.toString() == "") {
-            hasError = true
-            setError(binding.editTitulo, "Este campo no puede estar vacio.")
-
-        } else {
-            titulo = binding.editTitulo.text.toString()
-        }
-
-        if (binding.editDescripcion.text.toString() == "") {
-            hasError = true
-            binding.editDescripcion.error = "Este campo no puede estar vacio."
-        } else {
-            descripcion = binding.editDescripcion.text.toString()
-        }
-
-        if (!hasError) {
-            if (editorFichaViewModel.inmueble == null) {
-                crearInmueble()
-            } else {
-                actualizarInmueble()
-            }
-        }
-    }
-
-    private fun actualizarInmueble() {
-        val inmueble = editorFichaViewModel.inmueble!!
-        inmueble.dniPropietario = dniPropietario
-        inmueble.direccion = direccion
-        inmueble.nuevoDesarrollo = nuevoDesarrollo
-        inmueble.miniatura = miniatura
-        inmueble.URLminiatura = URLminiatura
-        inmueble.altura = altura
-        inmueble.precio = precio
-        inmueble.tipoDeInmueble = tipoDeInmueble
-        inmueble.operacion = operacion
-        inmueble.tamano = tamano
-        inmueble.exterior = exterior
-        inmueble.habitaciones = habitaciones
-        inmueble.banos = banos
-        inmueble.provincia = provinciaInmueble
-        inmueble.municipio = municipioInmueble
-        inmueble.barrio = barrio
-        inmueble.pais = pais
-        inmueble.latitud = latitud
-        inmueble.longitud = longitud
-        inmueble.estado = estadoInmueble
-        inmueble.tieneAscensor = tieneAscensor
-        inmueble.precioPorMetro = precioPorMetro
-        inmueble.titulo = titulo
-        inmueble.subtitulo = subtitulo
-        inmueble.descripcion = descripcion
-        inmueble.codigoPostal = codigoPostalInm
-
-        datasource.inmuebleDAO().delete(inmueble)
-        datasource.inmuebleDAO().insertAll(inmueble)
-        sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
-
-        editorFichaViewModel.imagesList.getValue().forEach {
-            Log.e("EEEE", "${editorFichaViewModel.inmuebleID} ${it.inmuebleId}")
-            if (datasource.fotoDAO().findById(it.fotoId.toString()) != null) {
-                datasource.fotoDAO().delete(it)
-            }
-            datasource.fotoDAO().insertAll(it)
-        }
-
-        val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
-        sharedModel.updateInmuebles()
-        sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
-        findNavController().navigate(action)
-    }
-
-    private fun crearInmueble() {
-        val inmueble = Inmueble(
-            dniPropietario,
-            direccion,
-            nuevoDesarrollo,
-            miniatura,
-            URLminiatura,
-            altura,
-            precio,
-            tipoDeInmueble,
-            operacion,
-            tamano,
-            exterior,
-            habitaciones,
-            banos,
-            provinciaInmueble,
-            municipioInmueble,
-            barrio,
-            pais,
-            latitud,
-            longitud,
-            estadoInmueble,
-            tieneAscensor,
-            precioPorMetro,
-            titulo,
-            subtitulo,
-            descripcion,
-            codigoPostalInm
-        )
-
-        datasource.inmuebleDAO().insertAll(inmueble)
-        if (editorFichaViewModel.inmueble == null) {
-            editorFichaViewModel.inmuebleID = datasource.inmuebleDAO().getAll().last().inmuebleId
-        }
-
-        editorFichaViewModel.imagesList.getValue().forEach {
-            datasource.fotoDAO().insertAll(Foto(editorFichaViewModel.inmuebleID!!, it.imagen))
-        }
-
+    private fun terminarEdicionCreacion() {
         val action = EditorFichaFragmentDirections.actionEditorFichaFragmentToNavHome()
         sharedModel.updateInmuebles()
         sharedModel.inmuebles.value = datasource.inmuebleDAO().getAll().toMutableList()
@@ -466,72 +254,6 @@ class EditorFichaFragment : Fragment() {
         }
     }
 
-    private fun getLatitude(): Double {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        val result = geocoder.getFromLocationName(
-            binding.editDireccion.text.toString() + binding.editCP.text.toString(),
-            1
-        )
-        return if (result.isEmpty()) 0.0 else result.get(0).latitude
-    }
-
-    private fun getLongitude(): Double {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        val result = geocoder.getFromLocationName(
-            binding.editDireccion.text.toString() + binding.editCP.text.toString(),
-            1
-        )
-        return if (result.isEmpty()) 0.0 else result.get(0).longitude
-    }
-
-    private fun getMunicipio(): String {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        val result = geocoder.getFromLocationName(
-            binding.editDireccion.text.toString() + binding.editCP.text.toString(),
-            1
-        )
-        return if (result.isEmpty()) "" else result.get(0).locality
-    }
-
-    private fun getProvincia(): String {
-        val geocoder = Geocoder(context, Locale.getDefault())
-        val dir = geocoder.getFromLocationName(
-            binding.editDireccion.text.toString() + binding.editCP.text.toString(),
-            1
-        )
-        return if (!dir.isEmpty()) dir.get(0).adminArea else ""
-    }
-
-    private fun tipoOperacion(): String {
-        val selectedID = binding.radioGroupOperacion.checkedRadioButtonId
-        return when (binding.radioGroupOperacion.findViewById<RadioButton>(selectedID).text) {
-            getString(R.string.venta) -> Constantes.VENTA
-            getString(R.string.alquiler) -> Constantes.ALQUILER
-            getString(R.string.intercambio_de_viviendas) -> Constantes.INTERCAMBIO_VIVIENDA
-            else -> ""
-        }
-    }
-
-    private fun tipoInmueble(): String {
-        val selectedID = binding.radioGroupTipoInmueble.checkedRadioButtonId
-        return when (binding.radioGroupTipoInmueble.findViewById<RadioButton>(selectedID).text) {
-            getString(R.string.tico) -> Constantes.ATICO
-            getString(R.string.casa_chalet) -> Constantes.CASA_CHALET
-            getString(R.string.habitaci_n) -> Constantes.HABITACION
-            getString(R.string.piso) -> Constantes.PISO
-            else -> ""
-        }
-    }
-
-    private fun getEstado(): String {
-        val selectedID = binding.radioGroupEstado.checkedRadioButtonId
-        return when (binding.radioGroupEstado.findViewById<RadioButton>(selectedID).text) {
-            getString(R.string.obra_nueva) -> Constantes.NUEVA_CONSTRUCCION
-            getString(R.string.buen_estado) -> Constantes.BUEN_ESTADO
-            getString(R.string.a_reformar) -> Constantes.REFORMAR
-            else -> ""
-        }
-    }
 
     private fun setDireccion(latitud: Double, longitud: Double) {
         val geocoder = Geocoder(context, Locale.getDefault())
