@@ -55,7 +55,7 @@ class PopulateDB(
         }
 
         // Crear Inmuebles
-        for (i in 0..40) {
+        for (i in 0..10) {
             createInmueble(i)
         }
 
@@ -80,7 +80,7 @@ class PopulateDB(
         saveImage(posterBitmap!!, inmuebleId)
     }
 
-    private fun createInmueble(i: Int) {
+    fun createInmueble(i: Int) {
         var posterBitmap: Bitmap? = null
         posterBitmap = getBitmapFromURL("https://source.unsplash.com/300x300/?building")
         posterBitmap = processImage(posterBitmap!!)
@@ -169,7 +169,6 @@ class PopulateDB(
         val tipoInmueble = listOf(
             Constantes.ATICO,
             Constantes.CASA_CHALET,
-            Constantes.HABITACION,
             Constantes.INTERCAMBIO_VIVIENDA,
         )
 

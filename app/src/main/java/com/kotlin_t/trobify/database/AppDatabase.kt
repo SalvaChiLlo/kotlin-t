@@ -18,7 +18,7 @@ import com.kotlin_t.trobify.persistencia.*
         Busqueda::class,
         SesionActual::class
     ],
-    version = 19
+    version = 20
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
