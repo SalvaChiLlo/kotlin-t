@@ -1,23 +1,17 @@
 package com.kotlin_t.trobify.presentacion
 
-import android.app.Activity
 import android.app.Application
 import android.os.Build
-import android.util.Log
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.findNavController
 import com.google.android.gms.maps.model.LatLng
-import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentRegistrarseBinding
 import com.kotlin_t.trobify.logica.Inmueble
 import com.kotlin_t.trobify.logica.SesionActual
 import com.kotlin_t.trobify.logica.Usuario
-import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 import com.kotlin_t.trobify.presentacion.ordenacion.EstrategiaOrdenacion
 import java.time.LocalDateTime
 
@@ -130,7 +124,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     }
 
 
-    fun updateCurrentUser(user: Usuario) {
+    fun updateCurrentUser(user: Usuario?) {
         this.usuarioActual.value = user
     }
 

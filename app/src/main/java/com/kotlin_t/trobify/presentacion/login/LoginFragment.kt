@@ -6,20 +6,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.navigation.NavigationView
-import com.kotlin_t.trobify.MainActivity
 import com.kotlin_t.trobify.R
-import com.kotlin_t.trobify.logica.SesionActual
 import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
-import java.time.LocalDateTime
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER

@@ -1,17 +1,16 @@
 package com.kotlin_t.trobify
 
 import android.Manifest
+import android.content.DialogInterface
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
@@ -32,7 +31,7 @@ import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var sharedViewModel: SharedViewModel
@@ -52,8 +51,9 @@ class MainActivity : AppCompatActivity() {
         headerView.findViewById<Button>(R.id.iniciaSesionButton)?.setOnClickListener {
             findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeToLoginFragment())
         }
-
-        navView.findViewById<Button>(R.id.botonCerrarSesion)?.setOnClickListener{
+        val cerrarSesion = nav_menu.findItem(R.id.cerrarSesion)
+        val botonCerrarSesion = cerrarSesion.actionView.rootView.findViewById<Button>(R.id.botonCerrarSesion)
+        botonCerrarSesion?.setOnClickListener {
             cerrarSesion()
         }
         val usuarioObserver = Observer<Usuario> { usuario ->
@@ -61,6 +61,7 @@ class MainActivity : AppCompatActivity() {
 
                 nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(false)
                 nav_menu.findItem(R.id.nav_mi_cuenta)
+                headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.VISIBLE
                 nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(false)
                 headerView.findViewById<TextView>(R.id.nav_header_text).text =
                     "No estás identificado"
@@ -210,8 +211,27 @@ class MainActivity : AppCompatActivity() {
     fun cerrarSesion(){
         val application = requireNotNull(this).application
         val database = AppDatabase.getDatabase(application)
-        database.sesionActualDAO().deleteSesion()
-        Log.d("Hola", "Hola")
-        findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeSelf())
+        val navView: NavigationView = findViewById(R.id.nav_view)
+        val headerView = navView.getHeaderView(0)
+        AlertDialog.Builder(this)
+            .setTitle("Cerrar Sesión")
+            .setMessage("¿Estás Seguro de cerrar la Sesión?")
+            .setPositiveButton("Si", DialogInterface.OnClickListener( fun(dialog : DialogInterface, _: Int){
+                database.sesionActualDAO().deleteSesion()
+                sharedViewModel.updateCurrentUser(null)
+                headerView.findViewById<ImageView>(R.id.nav_header_picture).setImageResource(R.drawable.anonymous_user)
+                findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeSelf())
+                dialog.cancel()
+            }))
+            .setNegativeButton("No", DialogInterface.OnClickListener(fun(dialog: DialogInterface, _: Int){
+                dialog.cancel()
+            }))
+            .setIcon(R.drawable.ic_baseline_warning_24)
+            .show()
+
+
+
     }
+
+
 }

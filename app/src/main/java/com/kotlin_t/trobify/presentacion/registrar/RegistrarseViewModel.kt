@@ -11,10 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentRegistrarseBinding
-import com.kotlin_t.trobify.logica.SesionActual
 import com.kotlin_t.trobify.logica.Usuario
 import com.kotlin_t.trobify.presentacion.SharedViewModel
-import java.time.LocalDateTime
 
 
 class RegistrarseViewModel(
@@ -183,7 +181,7 @@ class RegistrarseViewModel(
         }
 
         for(i in nombre.indices){
-            if(!Character.isLetter(nombre[i])){
+            if(!Character.isLetter(nombre[i]) && nombre[i].toInt() != 32){
                 binding.nombre.isErrorEnabled = true;
                 binding.nombre.error = fragment.getString(R.string.nombreInvalido)
                 return false;
@@ -201,9 +199,9 @@ class RegistrarseViewModel(
             return false;
         }
         for(i in apellidos.indices){
-            if(!Character.isLetter(apellidos[i])){
-                binding.nombre.isErrorEnabled = true;
-                binding.nombre.error = fragment.getString(R.string.apellidosInvalidos)
+            if(!Character.isLetter(apellidos[i]) && apellidos[i].toInt() != 32){
+                binding.apellidos.isErrorEnabled = true;
+                binding.apellidos.error = fragment.getString(R.string.apellidosInvalidos)
                 return false;
             }
         }
