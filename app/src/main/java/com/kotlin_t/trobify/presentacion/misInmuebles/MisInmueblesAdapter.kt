@@ -40,7 +40,7 @@ class MisInmueblesAdapter(
         val inmueble = database.inmuebleDAO().findById(dataset[position].inmuebleId!!.toString())
         holder.imagen.setImageBitmap(inmueble.miniatura)
         holder.imagen.setOnClickListener{
-            holder.itemView.findNavController().navigate(MisInmueblesFragmentDirections.actionNavMisInmueblesToEditorFichaFragment(inmueble.inmuebleId))
+            holder.itemView.findNavController().navigate(MisInmueblesFragmentDirections.actionMisInmueblesFragmentToEditorFichaFragment(inmueble.inmuebleId))
         }
         // Set direccion
         holder.direccion.text = inmueble.direccion
