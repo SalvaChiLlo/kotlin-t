@@ -92,11 +92,6 @@ class HomeFragment : Fragment() {
             findNavController().navigate(HomeFragmentDirections.actionNavHomeToBusquedaFragment())
         }
 
-        binding.addInmueble.setOnClickListener {
-            val action = HomeFragmentDirections.actionNavHomeToEditorFichaFragment(database.inmuebleDAO().getAll().last().inmuebleId)
-            findNavController().navigate(action)
-        }
-
     }
     private fun setAviso() {
         if(database.inmuebleDAO().getAll().isEmpty()) {

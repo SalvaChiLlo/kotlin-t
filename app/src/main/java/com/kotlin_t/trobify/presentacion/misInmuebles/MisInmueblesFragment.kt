@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
@@ -18,6 +19,7 @@ import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModel
 import com.kotlin_t.trobify.presentacion.misInmuebles.MisInmueblesAdapter
 import com.kotlin_t.trobify.presentacion.misInmuebles.MisInmueblesViewModel
 import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModelFactory
+import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 import com.kotlin_t.trobify.presentacion.misInmuebles.MisInmueblesViewModelFactory
 
 
@@ -52,6 +54,11 @@ class MisInmueblesFragment : androidx.fragment.app.Fragment() {
         recyclerView.adapter = MisInmueblesAdapter(
             requireContext(), misInmueblesViewModel.getMisInmuebles(), misInmueblesViewModel, misInmueblesViewModel.database
         )
+
+        binding.anadirInmueble.setOnClickListener {
+            val action = MisInmueblesFragmentDirections.actionMisInmueblesFragmentToEditorFichaFragment(-1)
+            findNavController().navigate(action)
+        }
     }
 
 }
