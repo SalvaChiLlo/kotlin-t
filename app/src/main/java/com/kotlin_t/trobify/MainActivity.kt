@@ -2,12 +2,15 @@ package com.kotlin_t.trobify
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -75,8 +78,11 @@ class MainActivity : AppCompatActivity() {
                 headerView.findViewById<TextView>(R.id.nav_header_text).text =
                     "Bienvenido " + usuario.nombre
                 headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.GONE
-
-
+                if(usuario.fotoPerfil == null) {
+                    headerView.findViewById<ImageView>(R.id.nav_header_picture).setImageResource(R.drawable.anonymous_user)
+                } else {
+                    headerView.findViewById<ImageView>(R.id.nav_header_picture).setImageBitmap(usuario.fotoPerfil)
+                }
             }
 
         }

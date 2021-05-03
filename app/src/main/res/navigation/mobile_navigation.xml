@@ -31,10 +31,13 @@
             app:destination="@id/nav_login" />
         <action
             android:id="@+id/action_nav_home_to_editorFichaFragment"
-            app:destination="@id/editorFichaFragment" />
+            app:destination="@id/editorFichaFragment" />/>
         <action
             android:id="@+id/action_nav_home_self"
             app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_nav_home_to_misInmueblesFragment"
+            app:destination="@id/nav_mis_inmuebles" />
     </fragment>
 
     <fragment
