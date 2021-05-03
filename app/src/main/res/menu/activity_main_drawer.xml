@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:showIn="navigation_view">
 
     <group android:checkableBehavior="single">
@@ -20,5 +21,18 @@
             android:id="@+id/nav_mis_inmuebles"
             android:icon="@drawable/ic_baseline_format_list_bulleted_24"
             android:title="@string/mis_inmuebles" />
+        >
+        <item
+            android:id="@+id/cerrarSesion"
+            android:title=""
+
+            app:actionLayout="@layout/cerrar_sesion"
+            app:showAsAction="always"
+            />
+
+
+
     </group>
+
+
 </menu>

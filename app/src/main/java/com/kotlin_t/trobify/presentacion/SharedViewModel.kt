@@ -1,15 +1,25 @@
 package com.kotlin_t.trobify.presentacion
 
+import android.app.Activity
 import android.app.Application
+import android.os.Build
+import android.util.Log
 import androidx.annotation.NonNull
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.findNavController
 import com.google.android.gms.maps.model.LatLng
+import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentRegistrarseBinding
 import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.logica.SesionActual
 import com.kotlin_t.trobify.logica.Usuario
+import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 import com.kotlin_t.trobify.presentacion.ordenacion.EstrategiaOrdenacion
+import java.time.LocalDateTime
 
 class SharedViewModel(@NonNull application: Application) : AndroidViewModel(application) {
     var database = AppDatabase.getDatabase(application)
@@ -24,7 +34,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
 
     val usuarioActual__PRUEBA = database.usuarioDAO().findById("-1")
 
-    val inmuebles = MutableLiveData<MutableList<Inmueble>>()
+    val inmuebles = MutableLiveData<MutableList<Inmueble>?>()
     val usuarios = MutableLiveData<MutableList<Usuario>>()
     var estrategiaOrdenacion: EstrategiaOrdenacion? = null
     lateinit var binding: FragmentRegistrarseBinding
@@ -42,6 +52,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     var busquedaString = "";
 
     init {
+
         if (database.usuarioDAO().getAll().isEmpty()) {
             val usuarioPopulate = Usuario(
                 "$2345678E",
@@ -136,6 +147,16 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         preciosOpciones.value!!.set(1, database.inmuebleDAO().getMaxPrecio())
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun insertarSesionActual(username: String) {
+        database.sesionActualDAO().insertSesion(SesionActual(username, LocalDateTime.now().toString()))
+    }
+    fun recuperarSesionActual(){
+        val sesionActual = database.sesionActualDAO().getSesionActual()
+        if(sesionActual != null){
+            usuarioActual.value = database.usuarioDAO().findByUsername(sesionActual.usuario)
+        }
 
+    }
 
 }

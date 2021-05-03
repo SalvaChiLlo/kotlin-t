@@ -15,9 +15,10 @@ import com.kotlin_t.trobify.persistencia.*
         Inmobiliaria::class,
         Inmueble::class,
         Usuario::class,
-        Busqueda::class
+        Busqueda::class,
+        SesionActual::class
     ],
-    version = 16
+    version = 19
 )
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
@@ -29,6 +30,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun inmuebleDAO(): InmuebleDAO
     abstract fun usuarioDAO(): UsuarioDAO
     abstract fun busquedaDAO(): BusquedaDAO
+    abstract fun sesionActualDAO(): SesionActualDAO
 
     companion object {
         @Volatile

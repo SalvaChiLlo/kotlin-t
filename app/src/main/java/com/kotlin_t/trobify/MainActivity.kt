@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
@@ -13,7 +14,6 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
@@ -45,13 +45,13 @@ class MainActivity : AppCompatActivity() {
         val navView: NavigationView = findViewById(R.id.nav_view)
         val headerView = navView.getHeaderView(0)
         val nav_menu: Menu = navView.menu
-        val loginButton = headerView.findViewById<Button>(R.id.iniciaSesionButton)
-        if (loginButton != null) {
-            loginButton.setOnClickListener {
-                findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeToLoginFragment())
-            }
+        headerView.findViewById<Button>(R.id.iniciaSesionButton)?.setOnClickListener {
+            findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeToLoginFragment())
         }
 
+        navView.findViewById<Button>(R.id.botonCerrarSesion)?.setOnClickListener{
+            cerrarSesion()
+        }
         val usuarioObserver = Observer<Usuario> { usuario ->
             if (usuario == null) {
 
@@ -60,18 +60,27 @@ class MainActivity : AppCompatActivity() {
                 nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(false)
                 headerView.findViewById<TextView>(R.id.nav_header_text).text =
                     "No estás identificado"
+                nav_menu.findItem(R.id.cerrarSesion).setVisible(false)
 
             } else {
 
                 nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(true)
                 nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(true)
+                nav_menu.findItem(R.id.cerrarSesion)
+                    .setVisible(true)
+
+
+
+
                 headerView.findViewById<TextView>(R.id.nav_header_text).text =
                     "Bienvenido " + usuario.nombre
                 headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.GONE
 
 
             }
+
         }
+
 
         sharedViewModel.usuarioActual.observe(this, usuarioObserver)
 
@@ -191,5 +200,11 @@ class MainActivity : AppCompatActivity() {
 
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
-
+    fun cerrarSesion(){
+        val application = requireNotNull(this).application
+        val database = AppDatabase.getDatabase(application)
+        database.sesionActualDAO().deleteSesion()
+        Log.d("Hola", "Hola")
+        findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeSelf())
+    }
 }

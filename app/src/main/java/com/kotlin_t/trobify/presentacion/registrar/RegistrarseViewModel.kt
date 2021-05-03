@@ -1,23 +1,20 @@
 package com.kotlin_t.trobify.presentacion.registrar
 
+
 import android.app.Application
-import android.content.Intent
 import android.graphics.Bitmap
-import android.util.Log
+import android.os.Build
 import android.widget.Toast
-import androidx.core.app.ActivityCompat.startActivityForResult
-import androidx.core.graphics.drawable.toBitmap
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.navigation.fragment.findNavController
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentRegistrarseBinding
+import com.kotlin_t.trobify.logica.SesionActual
 import com.kotlin_t.trobify.logica.Usuario
-import com.kotlin_t.trobify.persistencia.UsuarioDAO
 import com.kotlin_t.trobify.presentacion.SharedViewModel
-import java.security.AccessController.getContext
+import java.time.LocalDateTime
 
 
 class RegistrarseViewModel(
@@ -88,26 +85,25 @@ class RegistrarseViewModel(
             binding.usuario.error = fragment.getString(R.string.completaCampo)
             return false;
         }
+        if(usuario.length < 5){
+            binding.usuario.isErrorEnabled = true;
+            binding.usuario.error = fragment.getString(R.string.usuarioCorto)
+            return false;
+        }
         if (database.usuarioDAO().existsUsername(usuario)) {
             binding.usuario.isErrorEnabled = true;
             binding.usuario.error = fragment.getString(R.string.usuarioCogido)
             return false;
         }
-        var letra = false
-        var numero = false
-        var caracterEspecial = false
         for (i in usuario.indices) {
-            if (Character.isDigit(usuario[i])) numero = true
-            else if (Character.isLetter(usuario[i])) letra = true
-            else if (!Character.isLetterOrDigit(usuario[i])) caracterEspecial = true
+            if (usuario[i].toInt() == 32){
+                binding.usuario.isErrorEnabled = true;
+                binding.usuario.error = fragment.getString(R.string.usuarioIncorrecto)
+                return false
+            }
+
 
         }
-        if (!letra || !numero || !caracterEspecial) {
-            binding.usuario.isErrorEnabled = true;
-            binding.usuario.error = fragment.getString(R.string.usuarioCorrecto)
-            return false
-        }
-
         binding.usuario.isErrorEnabled = false;
         _usuario = usuario
         return true;
@@ -185,6 +181,14 @@ class RegistrarseViewModel(
             binding.nombre.error = fragment.getString(R.string.completaCampo)
             return false;
         }
+
+        for(i in nombre.indices){
+            if(!Character.isLetter(nombre[i])){
+                binding.nombre.isErrorEnabled = true;
+                binding.nombre.error = fragment.getString(R.string.nombreInvalido)
+                return false;
+            }
+        }
         binding.nombre.isErrorEnabled = false
         _nombre = nombre
         return true;
@@ -195,6 +199,13 @@ class RegistrarseViewModel(
             binding.apellidos.isErrorEnabled = true;
             binding.apellidos.error = fragment.getString(R.string.completaCampo)
             return false;
+        }
+        for(i in apellidos.indices){
+            if(!Character.isLetter(apellidos[i])){
+                binding.nombre.isErrorEnabled = true;
+                binding.nombre.error = fragment.getString(R.string.apellidosInvalidos)
+                return false;
+            }
         }
         binding.apellidos.isErrorEnabled = false
         _apellidos = apellidos
@@ -255,13 +266,15 @@ class RegistrarseViewModel(
         return true;
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun registrarse() {
         if (usuarioValido(usuario) && contrasenaValida(contrasena) && coincidenContrasenas(repetirContrasena) && dniCorrecto(dni) && nombreCorrecto(nombre) &&
-            apellidosCorrectos(apellidos) && telefonoCorrecto(telefono) && ibanCorrecto(iban)
+            apellidosCorrectos(apellidos) && telefonoCorrecto(telefono)
         ) {
-            val usuario = Usuario(dni, usuario, contrasena, nombre, apellidos, telefono, iban, avatar)
-            database.usuarioDAO().insertAll(usuario)
-            model.usuarioActual.value = usuario
+            val user = Usuario(dni, usuario, contrasena, nombre, apellidos, telefono, iban, avatar)
+            database.usuarioDAO().insertAll(user)
+            model.updateCurrentUser(user)
+            model.insertarSesionActual(usuario)
             fragment.findNavController().navigate(RegistrarseFragmentDirections.actionRegistrarseFragmentToNavHome())
             Toast.makeText(fragment.context, "Usuario registrado correctamente", Toast.LENGTH_LONG).show()
         }
@@ -300,10 +313,6 @@ class RegistrarseViewModel(
         if(binding.inputTelefono.text.toString().isEmpty()){
             binding.telefono.isErrorEnabled = true
             binding.telefono.error = fragment.getString(idString)
-        }
-        if(binding.inputIban.text.toString().isEmpty()){
-            binding.iban.isErrorEnabled = true
-            binding.iban.error = fragment.getString(idString)
         }
     }
 

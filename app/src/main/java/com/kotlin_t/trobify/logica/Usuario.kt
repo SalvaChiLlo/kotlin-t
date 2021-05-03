@@ -12,7 +12,7 @@ data class Usuario(
     var nombre: String,
     var apellidos: String,
     var telefono: String,
-    var iban: String,
+    var iban: String?,
     var fotoPerfil: Bitmap?
 ) {
     var baneado: Boolean = false

@@ -92,15 +92,19 @@
     <string name="datos_del_usuario">Datos del Usuario</string>
     <string name="datos_bancarios">Datos Bancarios</string>
     <string name="completaCampo">Completa este Campo</string>
-    <string name="usuarioIncorrecto">El usuario tiene que estar compuesto de letras y números</string>
+    <string name="usuarioIncorrecto">El usuario no puede contener espacios</string>
     <string name="contrasenaCorta">La contraseña es muy corta. Mínimo 8 caracteres</string>
     <string name="contrasenaNoCoinciden">Las Contraseñas no Coinciden</string>
-    <string name="usuarioCorrecto">El usuario debe estar compuesto por letras, número y caracteres especiales</string>
+
     <string name="dniIncorrecto">El DNI no tiene un formato Correcto</string>
     <string name="telefonoIncorrecto">el formato del Teléfono es incorrecto</string>
     <string name="ibanIncorrecto">El formato del IBAN es incorrecto</string>
     <string name="usuarioCogido">El Usuario está cogido</string>
     <string name="dniCogido">Este DNI ya existe</string>
+    <string name="nombreInvalido">El formato del nombre es Incorrecto</string>
+    <string name="apellidosInvalidos">El formato de los Apellidos es Invalido</string>
+    <string name="usuarioCorto">El usuario tiene que contener al menos 5 caracteres</string>
+    <string name="cerrar_sesion">Cerrar Sesión</string>
 
 
 </resources>

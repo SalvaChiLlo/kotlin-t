@@ -49,15 +49,20 @@ class HomeFragment : Fragment() {
             val estrategia = sharedViewModel.estrategiaOrdenacion
             sharedViewModel.inmuebles.observe(viewLifecycleOwner, Observer {
                 if (estrategia != null) {
-                    recyclerView.adapter = HomeItemAdapter(requireContext(), estrategia.ordenar(it), homeViewModel)
+                    recyclerView.adapter = it?.let { it1 -> estrategia.ordenar(it1) }?.let { it2 ->
+                        HomeItemAdapter(requireContext(),
+                            it2, homeViewModel)
+                    }
                 }
                 else{
-                    recyclerView.adapter = HomeItemAdapter(requireContext(), it, homeViewModel)
+                    recyclerView.adapter =
+                        it?.let { it1 -> HomeItemAdapter(requireContext(), it1, homeViewModel) }
                 }
 
                 setAviso()
             })
         }
+        sharedViewModel.recuperarSesionActual()
         return binding.root
     }
 
@@ -66,6 +71,8 @@ class HomeFragment : Fragment() {
         val orderButton = view.findViewById<ImageView>(R.id.order_button)
         val locationButton = view.findViewById<ImageView>(R.id.location_button)
         val busquedaButton = view.findViewById<ImageView>(R.id.busqueda_button)
+
+
 
         setAviso()
 

@@ -1,5 +1,6 @@
 package com.kotlin_t.trobify.presentacion.login
 
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,13 +10,16 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.navigation.NavigationView
 import com.kotlin_t.trobify.MainActivity
 import com.kotlin_t.trobify.R
+import com.kotlin_t.trobify.logica.SesionActual
 import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
+import java.time.LocalDateTime
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,6 +59,7 @@ class LoginFragment : Fragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         usernameField = view.findViewById(R.id.textFieldUsername)
@@ -101,6 +106,7 @@ class LoginFragment : Fragment() {
     }
 
     //Se asume que username y password no están vacios
+    @RequiresApi(Build.VERSION_CODES.O)
     fun checkLoginCredentials(username: String, password: String, view: View) {
 
         var usuario = sharedViewModel.getUserFromCredentials(username, password)
@@ -112,7 +118,7 @@ class LoginFragment : Fragment() {
         } else {
 
             sharedViewModel.updateCurrentUser(usuario)
-
+            sharedViewModel.insertarSesionActual(username)
             findNavController().navigate(R.id.action_loginFragment_to_nav_home, null)
 
         }
