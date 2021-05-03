@@ -47,6 +47,7 @@ class MainActivity : AppCompatActivity() {
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
         val navView: NavigationView = findViewById(R.id.nav_view)
         val headerView = navView.getHeaderView(0)
+
         val nav_menu: Menu = navView.menu
         headerView.findViewById<Button>(R.id.iniciaSesionButton)?.setOnClickListener {
             findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeToLoginFragment())
