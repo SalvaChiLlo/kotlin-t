@@ -18,6 +18,7 @@ import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Favorito
 import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.presentacion.SharedViewModel
 import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 import java.lang.Appendable
 
@@ -26,7 +27,9 @@ class FavoritoAdapter(
     val context: Context,
     val dataset: List<Favorito>,
     val viewModel: ListaFavoritosViewModel,
-    val database: AppDatabase
+    val database: AppDatabase,
+    val sharedViewModel: SharedViewModel
+
 ) :
     RecyclerView.Adapter<FavoritoAdapter.FavoritoViewHolder>() {
     class FavoritoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -58,9 +61,9 @@ class FavoritoAdapter(
         if (inmueble.operacion == "alquiler") type = R.string.precioMes
         else type = R.string.precio
         holder.precioMes.text = context.getString(type, inmueble.precio)
-        viewModel.checkIfFavorito(inmueble, holder.favorito)
+        viewModel.checkIfFavorito(dataset[position], holder.favorito)
         holder.favorito.setOnClickListener{
-            viewModel.addOrRemoveFavorite(inmueble, null, holder.favorito)
+            viewModel.addOrRemoveFavorite(dataset[position], sharedViewModel.usuarioActual.value?.dni, holder.favorito)
         }
 
     }

@@ -20,8 +20,8 @@ class ListaFavoritosViewModel(val database: AppDatabase, application: Applicatio
         return listaFavoritos
     }
 
-    fun checkIfFavorito(inmueble: Inmueble, imageView: ImageView) {
-        val search = database.favoritoDAO().findById(inmueble.inmuebleId)
+    fun checkIfFavorito(favorito: Favorito, imageView: ImageView) {
+        val search = database.favoritoDAO().findByIdandDni(favorito.inmuebleId,favorito.dni.toString())
         if (search != null) {
             imageView.setImageResource(R.drawable.ic_baseline_favorite_24)
         } else {
@@ -29,14 +29,14 @@ class ListaFavoritosViewModel(val database: AppDatabase, application: Applicatio
         }
     }
 
-    fun addOrRemoveFavorite(inmueble: Inmueble, dni: String?, imageView: ImageView) {
-        val search = database.favoritoDAO().findById(inmueble.inmuebleId)
+    fun addOrRemoveFavorite(favorito: Favorito, dni: String?, imageView: ImageView) {
+        val search = database.favoritoDAO().findByIdandDni(favorito.inmuebleId, favorito.dni.toString())
         if (search == null) {
-            database.favoritoDAO().insertAll(Favorito(inmueble.inmuebleId, dni))
+            database.favoritoDAO().insertAll(favorito)
         } else {
-            database.favoritoDAO().delete(Favorito(inmueble.inmuebleId, dni))
+            database.favoritoDAO().delete(favorito)
         }
-        checkIfFavorito(inmueble, imageView)
+        checkIfFavorito(favorito, imageView)
     }
 }
 

@@ -48,7 +48,7 @@ class ListaFavoritosFragment : Fragment() {
         recyclerView = binding.favoritosRecyclerView
 
         recyclerView.adapter = FavoritoAdapter(
-            requireContext(), listaFavoritosViewModel.getInmueblesFavoritos(), listaFavoritosViewModel, listaFavoritosViewModel.database
+            requireContext(), listaFavoritosViewModel.getInmueblesFavoritos(), listaFavoritosViewModel, listaFavoritosViewModel.database, sharedViewModel
         )
     }
 }

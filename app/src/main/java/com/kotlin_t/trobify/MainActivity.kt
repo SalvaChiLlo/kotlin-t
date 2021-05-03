@@ -189,17 +189,17 @@ class MainActivity : AppCompatActivity(){
                     .isEmpty()
             ) {
                 PopulateDB(database, this, sharedViewModel).populate()
-            }
 
-            this@MainActivity.runOnUiThread {
-                sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
-            }
+                this@MainActivity.runOnUiThread {
+                    sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
+                }
 
-            for(i in 1..20) {
-                PopulateDB(database, this, sharedViewModel).createInmueble(i)
-            }
-            this@MainActivity.runOnUiThread {
-                sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
+                for(i in 1..20) {
+                    PopulateDB(database, this, sharedViewModel).createInmueble(i)
+                }
+                this@MainActivity.runOnUiThread {
+                    sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
+                }
             }
         }.start()
     }
