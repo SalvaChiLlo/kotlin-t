@@ -57,6 +57,9 @@ class PopulateDB(
         // Crear Inmuebles
         for (i in 0..10) {
             createInmueble(i)
+            val ultimoInmueble = database.inmuebleDAO().getAll().last()
+            database.fotoDAO()
+                .insertAll(Foto(ultimoInmueble.inmuebleId, ultimoInmueble.miniatura!!))
         }
 
         val listaInmuebles = database.inmuebleDAO().getAll()
@@ -217,7 +220,7 @@ class PopulateDB(
                 direccion,
                 1
             )
-            return if (result.isEmpty()) "" else result.get(0)?.locality+""
+            return if (result.isEmpty()) "" else result.get(0)?.locality + ""
         }
 
         fun getProvincia(): String {
@@ -226,7 +229,7 @@ class PopulateDB(
                 direccion,
                 1
             )
-            return if (!dir.isEmpty()) dir.get(0)?.adminArea+"" else ""
+            return if (!dir.isEmpty()) dir.get(0)?.adminArea + "" else ""
         }
 
         database.inmuebleDAO().insertAll(
