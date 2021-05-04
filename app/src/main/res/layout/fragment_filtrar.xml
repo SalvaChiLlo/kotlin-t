@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.kotlin_t.trobify.presentacion.filtrar.FiltrarViewModel" />
+            type="com.kotlin_t.trobify.logica.filtrar.FiltrarViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

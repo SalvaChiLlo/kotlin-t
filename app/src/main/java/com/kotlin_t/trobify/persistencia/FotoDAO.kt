@@ -1,7 +1,6 @@
 package com.kotlin_t.trobify.persistencia
 
 import androidx.room.*
-import com.kotlin_t.trobify.logica.Foto
 
 @Dao
 interface FotoDAO {

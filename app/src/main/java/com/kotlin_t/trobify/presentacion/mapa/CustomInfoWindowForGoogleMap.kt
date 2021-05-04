@@ -2,17 +2,13 @@ package com.kotlin_t.trobify.presentacion.mapa
 
 import android.app.Activity
 import android.content.Context
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.kotlin_t.trobify.R
-import androidx.fragment.app.activityViewModels
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.persistencia.Inmueble
 
 class CustomInfoWindowForGoogleMap(context: Context) : GoogleMap.InfoWindowAdapter {
 

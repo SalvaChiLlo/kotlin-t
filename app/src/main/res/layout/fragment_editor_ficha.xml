@@ -8,7 +8,7 @@
 
         <variable
             name="viewModel"
-            type="com.kotlin_t.trobify.presentacion.editorFicha.EditorFichaViewModel" />
+            type="com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

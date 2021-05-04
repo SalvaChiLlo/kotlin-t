@@ -5,12 +5,9 @@ import android.content.Context
 import android.content.pm.PackageManager
 import android.location.*
 import android.os.Bundle
-import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.core.app.ActivityCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
@@ -21,9 +18,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentBusquedaBinding
-import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.filtrar.FiltrarViewModel
-import com.kotlin_t.trobify.presentacion.filtrar.criteria.Busqueda.BusquedaCriteria
+import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.busqueda.BusquedaViewModel
+import com.kotlin_t.trobify.logica.busqueda.BusquedaViewModelFactory
+import com.kotlin_t.trobify.logica.filtrar.FiltrarViewModel
+import com.kotlin_t.trobify.logica.filtrar.criteria.Busqueda.BusquedaCriteria
 import java.util.*
 
 class BusquedaFragment : Fragment() {

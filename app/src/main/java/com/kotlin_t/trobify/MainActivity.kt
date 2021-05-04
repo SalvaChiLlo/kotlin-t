@@ -4,7 +4,6 @@ import android.Manifest
 import android.content.DialogInterface
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.View
 import android.widget.Button
@@ -26,8 +25,8 @@ import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.database.PopulateDB
-import com.kotlin_t.trobify.logica.Usuario
-import com.kotlin_t.trobify.presentacion.SharedViewModel
+import com.kotlin_t.trobify.persistencia.Usuario
+import com.kotlin_t.trobify.logica.SharedViewModel
 import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 
 

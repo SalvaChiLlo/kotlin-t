@@ -8,23 +8,18 @@ import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.solver.widgets.ConstraintWidget.VISIBLE
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentRegistrarseBinding
-import com.kotlin_t.trobify.logica.Foto
-import com.kotlin_t.trobify.logica.Usuario
-import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.home.HomeViewModel
-import com.kotlin_t.trobify.presentacion.home.HomeViewModelFactory
+import com.kotlin_t.trobify.logica.registrar.RegistrarseViewModel
+import com.kotlin_t.trobify.logica.registrar.RegistrarseViewModelFactory
+import com.kotlin_t.trobify.logica.SharedViewModel
 
 class RegistrarseFragment : Fragment() {
     private lateinit var binding: FragmentRegistrarseBinding

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.kotlin_t.trobify.presentacion.home.HomeViewModel" />
+            type="com.kotlin_t.trobify.logica.home.HomeViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

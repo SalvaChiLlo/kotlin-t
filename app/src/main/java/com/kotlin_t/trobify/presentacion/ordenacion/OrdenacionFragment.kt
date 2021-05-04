@@ -7,15 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.get
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.OrdenacionFragmentBinding
-import com.kotlin_t.trobify.presentacion.Constantes
-import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.home.HomeViewModel
-import com.kotlin_t.trobify.presentacion.home.HomeViewModelFactory
+import com.kotlin_t.trobify.logica.Constantes
+import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ordenacion.OrdenacionViewModel
+import com.kotlin_t.trobify.logica.ordenacion.OrdenacionViewModelFactory
 
 class OrdenacionFragment : Fragment() {
     private lateinit var binding: OrdenacionFragmentBinding

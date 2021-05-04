@@ -6,11 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
-import com.kotlin_t.trobify.logica.Busqueda
-import com.kotlin_t.trobify.presentacion.favoritos.FavoritoAdapter
+import com.kotlin_t.trobify.logica.busqueda.BusquedaViewModel
+import com.kotlin_t.trobify.persistencia.Busqueda
 
 class BusquedaAdapter(val context: Context, val dataset: List<Busqueda>, val busquedaViewModel: BusquedaViewModel): RecyclerView.Adapter<BusquedaAdapter.BusquedaViewHolder>() {
     class BusquedaViewHolder(val view: View): RecyclerView.ViewHolder(view) {
