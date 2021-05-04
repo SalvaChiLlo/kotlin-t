@@ -100,85 +100,256 @@
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textoDimensiones"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:text="- Dimensiones: "
-                android:textSize="16sp" />
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textoExterior"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="- Exterior: "
-                android:textSize="16sp" />
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="35sp"
+                    android:layout_height="35sp"
+                    android:src="@drawable/_844470_home_house_110332"
+                    app:srcCompat="@drawable/_844470_home_house_110332__1_" />
 
-            <TextView
-                android:id="@+id/textoPrecioMetro"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="- Precio por m2: "
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/textoDimensiones"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="- Dimensiones: "
+                    android:layout_marginLeft="10dp"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView"
+                    tools:ignore="RtlCompat" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textoHabitaciones"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="- Habitaciones: "
-                android:textSize="16sp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textoEstado"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="- Estado: "
-                android:textSize="16sp" />
+                <ImageView
+                    android:id="@+id/imageView3"
+                    android:layout_width="68sp"
+                    android:layout_height="35sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/garden111_41357" />
 
-            <TextView
-                android:id="@+id/textoBanos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="- Baños: "
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/textoExterior"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:layout_marginLeft="10dp"
+                    android:text="- Exterior: "
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textoAscensor"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="- Ascensor: "
-                android:textSize="16sp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textoNuevo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="- Nuevo desarrollo: "
-                android:textSize="16sp" />
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="68sp"
+                    android:layout_height="35sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/_euro_symbol_90430" />
 
-            <TextView
-                android:id="@+id/textoTipo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="- Tipo de inmueble: "
-                android:textSize="16sp" />
+                <TextView
+                    android:id="@+id/textoPrecioMetro"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:layout_marginLeft="10dp"
+                    android:text="- Precio por m2: "
+                    android:textSize="16sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/textoAltura"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="- Piso: "
-                android:textSize="16sp" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="68sp"
+                    android:layout_height="35sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/sleepingbedsilhouette_89127" />
+
+                <TextView
+                    android:id="@+id/textoHabitaciones"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:layout_marginLeft="10dp"
+                    android:text="- Habitaciones: "
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView10"
+                    android:layout_width="68sp"
+                    android:layout_height="35sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/charging21_41604" />
+
+                <TextView
+                    android:id="@+id/textoEstado"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:layout_marginLeft="10dp"
+                    android:text="- Estado: "
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView7"
+                    android:layout_width="68sp"
+                    android:layout_height="35sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/bath_tube_icon_149739" />
+
+                <TextView
+                    android:id="@+id/textoBanos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:layout_marginLeft="10dp"
+                    android:text="- Baños: "
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="68sp"
+                    android:layout_height="35sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/elevator_86303" />
+
+                <TextView
+                    android:id="@+id/textoAscensor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:layout_marginLeft="10dp"
+                    android:text="- Ascensor: "
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView9"
+                    android:layout_width="68sp"
+                    android:layout_height="35sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/add_circle_create_expand_new_plus_icon_123218" />
+
+                <TextView
+                    android:id="@+id/textoNuevo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:layout_marginLeft="10dp"
+                    android:text="- Nuevo desarrollo: "
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView11"
+                    android:layout_width="68sp"
+                    android:layout_height="35sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/_986745_building_company_skyscraper_skyscraper_icon_112331" />
+
+                <TextView
+                    android:id="@+id/textoTipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:layout_marginLeft="10dp"
+                    android:text="- Tipo de inmueble: "
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/imageView8"
+                    android:layout_width="68sp"
+                    android:layout_height="35sp"
+                    android:layout_weight="1"
+                    android:src="@drawable/home_floor_icon_138488" />
+
+                <TextView
+                    android:id="@+id/textoAltura"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:textAlignment="textStart"
+                    tools:ignore="RtlCompat"
+                    android:layout_marginLeft="10dp"
+                    android:text="- Piso: "
+                    android:textSize="16sp" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/ubicacion"
