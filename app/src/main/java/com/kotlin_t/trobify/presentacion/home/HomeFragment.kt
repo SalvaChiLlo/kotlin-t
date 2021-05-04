@@ -1,12 +1,8 @@
 package com.kotlin_t.trobify.presentacion.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -16,8 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.databinding.FragmentHomeBinding
-import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.ordenacion.OrdenacionFragmentDirections
+import com.kotlin_t.trobify.logica.home.HomeViewModel
+import com.kotlin_t.trobify.logica.home.HomeViewModelFactory
+import com.kotlin_t.trobify.logica.SharedViewModel
 
 
 class HomeFragment : Fragment() {

@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -25,10 +24,11 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.textview.MaterialTextView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.logica.Favorito
-import com.kotlin_t.trobify.presentacion.SharedViewModel
+import com.kotlin_t.trobify.logica.ficha.FichaViewModel
+import com.kotlin_t.trobify.logica.ficha.FichaViewModelFactory
+import com.kotlin_t.trobify.persistencia.Favorito
+import com.kotlin_t.trobify.logica.SharedViewModel
 import com.kotlin_t.trobify.presentacion.mapa.CustomInfoWindowForGoogleMap
-import com.kotlin_t.trobify.presentacion.mapa.MapsFragmentDirections
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -65,7 +65,7 @@ class FichaFragment : Fragment() {
         }
         fichaViewModel.setHouse(inmuebleId)
 
-        return inflater.inflate(R.layout.ficha_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_ficha, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

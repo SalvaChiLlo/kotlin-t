@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.kotlin_t.trobify.presentacion.busqueda.BusquedaViewModel" />
+            type="com.kotlin_t.trobify.logica.busqueda.BusquedaViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

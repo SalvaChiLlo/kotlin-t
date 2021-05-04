@@ -1,8 +1,6 @@
 package com.kotlin_t.trobify.persistencia
 
 import androidx.room.*
-import com.kotlin_t.trobify.logica.Busqueda
-import com.kotlin_t.trobify.logica.ClientesInmobiliarias
 
 @Dao
 interface BusquedaDAO{

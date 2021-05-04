@@ -2,7 +2,6 @@ package com.kotlin_t.trobify.presentacion.misInmuebles
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,16 +10,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.databinding.FragmentListaFavoritosBinding
 import com.kotlin_t.trobify.databinding.MisInmueblesFragmentBinding
-import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.favoritos.FavoritoAdapter
-import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModel
-import com.kotlin_t.trobify.presentacion.misInmuebles.MisInmueblesAdapter
-import com.kotlin_t.trobify.presentacion.misInmuebles.MisInmueblesViewModel
-import com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModelFactory
-import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
-import com.kotlin_t.trobify.presentacion.misInmuebles.MisInmueblesViewModelFactory
+import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.misInmuebles.MisInmueblesViewModel
+import com.kotlin_t.trobify.logica.misInmuebles.MisInmueblesViewModelFactory
 
 
 class MisInmueblesFragment : androidx.fragment.app.Fragment() {

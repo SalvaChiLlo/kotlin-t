@@ -10,10 +10,8 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.logica.Favorito
-import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.favoritos.FavoritoAdapter
-import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
+import com.kotlin_t.trobify.logica.misInmuebles.MisInmueblesViewModel
+import com.kotlin_t.trobify.persistencia.Inmueble
 
 class MisInmueblesAdapter(
     val context: Context,

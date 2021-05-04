@@ -17,8 +17,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.ui.IconGenerator
 import com.kotlin_t.trobify.R
-import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.SharedViewModel
+import com.kotlin_t.trobify.persistencia.Inmueble
+import com.kotlin_t.trobify.logica.SharedViewModel
 
 class MapsFragment : Fragment() {
 

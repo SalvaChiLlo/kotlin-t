@@ -1,22 +1,20 @@
 package com.kotlin_t.trobify.presentacion.filtrar
 
 import android.os.Bundle
-import android.util.Log
-import android.util.Range
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.google.android.material.slider.RangeSlider
-import com.google.android.material.slider.Slider
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentFiltrarBinding
-import com.kotlin_t.trobify.presentacion.Constantes
-import com.kotlin_t.trobify.presentacion.SharedViewModel
+import com.kotlin_t.trobify.logica.filtrar.FiltrarViewModel
+import com.kotlin_t.trobify.logica.filtrar.FiltrarViewModelFactory
+import com.kotlin_t.trobify.logica.Constantes
+import com.kotlin_t.trobify.logica.SharedViewModel
 import java.text.NumberFormat
 import java.util.*
 
@@ -82,7 +80,8 @@ class FiltrarFragment : Fragment() {
             )
             filtrarViewModel.filtrarInmuebles()
         }
-        binding.alquilerHabitacionChkb.isChecked = model.operacionesOpciones.value!!.contains(Constantes.ALQUILER_HABITACION)
+        binding.alquilerHabitacionChkb.isChecked = model.operacionesOpciones.value!!.contains(
+            Constantes.ALQUILER_HABITACION)
         binding.alquilerHabitacionChkb.setOnCheckedChangeListener { _, isChecked ->
             filtrarViewModel.changeOperaciones(
                 Constantes.ALQUILER_HABITACION,

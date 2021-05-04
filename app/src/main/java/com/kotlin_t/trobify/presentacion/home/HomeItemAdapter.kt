@@ -11,7 +11,8 @@ import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
-import com.kotlin_t.trobify.logica.Inmueble
+import com.kotlin_t.trobify.logica.home.HomeViewModel
+import com.kotlin_t.trobify.persistencia.Inmueble
 
 
 class HomeItemAdapter(

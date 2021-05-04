@@ -8,7 +8,8 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kotlin_t.trobify.R
-import com.kotlin_t.trobify.logica.Foto
+import com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModel
+import com.kotlin_t.trobify.persistencia.Foto
 
 class ImageAdapter(
     val context: Context,

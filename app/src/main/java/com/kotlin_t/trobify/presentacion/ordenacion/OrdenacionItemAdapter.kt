@@ -1,20 +1,16 @@
 package com.kotlin_t.trobify.presentacion.ordenacion
 
-import android.content.Context
-import android.graphics.Typeface
 import android.graphics.Typeface.*
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckedTextView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
-import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.ordenacion.criteria.*
+import com.kotlin_t.trobify.logica.ordenacion.criteria.*
+import com.kotlin_t.trobify.logica.SharedViewModel
 
 class OrdenacionItemAdapter(
     private val sharedViewModel: SharedViewModel,

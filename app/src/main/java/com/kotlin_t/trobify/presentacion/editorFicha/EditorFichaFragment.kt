@@ -18,7 +18,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -27,14 +26,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputEditText
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentEditorFichaBinding
-import com.kotlin_t.trobify.logica.Foto
-import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.Constantes
-import com.kotlin_t.trobify.presentacion.SharedViewModel
+import com.kotlin_t.trobify.persistencia.Foto
+import com.kotlin_t.trobify.logica.Constantes
+import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModel
+import com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModelFactory
 import com.kotlin_t.trobify.presentacion.editorFicha.ObservableList.RecyclerViewObserver
 import java.util.*
 

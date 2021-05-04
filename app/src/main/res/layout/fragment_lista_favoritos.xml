@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.kotlin_t.trobify.presentacion.favoritos.ListaFavoritosViewModel" />
+            type="com.kotlin_t.trobify.logica.favoritos.ListaFavoritosViewModel" />
     </data>
 
     <FrameLayout

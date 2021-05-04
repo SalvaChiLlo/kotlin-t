@@ -1,10 +1,9 @@
 package com.kotlin_t.trobify.presentacion.editorFicha.ObservableList
 
 import android.content.Context
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.RecyclerView
-import com.kotlin_t.trobify.logica.Foto
-import com.kotlin_t.trobify.presentacion.editorFicha.EditorFichaViewModel
+import com.kotlin_t.trobify.persistencia.Foto
+import com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModel
 import com.kotlin_t.trobify.presentacion.editorFicha.ImageAdapter
 
 class RecyclerViewObserver<E>(

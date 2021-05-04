@@ -7,7 +7,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.kotlin_t.trobify.presentacion.misInmuebles.MisInmueblesViewModel" />
+            type="com.kotlin_t.trobify.logica.misInmuebles.MisInmueblesViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
