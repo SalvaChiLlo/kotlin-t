@@ -66,13 +66,6 @@ class PopulateDB(
         for (i in 0..6) {
             database.favoritoDAO().insertAll(Favorito(listaInmuebles[i].inmuebleId, "-1"))
         }
-
-        for (i in 0 until listaInmuebles.size - 1) {
-            processImageUris(
-                "https://source.unsplash.com/300x300/?building",
-                listaInmuebles[i].inmuebleId
-            )
-        }
     }
 
     private fun processImageUris(url: String, inmuebleId: Int) {
@@ -162,16 +155,16 @@ class PopulateDB(
             "Piso en venta en Recesvinto, 4 Venta de Baños\n",
         )
         val tipoOperacion = listOf(
-            Constantes.ALQUILER,
             Constantes.VENTA,
-            Constantes.ALQUILER_HABITACION,
-            Constantes.INTERCAMBIO_VIVIENDA,
+            Constantes.ALQUILER,
+            Constantes.INTERCAMBIO_VIVIENDA
         )
 
         val tipoInmueble = listOf(
             Constantes.ATICO,
             Constantes.CASA_CHALET,
-            Constantes.INTERCAMBIO_VIVIENDA,
+            Constantes.HABITACION,
+            Constantes.PISO,
         )
 
         val estados = listOf(

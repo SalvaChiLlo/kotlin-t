@@ -1,26 +1,19 @@
 package com.kotlin_t.trobify.presentacion.favoritos
 
 import ListaFavoritosFragmentDirections
-import android.R.drawable
 import android.content.Context
-import android.graphics.drawable.BitmapDrawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.graphics.drawable.toBitmap
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.logica.Favorito
-import com.kotlin_t.trobify.logica.Inmueble
-import com.kotlin_t.trobify.presentacion.SharedViewModel
-import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
-import java.lang.Appendable
+import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.favoritos.ListaFavoritosViewModel
+import com.kotlin_t.trobify.persistencia.Favorito
 
 
 class FavoritoAdapter(

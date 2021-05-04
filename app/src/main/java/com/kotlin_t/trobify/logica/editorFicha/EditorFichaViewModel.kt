@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.location.Address
 import android.location.Geocoder
+import android.util.Log
 import android.widget.RadioButton
 import androidx.lifecycle.AndroidViewModel
 import com.google.android.material.textfield.TextInputEditText
@@ -70,6 +71,8 @@ class EditorFichaViewModel(
         }
 
         geocoder = Geocoder(context, Locale.getDefault())
+        Log.e("EEEEEEE", inmuebleID.toString())
+
     }
 
     fun removeImageFromList(image: Foto) {
@@ -284,19 +287,19 @@ class EditorFichaViewModel(
     }
 
     fun getLatitude(): Double {
-        return if (geocoderInfo.isEmpty()) 0.0 else geocoderInfo.get(0).latitude
+        return if (geocoderInfo.isEmpty()) 0.0 else if(geocoderInfo.get(0).latitude != null) geocoderInfo.get(0).latitude else 0.0
     }
 
     fun getLongitude(): Double {
-        return if (geocoderInfo.isEmpty()) 0.0 else geocoderInfo.get(0).longitude
+        return if (geocoderInfo.isEmpty()) 0.0 else if(geocoderInfo.get(0).longitude != null) geocoderInfo.get(0).longitude else 0.0
     }
 
     fun getMunicipio(): String {
-        return if (geocoderInfo.isEmpty()) "" else geocoderInfo.get(0).locality
+        return if (geocoderInfo.isEmpty()) "" else geocoderInfo.get(0).locality + ""
     }
 
     fun getProvincia(): String {
-        return if (!geocoderInfo.isEmpty()) geocoderInfo.get(0).adminArea else ""
+        return if (!geocoderInfo.isEmpty()) geocoderInfo.get(0).adminArea+"" else ""
     }
 
     private fun getInfoFromGeocoder(dir: String): List<Address> {

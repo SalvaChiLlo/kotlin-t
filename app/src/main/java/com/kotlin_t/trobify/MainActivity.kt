@@ -27,6 +27,7 @@ import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.database.PopulateDB
 import com.kotlin_t.trobify.persistencia.Usuario
 import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.persistencia.Foto
 import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 
 
@@ -195,6 +196,9 @@ class MainActivity : AppCompatActivity(){
 
                 for(i in 1..20) {
                     PopulateDB(database, this, sharedViewModel).createInmueble(i)
+                    val ultimoInmueble = database.inmuebleDAO().getAll().last()
+                    database.fotoDAO()
+                        .insertAll(Foto(ultimoInmueble.inmuebleId, ultimoInmueble.miniatura!!))
                 }
                 this@MainActivity.runOnUiThread {
                     sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
