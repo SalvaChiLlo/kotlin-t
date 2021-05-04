@@ -105,6 +105,16 @@
     <string name="apellidosInvalidos">El formato de los Apellidos es Invalido</string>
     <string name="usuarioCorto">El usuario tiene que contener al menos 5 caracteres</string>
     <string name="cerrar_sesion">Cerrar Sesión</string>
-
-
+    <string name="modificar">Modificar</string>
+    <string name="aplicar_cambios">Aplicar Cambios</string>
+    <string name="textnombre">Nombre:</string>
+    <string name="textUsuario">Usuario:</string>
+    <string name="textContrasena">Contraseña:</string>
+    <string name="textDni">DNI:</string>
+    <string name="textApellidos">Apellidos:</string>
+    <string name="textTelefono">Telefono:</string>
+    <string name="textIban">IBAN:</string>
+    <string name="tagInputGenerico">tegInputGenerico</string>
+    <string name="eliminar_cuenta"><u>Eliminar cuenta</u></string>
+    <string name="textInputIban">ES1234567890123456789012</string>
 </resources>

@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentacion..editarPerfil.editarPerfilFragment">
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical">
+
+
+            <TextView
+                android:id="@+id/datosRegistro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/datos_de_registro"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/separadordatosRegistro"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/datosRegistro" />
+
+
+            <TextView
+                android:id="@+id/textUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/textUsuario"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separadordatosRegistro" />
+
+            <TextView
+                android:id="@+id/editUsuario"
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:hint="delaOssa"
+                app:layout_constraintStart_toEndOf="@id/textUsuario"
+                app:layout_constraintTop_toBottomOf="@id/separadordatosRegistro"
+                app:layout_constraintTop_toTopOf="@id/textUsuario" />
+
+            <ImageView
+                android:id="@+id/cambiarUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintStart_toEndOf="@id/editUsuario"
+                app:layout_constraintTop_toTopOf="@id/editUsuario" />
+
+
+            <TextView
+                android:id="@+id/textContrasena"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/textContrasena"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editUsuario" />
+
+            <TextView
+                android:id="@+id/editContrasena"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:hint="********"
+                app:layout_constraintStart_toEndOf="@id/textContrasena"
+                app:layout_constraintTop_toBottomOf="@id/separadordatosRegistro"
+                app:layout_constraintTop_toTopOf="@id/textContrasena" />
+
+            <ImageView
+                android:id="@+id/visibilidadContrasena"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_visibility_24"
+                app:layout_constraintStart_toEndOf="@id/editContrasena"
+                app:layout_constraintTop_toTopOf="@id/editContrasena" />
+            <ImageView
+                android:id="@+id/cambiarContrasena"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintStart_toEndOf="@id/visibilidadContrasena"
+                app:layout_constraintTop_toTopOf="@id/visibilidadContrasena" />
+
+            <TextView
+                android:id="@+id/datosUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/datos_del_usuario"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textContrasena" />
+
+            <View
+                android:id="@+id/separadordatosUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/datosUsuario" />
+
+
+            <TextView
+                android:id="@+id/textDni"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/textDni"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separadordatosUsuario" />
+
+            <TextView
+                android:id="@+id/editDni"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:hint="20910914G"
+                app:layout_constraintStart_toEndOf="@id/textDni"
+                app:layout_constraintTop_toTopOf="@id/textDni" />
+
+            <ImageView
+                android:id="@+id/cambiarDni"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintStart_toEndOf="@id/editDni"
+                app:layout_constraintTop_toTopOf="@id/editDni" />
+
+
+            <TextView
+                android:id="@+id/textNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/textnombre"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textDni" />
+
+            <TextView
+                android:id="@+id/editNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:hint="Pablo"
+                app:layout_constraintStart_toEndOf="@id/textNombre"
+                app:layout_constraintTop_toTopOf="@id/textNombre" />
+
+            <ImageView
+                android:id="@+id/cambiarNombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintStart_toEndOf="@id/editNombre"
+                app:layout_constraintTop_toTopOf="@id/editNombre" />
+
+            <TextView
+                android:id="@+id/textApellidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/textApellidos"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textNombre" />
+
+            <TextView
+                android:id="@+id/editApellidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:hint="de la Ossa Garcia"
+                app:layout_constraintStart_toEndOf="@id/textApellidos"
+                app:layout_constraintTop_toTopOf="@id/textApellidos" />
+
+            <ImageView
+                android:id="@+id/cambiarApellidos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintStart_toEndOf="@id/editApellidos"
+                app:layout_constraintTop_toTopOf="@id/editApellidos" />
+
+            <TextView
+                android:id="@+id/textTelefono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/textTelefono"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/textApellidos" />
+
+            <TextView
+                android:id="@+id/editTelefono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:hint="644257750"
+                app:layout_constraintStart_toEndOf="@id/textTelefono"
+                app:layout_constraintTop_toTopOf="@id/textTelefono" />
+
+            <ImageView
+                android:id="@+id/cambiarTelefono"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintStart_toEndOf="@id/editTelefono"
+                app:layout_constraintTop_toTopOf="@id/editTelefono" />
+
+            <TextView
+                android:id="@+id/fotoPerfil"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="15dp"
+
+                android:text="@string/foto_de_perfil"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/editTelefono" />
+
+            <View
+                android:id="@+id/separadorFotoPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/fotoPerfil" />
+
+
+            <ImageView
+                android:id="@+id/imagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/usuario_generico"
+                android:src="@drawable/anonymous_user"
+                app:layout_constraintHeight_max="100dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/separadorFotoPerfil"
+                app:layout_constraintWidth_max="100dp">
+
+            </ImageView>
+
+            <Button
+                android:id="@+id/nuevaImagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:text="@string/modificar"
+                app:layout_constraintBottom_toBottomOf="@+id/imagen"
+                app:layout_constraintStart_toEndOf="@+id/imagen">
+
+            </Button>
+
+            <ImageView
+                android:id="@+id/eliminarImagen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:importantForAccessibility="no"
+                android:src="@drawable/ic_baseline_clear_24"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/imagen"
+                app:layout_constraintTop_toTopOf="@id/imagen">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/datosBancarios"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="40dp"
+                android:text="@string/datos_bancarios"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/imagen" />
+
+            <View
+                android:id="@+id/separadordatosBancarios"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/orden_separador"
+                android:layout_marginHorizontal="30dp"
+                android:layout_marginTop="@dimen/ordenar_margin"
+                android:background="@color/black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/datosBancarios" />
+
+            <TextView
+                android:id="@+id/textIban"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:text="@string/textIban"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/separadordatosBancarios" />
+
+            <TextView
+                android:id="@+id/editIban"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                app:layout_constraintStart_toEndOf="@id/textIban"
+                app:layout_constraintTop_toTopOf="@id/textIban" />
+
+            <ImageView
+                android:id="@+id/eliminarIban"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_delete_24"
+                app:layout_constraintStart_toEndOf="@id/editIban"
+                app:layout_constraintTop_toTopOf="@id/editIban" />
+
+            <ImageView
+                android:id="@+id/cambiarIban"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:src="@drawable/ic_baseline_edit_24"
+                app:layout_constraintStart_toEndOf="@id/eliminarIban"
+                app:layout_constraintTop_toTopOf="@id/eliminarIban" />
+
+            <Button
+                android:id="@+id/aplicarCambios"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="15dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/aplicar_cambios"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textIban" />
+            <TextView
+                android:id="@+id/eliminarCuenta"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="20dp"
+                android:textColor="@color/error"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/aplicarCambios"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/eliminar_cuenta"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

@@ -152,5 +152,13 @@
             app:destination="@id/nav_home"
             app:popUpTo="@id/nav_home" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_mi_cuenta"
+        android:name="com.kotlin_t.trobify.presentacion.editarPerfil.EditarPerfilFragment"
+        android:label="Mi Cuenta" >
+        <action
+            android:id="@+id/action_nav_mi_cuenta_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <!---Añadir acciones hacia atrás-->
 </navigation>

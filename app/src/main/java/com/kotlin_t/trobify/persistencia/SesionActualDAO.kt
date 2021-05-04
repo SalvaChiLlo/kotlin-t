@@ -13,4 +13,7 @@ interface SesionActualDAO {
 
     @Query("DELETE FROM SesionActual")
     fun deleteSesion()
+
+    @Update
+    fun update(sesion: SesionActual)
 }
