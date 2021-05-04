@@ -65,7 +65,7 @@ class FichaFragment : Fragment() {
         }
         fichaViewModel.setHouse(inmuebleId)
 
-        return inflater.inflate(R.layout.ficha_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_ficha, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
