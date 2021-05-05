@@ -1,5 +1,8 @@
 package com.kotlin_t.trobify.presentacion.ficha
 
+import OnSwipeTouchListener
+import ahmed.easyslider.EasySlider
+import ahmed.easyslider.SliderItem
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
@@ -9,9 +12,7 @@ import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -28,6 +29,7 @@ import com.kotlin_t.trobify.logica.ficha.FichaViewModel
 import com.kotlin_t.trobify.logica.ficha.FichaViewModelFactory
 import com.kotlin_t.trobify.persistencia.Favorito
 import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.persistencia.Foto
 import com.kotlin_t.trobify.presentacion.mapa.CustomInfoWindowForGoogleMap
 import java.util.*
 import kotlin.properties.Delegates
@@ -213,7 +215,21 @@ class FichaFragment : Fragment() {
     }
 
     private fun setPhotos(container: View) {
-        container!!.findViewById<ImageView>(R.id.fotoPortal).setImageBitmap(fichaViewModel.inmueble.miniatura)
+        //container!!.findViewById<ImageView>(R.id.fotoPortal).setImageBitmap(fichaViewModel.inmueble.miniatura)
+
+        val flipper = container.findViewById<ViewFlipper>(R.id.sliderId)
+
+        for (photo in fichaViewModel.getPhotos()) {
+            val image = ImageView(fichaViewModel.getApplicationContext())
+            image.setImageBitmap(photo.imagen)
+            flipper.addView(image)
+        }
+
+        flipper.setFlipInterval( 3000 ) //5s intervals
+        //flipper.startFlipping()
+        flipper.setInAnimation(fichaViewModel.getApplicationContext(), android.R.anim.fade_in)
+        flipper.setOutAnimation(fichaViewModel.getApplicationContext(), android.R.anim.fade_out)
+        flipper.setOnTouchListener(OnSwipeTouchListener(fichaViewModel.getApplicationContext(), flipper))
 
         if (fichaViewModel.usuario.fotoPerfil != null)
             container!!.findViewById<ImageView>(R.id.fotoUsuario).setImageBitmap(fichaViewModel.usuario.fotoPerfil)
