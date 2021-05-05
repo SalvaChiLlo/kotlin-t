@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputType
+import android.text.SpannableStringBuilder
 import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
@@ -207,6 +208,7 @@ class EditarPerfilFragment : Fragment() {
         when (tipoDialogo) {
             USUARIO -> {
                 tituloGenerico = R.string.usuario
+                textInputEditTextGenerico?.text = SpannableStringBuilder(usuarioActual.username)
                 listener = DialogInterface.OnClickListener(fun(dialog: DialogInterface, _: Int) {
                     binding.editUsuario.text = textInputEditTextGenerico?.text.toString()
                     binding.aplicarCambios.visibility = View.VISIBLE
@@ -262,6 +264,7 @@ class EditarPerfilFragment : Fragment() {
             DNI -> {
 
                 tituloGenerico = R.string.dni
+                textInputEditTextGenerico?.text = SpannableStringBuilder(usuarioActual.dni)
                 listener = DialogInterface.OnClickListener(fun(dialog: DialogInterface, _: Int) {
 
 
@@ -322,6 +325,7 @@ class EditarPerfilFragment : Fragment() {
                 })
             }
             NOMBRE -> {
+                textInputEditTextGenerico?.text = SpannableStringBuilder(usuarioActual.nombre)
                 tituloGenerico = R.string.nombre
                 listener = DialogInterface.OnClickListener(fun(dialog: DialogInterface, _: Int) {
 
@@ -376,6 +380,7 @@ class EditarPerfilFragment : Fragment() {
             APELLIDOS -> {
 
                 tituloGenerico = R.string.apellidos
+                textInputEditTextGenerico?.text = SpannableStringBuilder(usuarioActual.apellidos)
                 textInputLayoutGenerico?.isErrorEnabled = false
 
 
@@ -432,6 +437,7 @@ class EditarPerfilFragment : Fragment() {
             TELEFONO -> {
 
                 tituloGenerico = R.string.telefono
+                textInputEditTextGenerico?.text = SpannableStringBuilder(usuarioActual.telefono)
                 textInputEditTextGenerico?.inputType = InputType.TYPE_CLASS_PHONE
                 listener = DialogInterface.OnClickListener(fun(dialog: DialogInterface, _: Int) {
                     binding.editTelefono.text = textInputEditTextGenerico?.text.toString()
@@ -494,6 +500,7 @@ class EditarPerfilFragment : Fragment() {
             IBAN -> {
 
                 tituloGenerico = R.string.iban
+                textInputEditTextGenerico?.text = SpannableStringBuilder(usuarioActual.iban)
                 listener = DialogInterface.OnClickListener(fun(dialog: DialogInterface, _: Int) {
 
 
