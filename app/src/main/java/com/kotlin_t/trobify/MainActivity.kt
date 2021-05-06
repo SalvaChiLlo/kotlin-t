@@ -36,6 +36,11 @@ class MainActivity : AppCompatActivity(){
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var sharedViewModel: SharedViewModel
 
+    private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navView: NavigationView
+    private lateinit var headerView: View
+    private lateinit var nav_menu: Menu
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,55 +48,34 @@ class MainActivity : AppCompatActivity(){
         setSupportActionBar(toolbar)
         sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
 
-        val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val headerView = navView.getHeaderView(0)
-
-        val nav_menu: Menu = navView.menu
-        headerView.findViewById<Button>(R.id.iniciaSesionButton)?.setOnClickListener {
-            findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeToLoginFragment())
-        }
-        val cerrarSesion = nav_menu.findItem(R.id.cerrarSesion)
-        val botonCerrarSesion = cerrarSesion.actionView.rootView.findViewById<Button>(R.id.botonCerrarSesion)
-        botonCerrarSesion?.setOnClickListener {
-            cerrarSesion()
-        }
-        val usuarioObserver = Observer<Usuario> { usuario ->
-            if (usuario == null) {
-
-                nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(false)
-                nav_menu.findItem(R.id.nav_mi_cuenta)
-                headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.VISIBLE
-                nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(false)
-                headerView.findViewById<TextView>(R.id.nav_header_text).text =
-                    "No estás identificado"
-                nav_menu.findItem(R.id.cerrarSesion).setVisible(false)
-
-            } else {
-
-                nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(true)
-                nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(true)
-                nav_menu.findItem(R.id.cerrarSesion)
-                    .setVisible(true)
+        // Inicializar Variables
+        drawerLayout = findViewById(R.id.drawer_layout)
+        navView = findViewById(R.id.nav_view)
+        headerView = navView.getHeaderView(0)
+        nav_menu = navView.menu
 
 
+        setupNavController()
+        inicializarSharedViewModel()
+        crearListeners()
+        crearObservers()
+        preguntarPermisos()
+        populate()
+    }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.main, menu)
+        return true
+    }
 
-                headerView.findViewById<TextView>(R.id.nav_header_text).text =
-                    "Bienvenido " + usuario.nombre
-                headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.GONE
-                if(usuario.fotoPerfil == null) {
-                    headerView.findViewById<ImageView>(R.id.nav_header_picture).setImageResource(R.drawable.anonymous_user)
-                } else {
-                    headerView.findViewById<ImageView>(R.id.nav_header_picture).setImageBitmap(usuario.fotoPerfil)
-                }
-            }
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment)
 
-        }
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
 
-
-        sharedViewModel.usuarioActual.observe(this, usuarioObserver)
-
+    private fun setupNavController() {
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -102,7 +86,9 @@ class MainActivity : AppCompatActivity(){
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+    }
 
+    private fun inicializarSharedViewModel() {
         val model = ViewModelProvider(this).get(SharedViewModel::class.java)
         model.preciosOpciones.value!!.set(
             0,
@@ -112,7 +98,59 @@ class MainActivity : AppCompatActivity(){
             1,
             AppDatabase.getDatabase(this).inmuebleDAO().getMaxPrecio()
         )
+    }
 
+    private fun crearListeners() {
+        // Botón Login
+        headerView.findViewById<Button>(R.id.iniciaSesionButton)?.setOnClickListener {
+            findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeToLoginFragment())
+        }
+
+        // Botón Cerrar Sesión
+        val cerrarSesion = nav_menu.findItem(R.id.cerrarSesion)
+        val botonCerrarSesion = cerrarSesion.actionView.rootView.findViewById<Button>(R.id.botonCerrarSesion)
+        botonCerrarSesion?.setOnClickListener {
+            cerrarSesion()
+        }
+    }
+
+    private fun crearObservers() {
+
+        val usuarioObserver = Observer<Usuario> { usuario ->
+
+            val usuarioLogeado = (usuario != null)
+
+            if (usuarioLogeado) {
+
+                headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.GONE
+                headerView.findViewById<TextView>(R.id.nav_header_text).text =
+                    "Bienvenido " + usuario.nombre
+
+                if(usuario.fotoPerfil == null) {
+                    headerView.findViewById<ImageView>(R.id.nav_header_picture).setImageResource(R.drawable.anonymous_user)
+                } else {
+                    headerView.findViewById<ImageView>(R.id.nav_header_picture).setImageBitmap(usuario.fotoPerfil)
+                }
+
+            } else {
+
+                headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.VISIBLE
+                headerView.findViewById<TextView>(R.id.nav_header_text).text =
+                    "No estás identificado"
+
+            }
+
+            nav_menu.findItem(R.id.nav_mi_cuenta).setVisible(usuarioLogeado)
+            nav_menu.findItem(R.id.nav_mis_inmuebles).setVisible(usuarioLogeado)
+            nav_menu.findItem(R.id.cerrarSesion).setVisible(usuarioLogeado)
+
+        }
+
+        sharedViewModel.usuarioActual.observe(this, usuarioObserver)
+
+    }
+
+    private fun preguntarPermisos() {
         try {
             if (ContextCompat.checkSelfPermission(
                     applicationContext,
@@ -176,13 +214,12 @@ class MainActivity : AppCompatActivity(){
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        populate()
     }
 
     private fun populate() {
+
         val database = AppDatabase.getDatabase(this)
-        var sharedViewModel: SharedViewModel =
-            ViewModelProvider(this).get(SharedViewModel::class.java)
+
         Thread {
 
             if (database.usuarioDAO().getAll().isEmpty() || database.inmuebleDAO().getAll()
@@ -207,22 +244,11 @@ class MainActivity : AppCompatActivity(){
         }.start()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.main, menu)
-        return true
-    }
+    private fun cerrarSesion(){
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
-
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-    fun cerrarSesion(){
         val application = requireNotNull(this).application
         val database = AppDatabase.getDatabase(application)
-        val navView: NavigationView = findViewById(R.id.nav_view)
-        val headerView = navView.getHeaderView(0)
+
         AlertDialog.Builder(this)
             .setTitle("Cerrar Sesión")
             .setMessage("¿Estás Seguro de cerrar la Sesión?")
@@ -238,9 +264,6 @@ class MainActivity : AppCompatActivity(){
             }))
             .setIcon(R.drawable.ic_baseline_warning_24)
             .show()
-
-
-
     }
 
 
