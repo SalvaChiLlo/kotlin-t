@@ -80,6 +80,9 @@
         <action
             android:id="@+id/action_mapsFragment_to_nav_home"
             app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_mapsFragment_to_fichaFragment"
+            app:destination="@id/fichaFragment" />
     </fragment>
     <fragment
         android:id="@+id/busquedaFragment"

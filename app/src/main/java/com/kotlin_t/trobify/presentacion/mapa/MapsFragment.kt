@@ -1,19 +1,18 @@
 package com.kotlin_t.trobify.presentacion.mapa
 
+import android.content.res.Resources
 import android.graphics.Bitmap
 import androidx.fragment.app.Fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.gms.maps.*
 
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.ui.IconGenerator
 import com.kotlin_t.trobify.R
@@ -26,6 +25,8 @@ class MapsFragment : Fragment() {
     private val sharedViewModel: SharedViewModel by activityViewModels()
     private val zoomLevel = 10f
     private var markers: MutableList<Marker> = ArrayList()
+
+    private val TAG = MapsFragment::class.java.simpleName
 
     private val callback = OnMapReadyCallback { googleMap ->
         /**
@@ -47,6 +48,7 @@ class MapsFragment : Fragment() {
         googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
         googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))*/
 
+        setMapStyle(map)
         setMarkers(map)
         setMarkersListeners(map)
         setZoomToFitMarkers(map)
@@ -64,6 +66,21 @@ class MapsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+    }
+
+    private fun setMapStyle(map: GoogleMap) {
+        try {
+
+            val success = map.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    requireContext(),
+                    R.raw.map_style
+                )
+            )
+
+        } catch (e: Resources.NotFoundException) {
+            Log.e(TAG, "Can't find style. Error: ", e)
+        }
     }
 
     fun setMarkers(map: GoogleMap) {
