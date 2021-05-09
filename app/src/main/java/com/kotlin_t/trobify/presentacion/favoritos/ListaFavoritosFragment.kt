@@ -28,7 +28,7 @@ class ListaFavoritosFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_recuperar_favoritos, container, false)
+            DataBindingUtil.inflate(inflater, R.layout.fragment_lista_favoritos, container, false)
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
         val application = requireNotNull(this.activity).application
         val datasource = AppDatabase.getDatabase(application)

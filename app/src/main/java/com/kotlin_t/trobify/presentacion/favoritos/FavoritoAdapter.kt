@@ -31,16 +31,16 @@ class FavoritoAdapter(
 ) :
     RecyclerView.Adapter<FavoritoAdapter.FavoritoViewHolder>() {
     class FavoritoViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        val imagen: ImageView = view.findViewById(R.id.home_imagen)
-        val direccion: TextView = view.findViewById(R.id.home_direccion)
-        val precioMes: TextView = view.findViewById(R.id.home_precio_mes)
-        val favorito: ImageView = view.findViewById(R.id.favorito_icon)
+        val imagen: ImageView = view.findViewById(R.id.miniatura_fav)
+        val direccion: TextView = view.findViewById(R.id.direcciontext)
+        val precioMes: TextView = view.findViewById(R.id.preciotext)
+        val favorito: ImageView = view.findViewById(R.id.favoicon)
         val recuperar: ImageView = view.findViewById(R.id.recuperarFavorito)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoritoViewHolder {
         val layoutInflater =
-            LayoutInflater.from(context).inflate(R.layout.home_item, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.favorito_item, parent, false)
 
         return FavoritoViewHolder(layoutInflater)
     }
