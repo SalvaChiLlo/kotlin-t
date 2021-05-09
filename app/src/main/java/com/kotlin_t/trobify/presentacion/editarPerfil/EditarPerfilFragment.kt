@@ -184,16 +184,12 @@ class EditarPerfilFragment : Fragment() {
     fun ensenarDialogo(tipoDialogo: Int) {
         val dialog = AlertDialog.Builder(requireContext())
         dialog.setIcon(R.drawable.ic_baseline_info_24)
-        val view: View
-        if (tipoDialogo == CONTRASENA) view =
-            layoutInflater.inflate(R.layout.edit_contrasena, null) else view =
-            layoutInflater.inflate(R.layout.edit_generico, null)
+        val view: View =
+            if (tipoDialogo == CONTRASENA) layoutInflater.inflate(R.layout.edit_contrasena, null) else layoutInflater.inflate(R.layout.edit_generico, null)
         dialog.setView(view)
         val textInputEditTextGenerico: TextInputEditText? =
             view.findViewById(R.id.inputEditarGenerico)
-        Log.d("Hola", textInputEditTextGenerico.toString())
         val textInputLayoutGenerico: TextInputLayout? = view.findViewById(R.id.editarGenerico)
-        Log.d("Hola", textInputLayoutGenerico.toString())
         val textInputEditTextContrasena: TextInputEditText? =
             view.findViewById(R.id.inputEditarContrasena)
         val textInputLayoutContrasena: TextInputLayout? = view.findViewById(R.id.editarContrasena)

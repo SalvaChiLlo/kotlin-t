@@ -30,8 +30,10 @@ class ListaFavoritosViewModel(val database: AppDatabase, application: Applicatio
         val search = database.favoritoDAO().findByIdandDni(favorito.inmuebleId, favorito.dni.toString())
         if (search == null) {
             database.favoritoDAO().insertAll(favorito)
+            sharedViewModel.favoritosEliminados.add(favorito)
         } else {
             database.favoritoDAO().delete(favorito)
+            sharedViewModel.favoritosEliminados.remove(favorito)
         }
         checkIfFavorito(favorito, imageView)
     }

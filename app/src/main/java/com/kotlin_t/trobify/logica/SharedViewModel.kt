@@ -13,6 +13,7 @@ import com.kotlin_t.trobify.persistencia.Inmueble
 import com.kotlin_t.trobify.persistencia.SesionActual
 import com.kotlin_t.trobify.persistencia.Usuario
 import com.kotlin_t.trobify.logica.ordenacion.EstrategiaOrdenacion
+import com.kotlin_t.trobify.persistencia.Favorito
 import java.time.LocalDateTime
 
 class SharedViewModel(@NonNull application: Application) : AndroidViewModel(application) {
@@ -25,6 +26,8 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     val usuarioActual: MutableLiveData<Usuario> by lazy {
         MutableLiveData<Usuario>()
     }
+    val favoritosEliminados = mutableSetOf<Favorito>()
+
 
     val usuarioActual__PRUEBA = database.usuarioDAO().findById("-1")
 

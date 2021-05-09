@@ -254,6 +254,7 @@ class MainActivity : AppCompatActivity(){
             .setMessage("¿Estás Seguro de cerrar la Sesión?")
             .setPositiveButton("Si", DialogInterface.OnClickListener( fun(dialog : DialogInterface, _: Int){
                 database.sesionActualDAO().deleteSesion()
+                sharedViewModel.favoritosEliminados.clear()
                 sharedViewModel.updateCurrentUser(null)
                 headerView.findViewById<ImageView>(R.id.nav_header_picture).setImageResource(R.drawable.anonymous_user)
                 findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeSelf())
