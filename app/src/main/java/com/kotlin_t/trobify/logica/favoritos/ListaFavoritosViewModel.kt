@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.logica.favoritos
 
 import android.app.Application
+import android.util.Log
 import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import com.kotlin_t.trobify.R
@@ -30,10 +31,10 @@ class ListaFavoritosViewModel(val database: AppDatabase, application: Applicatio
         val search = database.favoritoDAO().findByIdandDni(favorito.inmuebleId, favorito.dni.toString())
         if (search == null) {
             database.favoritoDAO().insertAll(favorito)
-            sharedViewModel.favoritosEliminados.add(favorito)
+            Log.e("FAvoritos", "${sharedViewModel.favoritosEliminados.remove(favorito)}")
         } else {
             database.favoritoDAO().delete(favorito)
-            sharedViewModel.favoritosEliminados.remove(favorito)
+            Log.e("FAvoritos", "${sharedViewModel.favoritosEliminados.add(favorito)}")
         }
         checkIfFavorito(favorito, imageView)
     }
