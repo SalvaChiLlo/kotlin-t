@@ -10,5 +10,6 @@ class RecuperarFavoritosViewModel(val database: AppDatabase, application: Applic
     AndroidViewModel(application){
    fun recuperarFavorito(favorito: Favorito){
        database.favoritoDAO().insertAll(favorito)
+       sharedViewModel.favoritosEliminados.remove(favorito)
    }
 }

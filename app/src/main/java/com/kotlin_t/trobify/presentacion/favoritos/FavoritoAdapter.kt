@@ -65,7 +65,9 @@ class FavoritoAdapter(
             holder.favorito.visibility = View.GONE
             holder.recuperar.setOnClickListener {
                 recuperarFavoritosViewModel!!.recuperarFavorito(dataset[position])
+                holder.recuperar.visibility = View.GONE
             }
+
         } else {
             action = ListaFavoritosFragmentDirections.actionNavFavoritosToFichaFragment(inmueble.inmuebleId)
 
