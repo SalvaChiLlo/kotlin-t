@@ -2,6 +2,7 @@ package com.kotlin_t.trobify.logica.ficha
 
 import android.app.Application
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.persistencia.Foto
@@ -17,7 +18,9 @@ class FichaViewModel(private val database: AppDatabase,
     val favoritoDatabase = database.favoritoDAO()
 
     fun setHouse(id : Int) {
+        Log.e("ViewModel", id.toString())
         this.inmueble = database.inmuebleDAO().findById(id.toString())
+        Log.e("ViewModel", this.inmueble.toString())
         setUser(database.usuarioDAO().findById(inmueble.dniPropietario))
     }
 

@@ -9,6 +9,7 @@ import android.location.Geocoder
 import android.net.Uri
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,6 +66,7 @@ class FichaFragment : Fragment() {
         arguments?.let {
             inmuebleId = it.getInt("InmuebleID")!!
         }
+        Log.e("Ficha", inmuebleId.toString())
         fichaViewModel.setHouse(inmuebleId)
 
         return inflater.inflate(R.layout.fragment_ficha, container, false)

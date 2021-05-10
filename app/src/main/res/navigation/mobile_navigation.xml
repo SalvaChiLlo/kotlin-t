@@ -28,7 +28,7 @@
             app:destination="@id/nav_login" />
         <action
             android:id="@+id/action_nav_home_to_editorFichaFragment"
-            app:destination="@id/editorFichaFragment" />/>
+            app:destination="@id/editorFichaFragment" />
         <action
             android:id="@+id/action_nav_home_self"
             app:destination="@id/nav_home" />
@@ -169,7 +169,7 @@
             android:id="@+id/action_fichaFragment_to_nav_home"
             app:destination="@id/nav_home" />
         <argument
-            android:name="inmuebleId"
+            android:name="InmuebleID"
             app:argType="integer" />
     </fragment>
     <!---Añadir acciones hacia atrás-->
