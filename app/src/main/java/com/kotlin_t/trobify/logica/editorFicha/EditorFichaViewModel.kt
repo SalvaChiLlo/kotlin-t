@@ -8,6 +8,8 @@ import android.location.Geocoder
 import android.util.Log
 import android.widget.RadioButton
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.google.android.material.textfield.TextInputEditText
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
@@ -17,7 +19,6 @@ import com.kotlin_t.trobify.logica.SharedViewModel
 import com.kotlin_t.trobify.persistencia.Foto
 import com.kotlin_t.trobify.persistencia.Inmueble
 import com.kotlin_t.trobify.presentacion.editorFicha.EditorFichaFragment
-import com.kotlin_t.trobify.presentacion.editorFicha.ObservableList.ObservableList
 import java.util.*
 
 class EditorFichaViewModel(
@@ -30,7 +31,9 @@ class EditorFichaViewModel(
 ) : AndroidViewModel(application) {
     var inmueble: Inmueble? = null
     var inmuebleID: Int? = null
-    var imagesList = ObservableList<Foto>()
+    val imagesList: MutableLiveData<MutableList<Foto>> by lazy {
+        MutableLiveData<MutableList<Foto>>()
+    }
 
     private lateinit var geocoder: Geocoder
     private lateinit var geocoderInfo: List<Address>
@@ -64,6 +67,7 @@ class EditorFichaViewModel(
     private var hasError = false
 
     init {
+        imagesList.value = mutableListOf()
         if (inmueble != null) {
             inmuebleID = inmueble!!.inmuebleId
         } else {
@@ -76,7 +80,9 @@ class EditorFichaViewModel(
     }
 
     fun removeImageFromList(image: Foto) {
-        imagesList.removeItem(image)
+        imagesList.value!!.remove(image)
+        imagesList.value = imagesList.value!!
+
         if (database.fotoDAO().findById(image.fotoId.toString()) != null) {
             database.fotoDAO().delete(image)
         }
@@ -95,9 +101,7 @@ class EditorFichaViewModel(
         tieneAscensor = binding.hasAscensor.isChecked
         subtitulo = "" // OK
         miniatura =
-            if (imagesList.getValue()
-                    .isEmpty()
-            ) null else imagesList.getValue()[0].imagen  // OK
+            if (imagesList.value?.isEmpty() == true) null else imagesList.value?.get(0)?.imagen  // OK
 
         hasError = checkBanos(hasError)
         hasError = checkCodigoPostal(hasError)
@@ -313,12 +317,14 @@ class EditorFichaViewModel(
     }
 
     private fun guardarImagenesDelInmueble() {
-        imagesList.getValue().forEach {
+        imagesList.value?.forEach {
             if (database.fotoDAO().findById(it.fotoId.toString()) != null) {
                 database.fotoDAO().delete(it)
             }
             database.fotoDAO().insertAll(it)
         }
+        imagesList.value = imagesList.value
+
     }
 
     private fun actualizarInmueble() {

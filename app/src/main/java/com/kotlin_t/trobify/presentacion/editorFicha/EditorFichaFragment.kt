@@ -34,7 +34,6 @@ import com.kotlin_t.trobify.logica.Constantes
 import com.kotlin_t.trobify.logica.SharedViewModel
 import com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModel
 import com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModelFactory
-import com.kotlin_t.trobify.presentacion.editorFicha.ObservableList.RecyclerViewObserver
 import java.util.*
 
 class EditorFichaFragment : Fragment() {
@@ -188,13 +187,8 @@ class EditorFichaFragment : Fragment() {
     }
 
     private fun setRecyclerViewObserver() {
-        editorFichaViewModel.imagesList.addObserver(
-            RecyclerViewObserver(
-                imagesRecyclerView,
-                requireContext(),
-                editorFichaViewModel
-            )
-        )
+        // TODO : REVISAR
+        imagesRecyclerView.adapter = ImageAdapter(requireContext(), editorFichaViewModel.imagesList.value!!.toList(),editorFichaViewModel)
     }
 
     private fun rellenarCamposEditables() {
@@ -230,11 +224,14 @@ class EditorFichaFragment : Fragment() {
         binding.editTitulo.setText(inmueble.titulo)
         binding.hasAscensor.isChecked = inmueble.tieneAscensor!!
 
-        editorFichaViewModel.imagesList.addAllItem(
+        editorFichaViewModel.imagesList.value?.addAll(
             datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId)
         )
+        editorFichaViewModel.imagesList.value = editorFichaViewModel.imagesList.value
 
-        imagesRecyclerView.adapter = ImageAdapter(requireContext(), editorFichaViewModel.imagesList.getValue(),editorFichaViewModel)
+        editorFichaViewModel.imagesList.observe(viewLifecycleOwner, {
+            imagesRecyclerView.adapter = ImageAdapter(requireContext(), it.toList(),editorFichaViewModel)
+        })
 
         Log.e("WEEEEE", datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId).map{it.inmuebleId}.toString())
     }
@@ -297,7 +294,10 @@ class EditorFichaFragment : Fragment() {
         val inputStream = context?.contentResolver?.openInputStream(imageUri)
         var bitmap = BitmapFactory.decodeStream(inputStream)
         bitmap = Bitmap.createScaledBitmap(bitmap!!, 300, 300, true)
-        editorFichaViewModel.imagesList.addItem(Foto(editorFichaViewModel.inmuebleID!!, bitmap))
+        editorFichaViewModel.imagesList.value?.add(Foto(editorFichaViewModel.inmuebleID!!, bitmap))
+        editorFichaViewModel.imagesList.value = editorFichaViewModel.imagesList.value
+        editorFichaViewModel.imagesList.value?.toString()?.let { Log.e("QWERTY", it) }
+        imagesRecyclerView.adapter = ImageAdapter(requireContext(), editorFichaViewModel.imagesList.value!!.toList(),editorFichaViewModel)
     }
 
 
