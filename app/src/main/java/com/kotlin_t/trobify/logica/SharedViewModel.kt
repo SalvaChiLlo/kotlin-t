@@ -122,6 +122,11 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
 
     }
 
+    fun isInmuebleFavorito(inmuebleId: Int) : Boolean {
+        if(usuarioActual == null) return false
+        return null != database.favoritoDAO().findByIdandDni(inmuebleId,usuarioActual.value!!.dni.toString())
+    }
+
     fun getCurrentUser() : Usuario? {
         return usuarioActual.value
     }

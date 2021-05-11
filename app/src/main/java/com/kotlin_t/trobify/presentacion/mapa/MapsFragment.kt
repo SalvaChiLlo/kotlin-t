@@ -98,11 +98,13 @@ class MapsFragment : Fragment() {
             var precio: String
 
             var iconGenerator = IconGenerator(this.requireContext())
-            iconGenerator.setStyle(IconGenerator.STYLE_BLUE)
 
             // Crear un marcador en el mapa por cada inmueble
             for (inmueble in listaInmuebles) {
 
+                if(sharedViewModel.isInmuebleFavorito(inmueble.inmuebleId)) {
+                    iconGenerator.setStyle(IconGenerator.STYLE_RED)
+                } else { iconGenerator.setStyle(IconGenerator.STYLE_BLUE)}
                 latitud = inmueble.latitud!!
                 longitud = inmueble.longitud!!
                 localizacion = LatLng(latitud, longitud)
