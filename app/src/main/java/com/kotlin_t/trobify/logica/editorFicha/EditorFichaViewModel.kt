@@ -390,7 +390,8 @@ class EditorFichaViewModel(
             titulo,
             subtitulo,
             descripcion,
-            codigoPostalInm
+            codigoPostalInm,
+            0
         )
 
         database.inmuebleDAO().insertAll(inmueble)

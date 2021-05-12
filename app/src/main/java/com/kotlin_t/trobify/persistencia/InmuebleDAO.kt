@@ -4,7 +4,7 @@ import androidx.room.*
 
 @Dao
 interface InmuebleDAO {
-    @Query("SELECT * FROM Inmuebles")
+    @Query("SELECT * FROM Inmuebles where publicado = 1")
     fun getAll(): List<Inmueble>
 
     @Query("SELECT * FROM Inmuebles WHERE inmuebleId IN (:ids)")

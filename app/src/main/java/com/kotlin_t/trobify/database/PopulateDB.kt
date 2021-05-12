@@ -251,7 +251,8 @@ class PopulateDB(
                 direccion,
                 "Subtitulo",
                 descripciones.random(),
-                46000 + (i * 10)
+                46000 + (i * 10),
+                1
             )
         )
 
