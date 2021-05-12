@@ -198,8 +198,10 @@ class EditorFichaFragment : Fragment() {
     }
 
     private fun setRecyclerViewObserver() {
-        // TODO : REVISAR
         imagesRecyclerView.adapter = ImageAdapter(requireContext(), editorFichaViewModel.imagesList.value!!.toList(),editorFichaViewModel)
+        editorFichaViewModel.imagesList.observe(viewLifecycleOwner, {
+            imagesRecyclerView.adapter = ImageAdapter(requireContext(), it.toList(),editorFichaViewModel)
+        })
     }
 
     private fun rellenarCamposEditables() {
