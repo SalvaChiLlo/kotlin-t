@@ -43,7 +43,6 @@ class EditarPerfilFragment : Fragment() {
     private val NOMBRE: Int = 4
     private val APELLIDOS: Int = 5
     private val TELEFONO: Int = 6
-    private val IBAN: Int = 7
     private lateinit var contraseñaDesencriptada: String
 
 
@@ -88,10 +87,6 @@ class EditarPerfilFragment : Fragment() {
             ensenarDialogo(TELEFONO)
 
         }
-        binding.cambiarIban.setOnClickListener {
-            ensenarDialogo(IBAN)
-
-        }
 
         binding.nuevaImagen.setOnClickListener {
             nuevaImagen()
@@ -110,7 +105,7 @@ class EditarPerfilFragment : Fragment() {
                 binding.editNombre.text.toString(),
                 binding.editApellidos.text.toString(),
                 binding.editTelefono.text.toString(),
-                binding.editIban.text.toString(),
+                "",
                 binding.imagen.drawable.toBitmap()
             )
             Log.d("Hola", usuarioNuevo.username)
@@ -138,28 +133,6 @@ class EditarPerfilFragment : Fragment() {
                 binding.editContrasena.text = encriptarContrasena(usuarioActual.contrasena)
             }
         }
-        binding.eliminarIban.setOnClickListener {
-            binding.editIban.text = ""
-        }
-        binding.editIban.addTextChangedListener(object : TextWatcher{
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if(p0.toString().isNotEmpty()){
-                    binding.eliminarIban.visibility = View.VISIBLE
-                }
-                else{
-                    binding.eliminarIban.visibility = View.GONE
-                }
-            }
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-
-        })
 
         binding.eliminarCuenta.setOnClickListener {
             AlertDialog.Builder(requireContext())
@@ -493,72 +466,6 @@ class EditarPerfilFragment : Fragment() {
 
                 })
             }
-            IBAN -> {
-
-                tituloGenerico = R.string.iban
-                textInputEditTextGenerico?.text = SpannableStringBuilder(usuarioActual.iban)
-                listener = DialogInterface.OnClickListener(fun(dialog: DialogInterface, _: Int) {
-
-
-
-
-                        binding.editIban.text = textInputEditTextGenerico?.text.toString()
-                    binding.aplicarCambios.visibility = View.VISIBLE
-                        dialog.cancel()
-
-                })
-                dialog.setPositiveButton("Confirmar", listener)
-                dialog.setNegativeButton("Cancelar", null)
-                val dialogCreado = dialog.create()
-                dialogCreado.show()
-                dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
-                textInputEditTextGenerico?.addTextChangedListener(object : TextWatcher{
-                    var correcto = true
-                    override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                    }
-
-                    override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        val text = p0.toString()
-                        if (text.isEmpty()) {
-                            textInputLayoutGenerico?.isErrorEnabled = true
-                            textInputLayoutGenerico?.error = getString(R.string.completaCampo)
-                            return
-                        }
-
-                        var esValido = true;
-                        for (i in text.indices) {
-                            if (i == 0 || i == 1) {
-                                if (!Character.isLetter(text[i])) {
-                                    esValido = false
-                                    break
-                                }
-                            } else {
-                                if (!Character.isDigit(text[i])) {
-                                    esValido = false
-                                    break
-                                }
-                            }
-                        }
-                        if (text.length != 24 || !esValido) {
-                            textInputLayoutGenerico?.isErrorEnabled = true;
-                            textInputLayoutGenerico?.error = getString(R.string.ibanIncorrecto)
-                            correcto = false
-                        }
-                        else{
-                            correcto = true
-                        }
-                        if(correcto)textInputLayoutGenerico?.isErrorEnabled = false
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = correcto
-
-                    }
-
-                    override fun afterTextChanged(p0: Editable?) {
-
-                    }
-
-                })
-            }
             CONTRASENA -> {
                 textInputLayoutContrasena?.hint = getString(R.string.contrasena)
                 textInputLayoutRepetirContrasena?.hint = getString(R.string.repetir_contrasena)
@@ -643,7 +550,6 @@ class EditarPerfilFragment : Fragment() {
         binding.editNombre.text = usuarioActual.nombre
         binding.editApellidos.text = usuarioActual.apellidos
         binding.editTelefono.text = usuarioActual.telefono
-        binding.editIban.text = usuarioActual.iban
         if (usuarioActual.fotoPerfil != null) binding.imagen.setImageBitmap(usuarioActual.fotoPerfil) else binding.imagen.setImageDrawable(
             getDrawable(requireContext(), R.drawable.anonymous_user)
         )

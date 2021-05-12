@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".presentacion..editarPerfil.editarPerfilFragment">
@@ -302,63 +302,6 @@
 
             </ImageView>
 
-            <TextView
-                android:id="@+id/datosBancarios"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="40dp"
-                android:text="@string/datos_bancarios"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/imagen" />
-
-            <View
-                android:id="@+id/separadordatosBancarios"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/orden_separador"
-                android:layout_marginHorizontal="30dp"
-                android:layout_marginTop="@dimen/ordenar_margin"
-                android:background="@color/black"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/datosBancarios" />
-
-            <TextView
-                android:id="@+id/textIban"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
-                android:text="@string/textIban"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/separadordatosBancarios" />
-
-            <TextView
-                android:id="@+id/editIban"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                app:layout_constraintStart_toEndOf="@id/textIban"
-                app:layout_constraintTop_toTopOf="@id/textIban" />
-
-            <ImageView
-                android:id="@+id/eliminarIban"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/ic_baseline_delete_24"
-                app:layout_constraintStart_toEndOf="@id/editIban"
-                app:layout_constraintTop_toTopOf="@id/editIban" />
-
-            <ImageView
-                android:id="@+id/cambiarIban"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/ic_baseline_edit_24"
-                app:layout_constraintStart_toEndOf="@id/eliminarIban"
-                app:layout_constraintTop_toTopOf="@id/eliminarIban" />
-
             <Button
                 android:id="@+id/aplicarCambios"
                 android:layout_width="match_parent"
@@ -368,7 +311,7 @@
                 android:layout_marginTop="25dp"
                 android:text="@string/aplicar_cambios"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textIban" />
+                app:layout_constraintTop_toBottomOf="@+id/nuevaImagen" />
             <TextView
                 android:id="@+id/eliminarCuenta"
                 android:layout_width="wrap_content"
