@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -43,6 +44,7 @@ class EditorFichaFragment : Fragment() {
     lateinit var sharedModel: SharedViewModel
     lateinit var imagesRecyclerView: RecyclerView
     lateinit var locationManager: LocationManager
+    lateinit var buttonsOperation : RadioGroup
     val args: EditorFichaFragmentArgs by navArgs()
 
     companion object {
@@ -71,6 +73,7 @@ class EditorFichaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         imagesRecyclerView = binding.imagesRecyclerView
+        buttonsOperation = view.findViewById(R.id.radioGroupOperacion)
         setEditorOrCreator()
         setAñadirImagenesAction()
         setDescartarAction()
@@ -179,6 +182,9 @@ class EditorFichaFragment : Fragment() {
             setBinIcon()
             (activity as AppCompatActivity).supportActionBar?.title = "Editar Inmueble"
             rellenarCamposEditables()
+            for (i in 0 until buttonsOperation.getChildCount()) {
+                buttonsOperation.getChildAt(i).setEnabled(false)
+            }
         }
     }
 
