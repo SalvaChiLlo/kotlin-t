@@ -45,6 +45,7 @@ class EditorFichaFragment : Fragment() {
     lateinit var imagesRecyclerView: RecyclerView
     lateinit var locationManager: LocationManager
     lateinit var buttonsOperation : RadioGroup
+    lateinit var buttonsTipo : RadioGroup
     val args: EditorFichaFragmentArgs by navArgs()
 
     companion object {
@@ -74,6 +75,7 @@ class EditorFichaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         imagesRecyclerView = binding.imagesRecyclerView
         buttonsOperation = view.findViewById(R.id.radioGroupOperacion)
+        buttonsTipo = view.findViewById(R.id.radioGroupTipoInmueble)
         setEditorOrCreator()
         setAñadirImagenesAction()
         setDescartarAction()
@@ -184,6 +186,9 @@ class EditorFichaFragment : Fragment() {
             rellenarCamposEditables()
             for (i in 0 until buttonsOperation.getChildCount()) {
                 buttonsOperation.getChildAt(i).setEnabled(false)
+            }
+            for (i in 0 until buttonsTipo.getChildCount()) {
+                buttonsTipo.getChildAt(i).setEnabled(false)
             }
         }
     }
