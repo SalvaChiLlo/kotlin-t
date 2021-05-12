@@ -125,7 +125,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     fun isInmuebleFavorito(inmuebleId: Int) : Boolean {
         if(usuarioActual == null) return false
         val dni =  if(usuarioActual.value != null) usuarioActual.value!!.dni else "-1"
-        return null != database.favoritoDAO().findByIdandDni(inmuebleId,usuarioActual.value!!.dni)
+        return null != database.favoritoDAO().findByIdandDni(inmuebleId,dni)
     }
 
     fun getCurrentUser() : Usuario? {
