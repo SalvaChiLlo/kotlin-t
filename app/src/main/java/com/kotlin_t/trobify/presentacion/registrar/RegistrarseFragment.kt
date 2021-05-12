@@ -151,21 +151,6 @@ class RegistrarseFragment : Fragment() {
             }
         })
 
-        binding.inputIban.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                registrarseViewModel.ibanCorrecto(p0.toString())
-            }
-
-
-            override fun afterTextChanged(p0: Editable?) {
-
-            }
-        })
-
         binding.nuevaImagen.setOnClickListener {
             nuevaImagen()
             binding.eliminarImagen.visibility = View.VISIBLE

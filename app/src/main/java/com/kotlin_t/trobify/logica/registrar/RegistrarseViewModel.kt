@@ -55,10 +55,6 @@ class RegistrarseViewModel(
     var avatar: Bitmap? = null
 
 
-    private var _iban = binding.inputIban.text.toString()
-    val iban: String
-        get() = _iban
-
     init {
 
         binding.apply {
@@ -69,7 +65,6 @@ class RegistrarseViewModel(
             nombre.isErrorEnabled = false
             apellidos.isErrorEnabled = false
             telefono.isErrorEnabled = false
-            iban.isErrorEnabled = false
 
         }
 
@@ -234,42 +229,12 @@ class RegistrarseViewModel(
         return true;
     }
 
-    fun ibanCorrecto(iban: String): Boolean {
-        if (iban.isEmpty()) {
-            binding.iban.isErrorEnabled = true
-            binding.iban.error = fragment.getString(R.string.completaCampo)
-            return false;
-        }
-        var esValido = true;
-        for (i in iban.indices) {
-            if (i == 0 || i == 1) {
-                if (!Character.isLetter(iban[i])) {
-                    esValido = false
-                    break
-                }
-            } else {
-                if (!Character.isDigit(iban[i])) {
-                    esValido = false
-                    break
-                }
-            }
-        }
-        if (iban.length != 24 || !esValido) {
-            binding.iban.isErrorEnabled = true;
-            binding.iban.error = fragment.getString(R.string.ibanIncorrecto)
-            return false;
-        }
-        binding.iban.isErrorEnabled = false
-        _iban = iban
-        return true;
-    }
-
     @RequiresApi(Build.VERSION_CODES.O)
     fun registrarse() {
         if (usuarioValido(usuario) && contrasenaValida(contrasena) && coincidenContrasenas(repetirContrasena) && dniCorrecto(dni) && nombreCorrecto(nombre) &&
             apellidosCorrectos(apellidos) && telefonoCorrecto(telefono)
         ) {
-            val user = Usuario(dni, usuario, contrasena, nombre, apellidos, telefono, iban, avatar)
+            val user = Usuario(dni, usuario, contrasena, nombre, apellidos, telefono, "", avatar)
             database.usuarioDAO().insertAll(user)
             model.updateCurrentUser(user)
             model.insertarSesionActual(usuario)
