@@ -58,7 +58,7 @@ class PopulateDB(
             createInmueble(i)
             val ultimoInmueble = database.inmuebleDAO().getAll().last()
             database.fotoDAO()
-                .insertAll(Foto(ultimoInmueble.inmuebleId, ultimoInmueble.miniatura!!))
+                .insertAll(Foto(ultimoInmueble.inmuebleId, ultimoInmueble.miniatura!!, true))
         }
 
         val listaInmuebles = database.inmuebleDAO().getAll()
@@ -79,6 +79,7 @@ class PopulateDB(
         var posterBitmap: Bitmap? = null
         posterBitmap = getBitmapFromURL("https://source.unsplash.com/300x300/?building")
         posterBitmap = processImage(posterBitmap!!)
+
         var latitud = 39.489658 + (i.toDouble() / 20.0)
         var longitud = -0.422140 + (i.toDouble() / 20.0)
         var direcciones = listOf(
@@ -266,7 +267,12 @@ class PopulateDB(
 
 
     private fun saveImage(bitmap: Bitmap, inmuebleId: Int) {
-        val image = Foto(inmuebleId, bitmap)
+        val image: Foto
+        if(database.fotoDAO().getAllFromInmuebleID(inmuebleId).isEmpty()) {
+            image = Foto(inmuebleId, bitmap, false)
+        } else {
+            image = Foto(inmuebleId, bitmap, false)
+        }
         database.fotoDAO().insertAll(image)
     }
 

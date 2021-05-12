@@ -233,9 +233,9 @@ class MainActivity : AppCompatActivity(){
 
                 for(i in 1..20) {
                     PopulateDB(database, this, sharedViewModel).createInmueble(i)
-                    val ultimoInmueble = database.inmuebleDAO().getAll().last()
+                    val ultimoInmueble = database.inmuebleDAO().getAllPublicAndNoPublic().last()
                     database.fotoDAO()
-                        .insertAll(Foto(ultimoInmueble.inmuebleId, ultimoInmueble.miniatura!!))
+                        .insertAll(Foto(ultimoInmueble.inmuebleId, ultimoInmueble.miniatura!!, true))
                 }
                 this@MainActivity.runOnUiThread {
                     sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()

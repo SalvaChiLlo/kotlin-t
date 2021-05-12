@@ -7,6 +7,9 @@ interface InmuebleDAO {
     @Query("SELECT * FROM Inmuebles where publicado = 1")
     fun getAll(): List<Inmueble>
 
+    @Query("SELECT * FROM Inmuebles")
+    fun getAllPublicAndNoPublic(): List<Inmueble>
+
     @Query("SELECT * FROM Inmuebles WHERE inmuebleId IN (:ids)")
     fun loadAllByIds(ids: Set<Int>): List<Inmueble>
 

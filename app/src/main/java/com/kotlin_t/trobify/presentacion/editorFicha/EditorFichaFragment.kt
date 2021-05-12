@@ -305,7 +305,14 @@ class EditorFichaFragment : Fragment() {
         val inputStream = context?.contentResolver?.openInputStream(imageUri)
         var bitmap = BitmapFactory.decodeStream(inputStream)
         bitmap = Bitmap.createScaledBitmap(bitmap!!, 300, 300, true)
-        editorFichaViewModel.imagesList.value?.add(Foto(editorFichaViewModel.inmuebleID!!, bitmap))
+        var wasEmpty = editorFichaViewModel.imagesList.value?.isEmpty() == true
+        editorFichaViewModel.imagesList.value?.add(Foto(editorFichaViewModel.inmuebleID!!, bitmap, false))
+        editorFichaViewModel.imagesList.value = editorFichaViewModel.imagesList.value
+
+        if(wasEmpty) {
+            editorFichaViewModel.imagesList.value?.get(0)?.main = true
+        }
+
         editorFichaViewModel.imagesList.value = editorFichaViewModel.imagesList.value
         editorFichaViewModel.imagesList.value?.toString()?.let { Log.e("QWERTY", it) }
         imagesRecyclerView.adapter = ImageAdapter(requireContext(), editorFichaViewModel.imagesList.value!!.toList(),editorFichaViewModel)

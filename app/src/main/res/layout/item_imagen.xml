@@ -22,5 +22,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="8dp"/>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fotoPrincipal"
+        android:layout_width="wrap_content"
+        android:importantForAccessibility="no"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_bookmark_border_24"
+        app:fabSize="mini"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_margin="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

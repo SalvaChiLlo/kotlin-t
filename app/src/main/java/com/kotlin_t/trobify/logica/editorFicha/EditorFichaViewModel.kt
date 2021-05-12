@@ -101,7 +101,7 @@ class EditorFichaViewModel(
         tieneAscensor = binding.hasAscensor.isChecked
         subtitulo = "" // OK
         miniatura =
-            if (imagesList.value?.isEmpty() == true) null else imagesList.value?.get(0)?.imagen  // OK
+            if (imagesList.value?.isEmpty() == true) null else imagesList.value?.filter { it.main }?.get(0)?.imagen  // OK
 
         hasError = checkBanos(hasError)
         hasError = checkCodigoPostal(hasError)

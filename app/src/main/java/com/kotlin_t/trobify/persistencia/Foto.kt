@@ -28,7 +28,8 @@ import androidx.room.PrimaryKey
 data class Foto(
     @NonNull
     val inmuebleId: Int,
-    var imagen: Bitmap
+    var imagen: Bitmap,
+    var main: Boolean
 ) {
     @PrimaryKey(autoGenerate = true) var fotoId: Int = 0
 }
