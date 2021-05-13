@@ -96,15 +96,22 @@ class MapsFragment : Fragment() {
             var marker: Marker
             var bitmap: Bitmap
             var precio: String
+            var tipoInmueble: Int
 
             var iconGenerator = IconGenerator(this.requireContext())
 
             // Crear un marcador en el mapa por cada inmueble
             for (inmueble in listaInmuebles) {
 
-                if(sharedViewModel.isInmuebleFavorito(inmueble.inmuebleId)) {
+                tipoInmueble = sharedViewModel.getTipoInmueble(inmueble.inmuebleId)
+
+                if(tipoInmueble == -1) { // Es Propio
+                    iconGenerator.setStyle(IconGenerator.STYLE_GREEN)
+                } else if(tipoInmueble == 0) { // Es Favorito
                     iconGenerator.setStyle(IconGenerator.STYLE_RED)
-                } else { iconGenerator.setStyle(IconGenerator.STYLE_BLUE)}
+                } else {
+                    iconGenerator.setStyle(IconGenerator.STYLE_WHITE)
+                }
                 latitud = inmueble.latitud!!
                 longitud = inmueble.longitud!!
                 localizacion = LatLng(latitud, longitud)

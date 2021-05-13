@@ -19,6 +19,9 @@ interface InmuebleDAO {
     @Query("SELECT * FROM Inmuebles WHERE inmuebleId like :inmuebleId")
     fun findById(inmuebleId: String): Inmueble
 
+    @Query("SELECT * FROM Inmuebles WHERE inmuebleId like :inmuebleId and dniPropietario like :dni")
+    fun findByIdandDni(inmuebleId: Int, dni: String): Inmueble?
+
     @Query("SELECT max(precio) FROM Inmuebles")
     fun getMaxPrecio(): Int
 

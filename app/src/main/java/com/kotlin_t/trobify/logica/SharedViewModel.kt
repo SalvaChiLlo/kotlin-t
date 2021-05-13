@@ -22,7 +22,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     ///////////////////////////////////////////////
     // USUARIO QUE ESTÁ UTILIZANDO LA APLICACIÓN //
     ///////////////////////////////////////////////
-    //var usuario: Usuario? = null
+
     val usuarioActual: MutableLiveData<Usuario> by lazy {
         MutableLiveData<Usuario>()
     }
@@ -122,10 +122,14 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
 
     }
 
-    fun isInmuebleFavorito(inmuebleId: Int) : Boolean {
-        if(usuarioActual == null) return false
-        val dni =  if(usuarioActual.value != null) usuarioActual.value!!.dni else "-1"
-        return null != database.favoritoDAO().findByIdandDni(inmuebleId,dni)
+    fun getTipoInmueble(inmuebleId: Int) : Int {
+        // -1 --> Es Propio
+        // 0 --> Es Favorito
+        // 1 --> No es Propio ni Favorito
+        val dni = if(usuarioActual.value == null) "-1" else usuarioActual.value!!.dni
+        if(database.inmuebleDAO().findByIdandDni(inmuebleId,dni) != null) return -1
+        if(database.favoritoDAO().findByIdandDni(inmuebleId,dni) != null) return 0
+        return 1
     }
 
     fun getCurrentUser() : Usuario? {
