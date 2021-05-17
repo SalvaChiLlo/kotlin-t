@@ -119,7 +119,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         //Log.i("VARIABLES", "Provided info Username: " + username + " Contraseña: " + password)
 
         val res: Usuario? =
-            usuarios.value?.find { it.username == username && it.contrasena == password }
+            database.usuarioDAO().getAll().find { it.username == username && it.contrasena == password }
 
         return res
 
