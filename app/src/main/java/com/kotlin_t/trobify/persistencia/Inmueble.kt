@@ -44,7 +44,7 @@ data class Inmueble(
     var subtitulo: String,
     var descripcion: String?,
     var codigoPostal: Int,
-    var publicado: Int
+    var publicado: Boolean
 ) {
     @PrimaryKey(autoGenerate = true) var inmuebleId: Int = 0
 }

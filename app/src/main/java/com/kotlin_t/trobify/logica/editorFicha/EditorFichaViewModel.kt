@@ -71,7 +71,7 @@ class EditorFichaViewModel(
         if (inmueble != null) {
             inmuebleID = inmueble!!.inmuebleId
         } else {
-            inmuebleID = database.inmuebleDAO().getAll().last().inmuebleId + 1
+            inmuebleID = database.inmuebleDAO().getAllPublicAndNoPublic().last().inmuebleId + 1
         }
 
         geocoder = Geocoder(context, Locale.getDefault())
@@ -391,12 +391,12 @@ class EditorFichaViewModel(
             subtitulo,
             descripcion,
             codigoPostalInm,
-            0
+            false
         )
 
         database.inmuebleDAO().insertAll(inmueble)
         if (inmueble == null) {
-            inmuebleID = database.inmuebleDAO().getAll().last().inmuebleId
+            inmuebleID = database.inmuebleDAO().getAllPublicAndNoPublic().last().inmuebleId
         }
 
         guardarImagenesDelInmueble()

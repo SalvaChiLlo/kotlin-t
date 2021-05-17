@@ -45,7 +45,7 @@ class MisInmueblesFragment : androidx.fragment.app.Fragment() {
         recyclerView = binding.misInmueblesRecyclerView
 
         recyclerView.adapter = MisInmueblesAdapter(
-            requireContext(), misInmueblesViewModel.getMisInmuebles(), misInmueblesViewModel, misInmueblesViewModel.database
+            requireContext(), misInmueblesViewModel.getMisInmuebles(), misInmueblesViewModel, misInmueblesViewModel.database, sharedViewModel
         )
 
         binding.anadirInmueble.setOnClickListener {

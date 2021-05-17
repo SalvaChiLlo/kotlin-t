@@ -11,6 +11,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.logica.home.HomeViewModel
 import com.kotlin_t.trobify.persistencia.Inmueble
@@ -27,6 +28,7 @@ class HomeItemAdapter(
         val direccion: TextView = view.findViewById(R.id.home_direccion)
         val precioMes: TextView = view.findViewById(R.id.home_precio_mes)
         val favorito: ImageView = view.findViewById(R.id.favorito_icon)
+        val publicar: FloatingActionButton = view.findViewById(R.id.publicarInmueble)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeItemViewHolder {
@@ -51,6 +53,8 @@ class HomeItemAdapter(
             val action = HomeFragmentDirections.actionNavHomeToFichaFragment(inmueble.inmuebleId)
             holder.itemView.findNavController().navigate(action)
         }
+
+        holder.publicar.visibility = View.GONE
 
     }
 

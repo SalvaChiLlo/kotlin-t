@@ -54,12 +54,12 @@ class PopulateDB(
         // Crear Inmuebles
         for (i in 0..10) {
             createInmueble(i)
-            val ultimoInmueble = database.inmuebleDAO().getAll().last()
+            val ultimoInmueble = database.inmuebleDAO().getAllPublicAndNoPublic().last()
             database.fotoDAO()
                 .insertAll(Foto(ultimoInmueble.inmuebleId, ultimoInmueble.miniatura!!, true))
         }
 
-        val listaInmuebles = database.inmuebleDAO().getAll()
+        val listaInmuebles = database.inmuebleDAO().getAllPublicAndNoPublic()
         // Crear Favoritos
         for (i in 0..6) {
             database.favoritoDAO().insertAll(Favorito(listaInmuebles[i].inmuebleId, "-1"))
@@ -251,7 +251,7 @@ class PopulateDB(
                 "Subtitulo",
                 descripciones.random(),
                 46000 + (i * 10),
-                1
+                true
             )
         )
 
