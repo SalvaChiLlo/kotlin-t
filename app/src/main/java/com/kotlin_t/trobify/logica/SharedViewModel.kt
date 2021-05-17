@@ -32,8 +32,6 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     val favoritosEliminados = mutableSetOf<Favorito?>()
 
 
-    val usuarioActual__PRUEBA = database.usuarioDAO().findById("-1")
-
     val inmuebles = MutableLiveData<MutableList<Inmueble>?>()
     val usuarios = MutableLiveData<MutableList<Usuario>>()
     var estrategiaOrdenacion: EstrategiaOrdenacion? = null
@@ -49,7 +47,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     var plantaOpciones = MutableLiveData<MutableSet<String>>()
 
     // Variables de busqueda
-    var busquedaString = "";
+    var busquedaString = ""
 
     init {
 
@@ -63,7 +61,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
                 "999888777",
                 null
             )
-            database.usuarioDAO().insertAll(usuarioPopulate!!)
+            database.usuarioDAO().insertAll(usuarioPopulate)
 
         }
 

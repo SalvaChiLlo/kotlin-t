@@ -1,6 +1,7 @@
 package com.kotlin_t.trobify.presentacion.misInmuebles
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,11 +17,11 @@ import com.kotlin_t.trobify.logica.misInmuebles.MisInmueblesViewModel
 import com.kotlin_t.trobify.persistencia.Inmueble
 
 class MisInmueblesAdapter(
-    val context: Context,
-    val dataset: List<Inmueble>,
-    val viewModel: MisInmueblesViewModel,
-    val database: AppDatabase,
-    val sharedViewModel: SharedViewModel
+    private val context: Context,
+    private val dataset: List<Inmueble>,
+    private val viewModel: MisInmueblesViewModel,
+    private val database: AppDatabase,
+    private val sharedViewModel: SharedViewModel
 ) :
     RecyclerView.Adapter<MisInmueblesAdapter.MisInmueblesViewHolder>() {
     class MisInmueblesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -39,7 +40,8 @@ class MisInmueblesAdapter(
 
     override fun onBindViewHolder(holder: MisInmueblesViewHolder, position: Int) {
         // Set image
-        checkEstadoInmueble(dataset[position],holder.publicar)
+        setIconoEstado(dataset[position], holder.publicar)
+
         val inmueble = database.inmuebleDAO().findById(dataset[position].inmuebleId!!.toString())
         holder.imagen.setImageBitmap(inmueble.miniatura)
         holder.imagen.setOnClickListener {
@@ -59,20 +61,23 @@ class MisInmueblesAdapter(
         holder.favorito.visibility = View.GONE
 
         holder.publicar.setOnClickListener {
-            checkEstadoInmueble(dataset[position], it as FloatingActionButton)
+            changeEstado(dataset[position])
+            setIconoEstado(dataset[position], it as FloatingActionButton)
             sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
         }
     }
 
-    private fun checkEstadoInmueble(inmueble: Inmueble, button: FloatingActionButton) {
+    private fun changeEstado(inmueble: Inmueble) {
+        inmueble.publicado = !inmueble.publicado
+        database.inmuebleDAO().update(inmueble)
+    }
+
+    private fun setIconoEstado(inmueble: Inmueble, button: FloatingActionButton) {
+        Log.e("HOLA", "${inmueble.publicado}")
         if (inmueble.publicado) {
-            inmueble.publicado = false
-            button.setImageResource(R.drawable.ic_baseline_public_off_24)
-            database.inmuebleDAO().update(inmueble)
-        } else {
-            inmueble.publicado = true
             button.setImageResource(R.drawable.ic_baseline_public_24)
-            database.inmuebleDAO().update(inmueble)
+        } else {
+            button.setImageResource(R.drawable.ic_baseline_public_off_24)
         }
     }
 

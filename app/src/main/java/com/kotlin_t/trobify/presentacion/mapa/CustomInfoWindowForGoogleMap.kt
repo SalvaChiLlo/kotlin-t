@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.persistencia.Inmueble
 
@@ -20,10 +21,12 @@ class CustomInfoWindowForGoogleMap(context: Context) : GoogleMap.InfoWindowAdapt
         val direccion = view.findViewById<TextView>(R.id.home_direccion)
         val precio = view.findViewById<TextView>(R.id.home_precio_mes)
         val foto = view.findViewById<ImageView>(R.id.home_imagen)
+        val publishToggle = view.findViewById<FloatingActionButton>(R.id.publicarInmueble)
 
         direccion.text = ((marker.tag as Inmueble)).direccion
         precio.text = ((marker.tag as Inmueble)).precio.toString() + "€"
         foto.setImageBitmap((marker.tag as Inmueble).miniatura)
+        publishToggle.visibility = View.GONE
 
     }
 
