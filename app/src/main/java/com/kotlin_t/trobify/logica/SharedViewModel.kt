@@ -4,9 +4,12 @@ import android.app.Application
 import android.os.Build
 import androidx.annotation.NonNull
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.textfield.TextInputLayout
+import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentRegistrarseBinding
 import com.kotlin_t.trobify.persistencia.Inmueble
@@ -26,7 +29,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
     val usuarioActual: MutableLiveData<Usuario> by lazy {
         MutableLiveData<Usuario>()
     }
-    val favoritosEliminados = mutableSetOf<Favorito>()
+    val favoritosEliminados = mutableSetOf<Favorito?>()
 
 
     val usuarioActual__PRUEBA = database.usuarioDAO().findById("-1")
@@ -58,7 +61,6 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
                 "nombre",
                 "appellido$",
                 "999888777",
-                "iban",
                 null
             )
             database.usuarioDAO().insertAll(usuarioPopulate!!)
@@ -110,29 +112,30 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         usuarios.value = database.usuarioDAO().getAll().toMutableList()
     }
 
-    fun getUserFromCredentials(username: String, password: String) : Usuario? {
+    fun getUserFromCredentials(username: String, password: String): Usuario? {
 
         //Log.i("USERNAME", "First username: " + usuarios.value!!.get(0).username)
         //Log.i("PASSWORD", "First password: " + usuarios.value!!.get(0).contrasena)
         //Log.i("VARIABLES", "Provided info Username: " + username + " Contraseña: " + password)
 
-        val res: Usuario? = usuarios.value?.find { it.username == username && it.contrasena == password }
+        val res: Usuario? =
+            usuarios.value?.find { it.username == username && it.contrasena == password }
 
         return res
 
     }
 
-    fun getTipoInmueble(inmuebleId: Int) : Int {
+    fun getTipoInmueble(inmuebleId: Int): Int {
         // -1 --> Es Propio
         // 0 --> Es Favorito
         // 1 --> No es Propio ni Favorito
-        val dni = if(usuarioActual.value == null) "-1" else usuarioActual.value!!.dni
-        if(database.inmuebleDAO().findByIdandDni(inmuebleId,dni) != null) return -1
-        if(database.favoritoDAO().findByIdandDni(inmuebleId,dni) != null) return 0
+        val dni = if (usuarioActual.value == null) "-1" else usuarioActual.value!!.dni
+        if (database.inmuebleDAO().findByIdandDni(inmuebleId, dni) != null) return -1
+        if (database.favoritoDAO().findByIdandDni(inmuebleId, dni) != null) return 0
         return 1
     }
 
-    fun getCurrentUser() : Usuario? {
+    fun getCurrentUser(): Usuario? {
         return usuarioActual.value
     }
 
@@ -156,14 +159,195 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
 
     @RequiresApi(Build.VERSION_CODES.O)
     fun insertarSesionActual(username: String) {
-        database.sesionActualDAO().insertSesion(SesionActual(username, LocalDateTime.now().toString()))
+        database.sesionActualDAO()
+            .insertSesion(SesionActual(username, LocalDateTime.now().toString()))
     }
-    fun recuperarSesionActual(){
+
+    fun recuperarSesionActual() {
         val sesionActual = database.sesionActualDAO().getSesionActual()
-        if(sesionActual != null){
+        if (sesionActual != null) {
             usuarioActual.value = database.usuarioDAO().findByUsername(sesionActual.usuario)
         }
 
     }
 
+    fun usuarioCorrecto(usuario: String, layout: TextInputLayout, fragment: Fragment): Boolean {
+        if (usuario.isEmpty()) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.completaCampo)
+            return false;
+        }
+        if (usuario.length < 5) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.usuarioCorto)
+            return false;
+        }
+        if (database.usuarioDAO().existsUsername(usuario)) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.usuarioCogido)
+            return false;
+        }
+        if (!formatoUsuarioCorrecto(usuario)) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.usuarioIncorrecto)
+            return false
+        }
+
+        layout.isErrorEnabled = false
+        return true
+    }
+
+    private fun formatoUsuarioCorrecto(usuario: String): Boolean {
+        for (i in usuario.indices) {
+            if (usuario[i].toInt() == 32) {
+                return false
+            }
+        }
+        return true
+    }
+
+    fun dniCorrecto(dni: String, layout: TextInputLayout, fragment: Fragment): Boolean {
+        if (dni.isEmpty()) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.completaCampo)
+            return false;
+        }
+        if (database.usuarioDAO().existsId(dni)) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.dniCogido)
+            return false;
+        }
+
+        if (!formatoDniCorrecto(dni)) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.dniIncorrecto)
+            return false;
+        }
+        layout.isErrorEnabled = false
+        return true;
+    }
+
+    private fun formatoDniCorrecto(dni: String): Boolean {
+        if (dni.length != 9) return false
+        for (i in dni.indices) {
+            if (i == 8) {
+                if (!Character.isLetter(dni[i])) {
+                    return false
+                }
+            } else if (!Character.isDigit(dni[i])) {
+                return false
+
+            }
+        }
+        return true
+    }
+
+    fun nombreCorrecto(nombre: String, layout: TextInputLayout, fragment: Fragment): Boolean {
+        if (nombre.isEmpty()) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.completaCampo)
+            return false;
+        }
+        if (!formatoNombreApellidosCorrecto(nombre)) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.nombreInvalido)
+            return false;
+        }
+
+        layout.isErrorEnabled = false
+        return true;
+    }
+
+    private fun formatoNombreApellidosCorrecto(nombreApellidos: String): Boolean {
+        for (i in nombreApellidos.indices) {
+            if (!Character.isLetter(nombreApellidos[i]) && nombreApellidos[i].toInt() != 32) {
+                return false;
+            }
+        }
+        return true
+    }
+
+    fun apellidosCorrectos(
+        apellidos: String,
+        layout: TextInputLayout,
+        fragment: Fragment
+    ): Boolean {
+        if (apellidos.isEmpty()) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.completaCampo)
+            return false;
+        }
+
+        if (!formatoNombreApellidosCorrecto(apellidos)) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.apellidosInvalidos)
+            return false;
+        }
+
+        layout.isErrorEnabled = false
+        return true;
+    }
+
+    fun telefonoCorrecto(telefono: String, layout: TextInputLayout,
+                         fragment: Fragment): Boolean {
+        if (telefono.isEmpty()) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.completaCampo)
+            return false;
+        }
+
+        if (!formatoTelefonoCorrecto(telefono)) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.telefonoIncorrecto)
+            return false;
+        }
+        layout.isErrorEnabled = false
+        return true;
+    }
+
+    private fun formatoTelefonoCorrecto(telefono: String): Boolean{
+        if(telefono.length != 9) return false
+        for (i in telefono.indices) {
+            if (!Character.isDigit(telefono[i])) {
+                return false
+            }
+        }
+        return true
+    }
+
+    fun contrasenaCorrecta(contrasena: String, layout: TextInputLayout,
+                         fragment: Fragment): Boolean {
+        if (contrasena.isEmpty()) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.completaCampo)
+            return false;
+        }
+        if (!formatoContrasenaCorrecto(contrasena)) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.contrasenaCorta)
+            return false;
+        }
+        layout.isErrorEnabled = false;
+        return true;
+    }
+
+    private fun formatoContrasenaCorrecto(contrasena: String): Boolean{
+        return contrasena.length >= 8
+    }
+
+    fun coincidenContrasenas(contrasena: String, contrasenaRepetida: String, layout: TextInputLayout,
+                             fragment: Fragment): Boolean {
+        if (contrasenaRepetida.isEmpty()) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.completaCampo)
+            return false;
+        }
+        if (contrasenaRepetida != contrasena) {
+            layout.isErrorEnabled = true;
+            layout.error = fragment.getString(R.string.contrasenaNoCoinciden)
+            return false;
+        }
+        layout.isErrorEnabled = false
+        return true;
+    }
 }

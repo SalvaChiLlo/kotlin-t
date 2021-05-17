@@ -36,6 +36,7 @@ class EditarPerfilFragment : Fragment() {
     private lateinit var database: AppDatabase
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var usuarioActual: Usuario
+    private val fragment: EditarPerfilFragment = this
     private val REQUEST_CODE = 100
     private val USUARIO: Int = 1
     private val CONTRASENA: Int = 2
@@ -51,8 +52,7 @@ class EditarPerfilFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding =
-            DataBindingUtil.inflate(inflater, R.layout.fragment_editar_perfil, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_editar_perfil, container, false)
         val application = requireNotNull(this.activity).application
         database = AppDatabase.getDatabase(application)
         sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
@@ -105,7 +105,6 @@ class EditarPerfilFragment : Fragment() {
                 binding.editNombre.text.toString(),
                 binding.editApellidos.text.toString(),
                 binding.editTelefono.text.toString(),
-                "",
                 binding.imagen.drawable.toBitmap()
             )
             Log.d("Hola", usuarioNuevo.username)
@@ -194,34 +193,7 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        var correcto = true
-                        if (p0.toString().isEmpty()) {
-                            textInputLayoutGenerico?.isErrorEnabled = true
-                            textInputLayoutGenerico?.error = getString(R.string.completaCampo)
-                            return
-                        }
-                        if (p0.toString().length < 5) {
-                            textInputLayoutGenerico?.isErrorEnabled = true;
-                            textInputLayoutGenerico?.error = getString(R.string.usuarioCorto)
-                            return
-
-                        }
-                        if (database.usuarioDAO().existsUsername(p0.toString())) {
-                            textInputLayoutGenerico?.isErrorEnabled = true;
-                            textInputLayoutGenerico?.error = getString(R.string.usuarioCogido)
-                            correcto = false
-                        }
-                        for (i in p0.toString().indices) {
-                            if (p0.toString()[i].toInt() == 32) {
-                                textInputLayoutGenerico?.isErrorEnabled = true;
-                                textInputLayoutGenerico?.error =
-                                    getString(R.string.usuarioIncorrecto)
-                                correcto = false
-                                break
-                            }
-                        }
-                        if(correcto) textInputLayoutGenerico?.isErrorEnabled = false
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = correcto
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.usuarioCorrecto(p0.toString(), textInputLayoutGenerico!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -253,38 +225,7 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        var correcto = true
-                        val text = p0.toString()
-                        if (text.isEmpty()) {
-                            textInputLayoutGenerico?.isErrorEnabled = true
-                            textInputLayoutGenerico?.error = getString(R.string.completaCampo)
-                            return
-                        }
-                        if (database.usuarioDAO().existsId(text)) {
-                            textInputLayoutGenerico?.isErrorEnabled = true;
-                            textInputLayoutGenerico?.error = getString(R.string.dniCogido)
-                            return
-                        }
-                        var esValido = true
-
-                        for (i in text.indices) {
-                            if (i == 8) {
-                                if (!Character.isLetter(text[i])) {
-                                    esValido = false;
-                                    break
-                                }
-                            } else if (!Character.isDigit(text[i])) {
-                                esValido = false;
-                                break
-                            }
-                        }
-                        if (text.length != 9 || !esValido) {
-                            textInputLayoutGenerico?.isErrorEnabled = true;
-                            textInputLayoutGenerico?.error = getString(R.string.dniIncorrecto)
-                            correcto = false
-                        }
-                        if(correcto)textInputLayoutGenerico?.isErrorEnabled = false
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = correcto
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.dniCorrecto(p0.toString(), textInputLayoutGenerico!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -311,33 +252,12 @@ class EditarPerfilFragment : Fragment() {
                 dialogCreado.show()
                 dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
                 textInputEditTextGenerico?.addTextChangedListener(object : TextWatcher{
-                    var correcto = true
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        if (p0.toString().isEmpty()) {
-                            textInputLayoutGenerico?.isErrorEnabled = true
-                            textInputLayoutGenerico?.error = getString(R.string.completaCampo)
-                            correcto = false
-                            return
-                        }
-                        val text = p0.toString()
-                        for (i in text.indices) {
-                            if (!Character.isLetter(text[i]) && text[i].toInt() != 32) {
-                                textInputLayoutGenerico?.isErrorEnabled = true;
-                                textInputLayoutGenerico?.error = getString(R.string.nombreInvalido)
-                                correcto = false
-
-                            }
-                            else{
-                                correcto = true
-                            }
-                        }
-
-                        if(correcto) textInputLayoutGenerico?.isErrorEnabled = false
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = correcto
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.apellidosCorrectos(p0.toString(), textInputLayoutGenerico!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -373,27 +293,7 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                        if (p0.toString().isEmpty()) {
-                            textInputLayoutGenerico?.isErrorEnabled = true
-                            textInputLayoutGenerico?.error = getString(R.string.completaCampo)
-                            return
-
-                        }
-
-                        for (i in p0.toString().indices) {
-                            if (!Character.isLetter(p0.toString()[i]) && p0.toString()[i].toInt() != 32) {
-                                textInputLayoutGenerico?.isErrorEnabled = true;
-                                textInputLayoutGenerico?.error =
-                                    getString(R.string.apellidosInvalidos)
-                                correcto = false
-                                break
-                            }
-
-                        }
-                        if(correcto)textInputLayoutGenerico?.isErrorEnabled = false
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = correcto
-
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.apellidosCorrectos(p0.toString(), textInputLayoutGenerico!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -420,44 +320,12 @@ class EditarPerfilFragment : Fragment() {
                 dialogCreado.show()
                 dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = false
                 textInputEditTextGenerico?.addTextChangedListener(object : TextWatcher{
-                    var correcto = true
                     override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-                        val text = p0.toString()
-                        if (text.isEmpty()) {
-                            textInputLayoutGenerico?.isErrorEnabled = true
-                            textInputLayoutGenerico?.error = getString(R.string.completaCampo)
-                            return
-                        }
-
-                        var esValido = true;
-                        for (i in text.indices) {
-                            if (!Character.isDigit(text[i])) {
-
-                                esValido = false;
-                                break
-                            }
-                        }
-                        var res = text.length
-                        Log.d("Hola", res.toString())
-                        Log.d("Hola", (text.length != 9).toString())
-                        if (text.length != 9 || !esValido) {
-                            textInputLayoutGenerico?.isErrorEnabled = true;
-                            textInputLayoutGenerico?.error = getString(R.string.telefonoIncorrecto)
-                            correcto = false
-                        }
-                        else{
-                            correcto = true
-                        }
-
-
-                        if (correcto) textInputLayoutGenerico?.isErrorEnabled = false
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = correcto
-
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.telefonoCorrecto(p0.toString(), textInputLayoutGenerico!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -469,8 +337,6 @@ class EditarPerfilFragment : Fragment() {
             CONTRASENA -> {
                 textInputLayoutContrasena?.hint = getString(R.string.contrasena)
                 textInputLayoutRepetirContrasena?.hint = getString(R.string.repetir_contrasena)
-                var correctaContrasena = false
-                var correctaContrasenaRepetida = false
                 listener = DialogInterface.OnClickListener(fun(dialog: DialogInterface, _: Int) {
                         contraseñaDesencriptada = textInputEditTextContrasena?.text.toString()
                         binding.editContrasena.text =
@@ -495,10 +361,9 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        if (textInputLayoutContrasena != null) {
-                            correctaContrasena = contrasenaValida(p0.toString(), textInputLayoutContrasena)
-                        }
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = correctaContrasena && correctaContrasenaRepetida
+                        contraseñaDesencriptada = p0.toString()
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.contrasenaCorrecta(contraseñaDesencriptada, textInputLayoutContrasena!!, fragment)
+                                && sharedViewModel.coincidenContrasenas(contraseñaDesencriptada, textInputEditTextRepetirContrasena!!.text.toString(), textInputLayoutRepetirContrasena!!, fragment)
 
                     }
 
@@ -519,14 +384,8 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        if (textInputLayoutRepetirContrasena != null) {
-                            correctaContrasenaRepetida = coincidenContrasenas(
-                                textInputEditTextContrasena?.text.toString(),
-                                p0.toString(),
-                                textInputLayoutRepetirContrasena
-                            )
-                        }
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = correctaContrasena && correctaContrasenaRepetida
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.contrasenaCorrecta(contraseñaDesencriptada, textInputLayoutContrasena!!, fragment)
+                                && sharedViewModel.coincidenContrasenas(contraseñaDesencriptada, textInputEditTextRepetirContrasena.text.toString(), textInputLayoutRepetirContrasena!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -570,40 +429,6 @@ class EditarPerfilFragment : Fragment() {
             contrasenaEncriptada += "●"
         }
         return contrasenaEncriptada
-    }
-
-    fun contrasenaValida(contrasena: String, textInputLayout: TextInputLayout): Boolean {
-        if (contrasena.isEmpty()) {
-            textInputLayout.isErrorEnabled = true;
-            textInputLayout.error = getString(R.string.completaCampo)
-            return false;
-        }
-        if (contrasena.length < 8) {
-            textInputLayout.isErrorEnabled = true;
-            textInputLayout.error = getString(R.string.contrasenaCorta)
-            return false;
-        }
-        textInputLayout.isErrorEnabled = false;
-        return true;
-    }
-
-    fun coincidenContrasenas(
-        contrasena: String,
-        contrasenaRepetida: String,
-        textInputLayout: TextInputLayout
-    ): Boolean {
-        if (contrasenaRepetida.isEmpty()) {
-            textInputLayout.isErrorEnabled = true;
-            textInputLayout.error = getString(R.string.completaCampo)
-            return false;
-        }
-        if (contrasenaRepetida != contrasena) {
-            textInputLayout.isErrorEnabled = true;
-            textInputLayout.error = getString(R.string.contrasenaNoCoinciden)
-            return false;
-        }
-        textInputLayout.isErrorEnabled = false
-        return true;
     }
 
     private fun nuevaImagen() {

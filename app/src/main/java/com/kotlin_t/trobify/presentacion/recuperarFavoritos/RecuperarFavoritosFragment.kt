@@ -18,6 +18,7 @@ import com.kotlin_t.trobify.logica.favoritos.ListaFavoritosViewModel
 import com.kotlin_t.trobify.logica.favoritos.ListaFavoritosViewModelFactory
 import com.kotlin_t.trobify.logica.recuperarFavoritos.RecuperarFavoritosViewModel
 import com.kotlin_t.trobify.logica.recuperarFavoritos.RecuperarFavoritosViewModelFactory
+import com.kotlin_t.trobify.persistencia.Favorito
 import com.kotlin_t.trobify.presentacion.favoritos.FavoritoAdapter
 
 class RecuperarFavoritosFragment : Fragment() {
@@ -45,7 +46,8 @@ class RecuperarFavoritosFragment : Fragment() {
         recyclerView = binding.recuperarFavoritosRecyclerView
         Log.e("RECUPERAR", sharedViewModel.favoritosEliminados.toList().toString())
         recyclerView.adapter = FavoritoAdapter(
-            requireContext(), sharedViewModel.favoritosEliminados.toList(), null,recuperarFavoritosViewModel, recuperarFavoritosViewModel.database, sharedViewModel, true
+            requireContext(),
+            sharedViewModel.favoritosEliminados.toList() as List<Favorito>, null,recuperarFavoritosViewModel, recuperarFavoritosViewModel.database, sharedViewModel, true
         )
     }
 }

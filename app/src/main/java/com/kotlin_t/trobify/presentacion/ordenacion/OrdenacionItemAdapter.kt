@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.logica.ordenacion.criteria.*
 import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ordenacion.OrdenacionViewModel
 
 class OrdenacionItemAdapter(
-    private val sharedViewModel: SharedViewModel,
+    private val ordenacionViewModel: OrdenacionViewModel,
     private val dataset: List<String>,
     private val fragment: OrdenacionFragment
 ) : RecyclerView.Adapter<OrdenacionItemAdapter.OrdenacionItemViewHolder>() {
@@ -31,34 +32,19 @@ class OrdenacionItemAdapter(
     }
 
     override fun onBindViewHolder(holder: OrdenacionItemViewHolder, position: Int) {
-        val item = dataset[position]
-        if (item.equals(sharedViewModel.estrategiaOrdenacion.toString())) {
+        val estrategia = dataset[position]
+        holder.criterio.text = estrategia
+        if (estrategia == ordenacionViewModel.getEstrategiaOrdenacion()) {
             holder.selecionado.visibility = View.VISIBLE
             holder.cancelar.visibility = View.VISIBLE
             holder.criterio.typeface = DEFAULT_BOLD
         }
-        holder.criterio.text = item
         holder.criterio.setOnClickListener {
-            if (item.equals("Precio más Alto")) sharedViewModel.estrategiaOrdenacion =
-                PrecioMasAlto()
-            else if (item.equals("Precio más Bajo")) sharedViewModel.estrategiaOrdenacion =
-                PrecioMasBajo()
-            else if (item.equals("Más Grande")) sharedViewModel.estrategiaOrdenacion = MayorTamano()
-            else if (item.equals("Más Pequeño")) sharedViewModel.estrategiaOrdenacion =
-                MenorTamano()
-            else if (item.equals("Pisos Altos")) sharedViewModel.estrategiaOrdenacion = PisosAltos()
-            else if (item.equals("Pisos Bajos")) sharedViewModel.estrategiaOrdenacion = PisosBajos()
-            else if (item.equals("Más Baños")) sharedViewModel.estrategiaOrdenacion = MasBanos()
-            else if (item.equals("Menos Baños")) sharedViewModel.estrategiaOrdenacion = MenosBanos()
-            else if (item.equals("Más Habitaciones")) sharedViewModel.estrategiaOrdenacion =
-                MasHabitaciones()
-            else if (item.equals("Menos Habitaciones")) sharedViewModel.estrategiaOrdenacion =
-                MenosHabitaciones()
-            fragment.findNavController()
-                .navigate(OrdenacionFragmentDirections.actionOrdenacionFragmentToNavHome())
+            ordenacionViewModel.elegirEstrategia(estrategia)
+            fragment.findNavController().navigate(OrdenacionFragmentDirections.actionOrdenacionFragmentToNavHome())
         }
         holder.cancelar.setOnClickListener {
-            sharedViewModel.estrategiaOrdenacion = null
+            ordenacionViewModel.eliminarEstrategia()
             holder.selecionado.visibility = View.INVISIBLE
             holder.cancelar.visibility = View.INVISIBLE
             holder.criterio.typeface = DEFAULT

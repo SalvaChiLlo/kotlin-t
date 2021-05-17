@@ -33,7 +33,6 @@ class PopulateDB(
                 "-1",
                 "-1",
                 "-1",
-                "-1",
                 null
             )
         )
@@ -47,7 +46,6 @@ class PopulateDB(
                         "nombre${i}",
                         "appellido${i}",
                         "999888777",
-                        "iban${i}",
                         null
                     )
                 )

@@ -25,7 +25,9 @@ class RegistrarseFragment : Fragment() {
     private lateinit var binding: FragmentRegistrarseBinding
     private lateinit var sharedViewModel: SharedViewModel
     private lateinit var registrarseViewModel: RegistrarseViewModel
+    private val fragment: RegistrarseFragment = this
     private val REQUEST_CODE = 100;
+    private var contrasena = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,7 +58,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                registrarseViewModel.usuarioValido(p0.toString())
+               sharedViewModel.usuarioCorrecto(p0.toString(), binding.usuario, fragment)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -70,7 +72,8 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                registrarseViewModel.contrasenaValida(p0.toString())
+                contrasena = p0.toString()
+                sharedViewModel.contrasenaCorrecta(contrasena, binding.contrasena, fragment)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -84,7 +87,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                registrarseViewModel.coincidenContrasenas(p0.toString())
+                sharedViewModel.coincidenContrasenas(contrasena, p0.toString(), binding.repetirContrasena, fragment)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -98,7 +101,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                registrarseViewModel.dniCorrecto(p0.toString())
+                sharedViewModel.dniCorrecto(p0.toString(), binding.dni, fragment)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -112,7 +115,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                registrarseViewModel.nombreCorrecto(p0.toString())
+                sharedViewModel.nombreCorrecto(p0.toString(), binding.nombre, fragment)
             }
 
 
@@ -127,7 +130,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                registrarseViewModel.apellidosCorrectos(p0.toString())
+                sharedViewModel.apellidosCorrectos(p0.toString(), binding.apellidos, fragment)
             }
 
 
@@ -142,7 +145,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                registrarseViewModel.telefonoCorrecto(p0.toString())
+                sharedViewModel.telefonoCorrecto(p0.toString(), binding.telefono, fragment)
             }
 
 
