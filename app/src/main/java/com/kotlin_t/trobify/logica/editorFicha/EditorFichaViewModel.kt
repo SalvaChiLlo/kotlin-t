@@ -401,4 +401,52 @@ class EditorFichaViewModel(
 
         guardarImagenesDelInmueble()
     }
+
+    fun createMemento() : Memento {
+        return Memento(
+            binding.editPrecio.text.toString(), // Precio
+            binding.editSuperficie.text.toString(), // Superficie
+            binding.editHabitaciones.text.toString(), // Habitaciones
+            binding.editBanos.text.toString(), // Baños
+            binding.editPlanta.text.toString(), // Planta
+            binding.hasAscensor.isChecked, // Ascensor
+            binding.radioGroupEstado.checkedRadioButtonId, // Estado
+            binding.editTitulo.text.toString(), // Titulo
+            binding.editDireccion.text.toString(), // Direccion
+            binding.editCP.text.toString(), // Codigo Postal
+            binding.editDescripcion.text.toString() // Descripcion
+        )
+    }
+
+
+
+    inner class Memento(
+        private var precio: String,
+        private var superficie: String,
+        private var habitaciones : String,
+        private var baños : String,
+        private var planta : String,
+        private var ascensor : Boolean,
+        private var estado : Int,
+        private var titulo : String,
+        private var direccion : String,
+        private var cp : String,
+        private var descripcion : String
+    ) {
+
+        fun restore() {
+            binding.editPrecio.setText(precio)
+            binding.editSuperficie.setText(superficie)
+            binding.editHabitaciones.setText(habitaciones)
+            binding.editBanos.setText(baños)
+            binding.editPlanta.setText(planta)
+            binding.hasAscensor.isChecked = ascensor
+            binding.radioGroupEstado.check(estado)
+            binding.editTitulo.setText(titulo)
+            binding.editDireccion.setText(direccion)
+            binding.editCP.setText(cp)
+            binding.editDescripcion.setText(descripcion)
+        }
+    }
+
 }
