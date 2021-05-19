@@ -123,8 +123,10 @@ class MainActivity : AppCompatActivity(){
             if (usuarioLogeado) {
 
                 headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.GONE
-                headerView.findViewById<TextView>(R.id.nav_header_text).text =
-                    "Bienvenido " + usuario.nombre
+                headerView.findViewById<TextView>(R.id.nav_header_text).visibility = View.GONE
+                headerView.findViewById<TextView>(R.id.nav_header_bienvenido).visibility = View.VISIBLE
+                headerView.findViewById<TextView>(R.id.nav_header_usuario).text = usuario.nombre.toUpperCase()
+                headerView.findViewById<TextView>(R.id.nav_header_usuario).visibility = View.VISIBLE
 
                 if(usuario.fotoPerfil == null) {
                     headerView.findViewById<ImageView>(R.id.nav_header_picture).setImageResource(R.drawable.anonymous_user)
@@ -133,10 +135,10 @@ class MainActivity : AppCompatActivity(){
                 }
 
             } else {
-
+                headerView.findViewById<TextView>(R.id.nav_header_usuario).visibility = View.GONE
+                headerView.findViewById<TextView>(R.id.nav_header_bienvenido).visibility = View.GONE
                 headerView.findViewById<Button>(R.id.iniciaSesionButton).visibility = View.VISIBLE
-                headerView.findViewById<TextView>(R.id.nav_header_text).text =
-                    "No estás identificado"
+                headerView.findViewById<TextView>(R.id.nav_header_text).visibility = View.VISIBLE
 
             }
 

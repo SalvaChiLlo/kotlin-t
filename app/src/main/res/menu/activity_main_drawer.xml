@@ -11,11 +11,11 @@
             android:title="@string/mi_cuenta" />
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/_844470_home_house_110332__1_"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_favoritos"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_baseline_favorite_24"
             android:title="@string/favoritos" />
         <item
             android:id="@+id/nav_mis_inmuebles"

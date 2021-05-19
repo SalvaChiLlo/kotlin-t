@@ -11,7 +11,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minWidth="200dp"
+        android:minWidth="100dp"
         android:orientation="vertical">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -43,19 +43,36 @@
             android:id="@+id/home_direccion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            tools:text="Avenida Cardenal Benlloch, 106" />
+            android:textSize="20sp"
+            tools:text="Avenida Cardenal Benlloch, 106"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"/>
 
-        <TextView
-            android:id="@+id/home_precio_mes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="300€/mes" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp">
 
-        <ImageView
-            android:id="@+id/favorito_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:src="@drawable/ic_baseline_favorite_24" />
+            <TextView
+                android:id="@+id/home_precio_mes"
+                android:layout_width="333dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textAlignment="textStart"
+                android:textSize="18sp"
+                tools:ignore="RtlCompat"
+                tools:text="300€/mes" />
+
+            <ImageView
+                android:id="@+id/favorito_icon"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                tools:src="@drawable/ic_baseline_favorite_24" />
+        </LinearLayout>
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

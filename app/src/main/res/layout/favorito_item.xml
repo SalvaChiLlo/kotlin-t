@@ -28,7 +28,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/miniatura_fav"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Avenida Cardenal Benlloch, 106" />
+            tools:text="Avenida Cardenal Benlloch, 106"
+            />
 
         <TextView
             android:id="@+id/preciotext"
