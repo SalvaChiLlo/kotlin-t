@@ -13,33 +13,39 @@ import android.location.*
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.RadioGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.textfield.TextInputEditText
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentEditorFichaBinding
-import com.kotlin_t.trobify.persistencia.Foto
 import com.kotlin_t.trobify.logica.Constantes
 import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.editorFicha.Cuidador
 import com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModel
 import com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModelFactory
+import com.kotlin_t.trobify.persistencia.Foto
 import java.util.*
 
 class EditorFichaFragment : Fragment() {
     lateinit var binding: FragmentEditorFichaBinding
     lateinit var editorFichaViewModel: EditorFichaViewModel
+    lateinit var cuidador: Cuidador
     lateinit var datasource: AppDatabase
     lateinit var sharedModel: SharedViewModel
     lateinit var imagesRecyclerView: RecyclerView
@@ -69,6 +75,7 @@ class EditorFichaFragment : Fragment() {
             ViewModelProvider(this, viewModelFactory).get(EditorFichaViewModel::class.java)
         binding.viewModel = editorFichaViewModel
         binding.lifecycleOwner = this
+        cuidador = Cuidador(editorFichaViewModel)
         return binding.root
     }
 
@@ -82,6 +89,16 @@ class EditorFichaFragment : Fragment() {
         setGuardarInmuebleAction()
         setRecyclerViewObserver()
         setUbicacionButtonAction()
+        setUndoAction()
+        setListeners()
+        cuidador.createSnapshot()
+    }
+
+    private fun setUndoAction() {
+        binding.deshacerAccionButton.setOnClickListener {
+            cuidador.undo()
+            cuidador.undo()
+        }
     }
 
     private fun setGuardarInmuebleAction() {
@@ -320,5 +337,45 @@ class EditorFichaFragment : Fragment() {
         imagesRecyclerView.adapter = ImageAdapter(requireContext(), editorFichaViewModel.imagesList.value!!.toList(),editorFichaViewModel)
     }
 
+    private fun setListeners() {
+
+        // Array of TextInputEditText
+        val textInputEditTextList: List<EditText> = listOf(
+            binding.editPrecio, binding.editSuperficie, binding.editHabitaciones, binding.editBanos,
+            binding.editTitulo, binding.editDireccion, binding.editCP, binding.editDescripcion
+        )
+
+        //Timers
+        var timer = Timer()
+        val delay : Long = 1000
+
+
+        //Asign Listener to Each EditText
+        textInputEditTextList.forEach{it.addTextChangedListener(object : TextWatcher {
+
+            override fun afterTextChanged(s: Editable?) {
+                timer.cancel()
+                timer = Timer()
+                timer.schedule(
+                    object : TimerTask() {
+                        override fun run() {
+                            cuidador.createSnapshot()
+                        }
+                    },
+                    delay
+                )
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })}
+
+        //RadioGroup Listeners (Estado del Inmueble)
+        binding.radioGroupEstado.setOnCheckedChangeListener { group, checkedId ->  cuidador.createSnapshot()}
+
+        //Ascensor CheckBox Listener
+        binding.hasAscensor.setOnCheckedChangeListener { buttonView, isChecked ->  cuidador.createSnapshot()}
+    }
 
 }

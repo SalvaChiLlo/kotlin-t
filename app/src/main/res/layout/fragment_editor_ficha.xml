@@ -13,7 +13,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:focusable="true"
+        android:focusableInTouchMode="true">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -64,6 +66,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/intercambio_de_viviendas" />
                     </RadioGroup>
+
                 </LinearLayout>
 
                 <LinearLayout
@@ -111,6 +114,7 @@
                             android:layout_height="wrap_content"
                             android:text="@string/piso" />
                     </RadioGroup>
+
                 </LinearLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -559,6 +563,7 @@
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
@@ -571,6 +576,17 @@
             android:src="@drawable/ic_baseline_save_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deshacerAccionButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="10dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintBottom_toTopOf="@id/descartar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_baseline_undo_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/descartar"
