@@ -404,6 +404,8 @@ class EditorFichaViewModel(
 
     fun createMemento() : Memento {
         return Memento(
+            binding.radioGroupOperacion.checkedRadioButtonId, // Tipo de Operacion
+            binding.radioGroupTipoInmueble.checkedRadioButtonId, // Tipo de Inmueble
             binding.editPrecio.text.toString(), // Precio
             binding.editSuperficie.text.toString(), // Superficie
             binding.editHabitaciones.text.toString(), // Habitaciones
@@ -421,6 +423,8 @@ class EditorFichaViewModel(
 
 
     inner class Memento(
+        private var operacion : Int,
+        private var tipoInmueble : Int,
         private var precio: String,
         private var superficie: String,
         private var habitaciones : String,
@@ -435,6 +439,8 @@ class EditorFichaViewModel(
     ) {
 
         fun restore() {
+            binding.radioGroupOperacion.check(operacion)
+            binding.radioGroupTipoInmueble.check(tipoInmueble)
             binding.editPrecio.setText(precio)
             binding.editSuperficie.setText(superficie)
             binding.editHabitaciones.setText(habitaciones)

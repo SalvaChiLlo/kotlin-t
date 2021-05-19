@@ -371,8 +371,11 @@ class EditorFichaFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })}
 
-        //RadioGroup Listeners (Estado del Inmueble)
-        binding.radioGroupEstado.setOnCheckedChangeListener { group, checkedId ->  cuidador.createSnapshot()}
+        //RadioGroup Listeners
+        val radioGroupList: List<RadioGroup> = listOf(
+            binding.radioGroupOperacion, binding.radioGroupTipoInmueble, binding.radioGroupEstado
+        )
+        radioGroupList.forEach{it.setOnCheckedChangeListener { group, checkedId ->  cuidador.createSnapshot()}}
 
         //Ascensor CheckBox Listener
         binding.hasAscensor.setOnCheckedChangeListener { buttonView, isChecked ->  cuidador.createSnapshot()}
