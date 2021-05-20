@@ -23,6 +23,9 @@ import com.kotlin_t.trobify.logica.busqueda.BusquedaViewModel
 import com.kotlin_t.trobify.logica.busqueda.BusquedaViewModelFactory
 import com.kotlin_t.trobify.logica.filtrar.FiltrarViewModel
 import com.kotlin_t.trobify.logica.filtrar.criteria.Busqueda.BusquedaCriteria
+import com.kotlin_t.trobify.persistencia.Busqueda
+import com.kotlin_t.trobify.persistencia.BusquedaDAO
+import com.kotlin_t.trobify.persistencia.BusquedaDAO_Impl
 import java.util.*
 
 class BusquedaFragment : Fragment() {
@@ -47,7 +50,8 @@ class BusquedaFragment : Fragment() {
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
         sharedModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        val viewModelFactory = BusquedaViewModelFactory(datasource, application,sharedModel, viewLifecycleOwner)
+        val viewModelFactory =
+            BusquedaViewModelFactory(datasource, application, sharedModel, viewLifecycleOwner)
         busquedaViewModel =
             ViewModelProvider(this, viewModelFactory).get(BusquedaViewModel::class.java)
         binding.viewModel = busquedaViewModel
@@ -57,35 +61,13 @@ class BusquedaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         busquedaViewModel.search("")
+        setRecyclerView(busquedaViewModel.listaBusquedas.reversed())
+        setSearchButton()
+        setCampoBusqueda()
+        setMiUbicacionButton()
+    }
 
-        recyclerView = binding.historialBusquedas
-
-        recyclerView.adapter = BusquedaAdapter(
-            requireContext(), busquedaViewModel.listaBusquedas.reversed(), busquedaViewModel
-        )
-
-        binding.searchButton.setOnClickListener {
-            busquedaViewModel.search(binding.campoBusqueda.text.toString())
-            val action = BusquedaFragmentDirections.actionBusquedaFragmentToNavHome()
-            findNavController().navigate(action)
-        }
-
-        binding.campoBusqueda.doAfterTextChanged {
-            if (binding.campoBusqueda.text.toString() == "") {
-                recyclerView.adapter = BusquedaAdapter(
-                    requireContext(), busquedaViewModel.listaBusquedas.reversed(), busquedaViewModel
-                )
-            } else {
-                recyclerView.adapter = BusquedaAdapter(
-                    requireContext(),
-                    BusquedaCriteria(binding.campoBusqueda.text.toString()).meetCriteriaBusqueda(
-                        busquedaViewModel.listaMunicipios.toList()
-                    ),
-                    busquedaViewModel
-                )
-            }
-        }
-
+    private fun setMiUbicacionButton() {
         binding.miUbicacionButton.setOnClickListener {
             locationManager =
                 requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -122,6 +104,36 @@ class BusquedaFragment : Fragment() {
                 locationListener
             )
         }
+    }
+
+    private fun setCampoBusqueda() {
+        binding.campoBusqueda.doAfterTextChanged {
+            if (binding.campoBusqueda.text.toString() == "") {
+                setRecyclerView(busquedaViewModel.listaBusquedas.reversed())
+            } else {
+                var busquedas =
+                    BusquedaCriteria(binding.campoBusqueda.text.toString()).meetCriteriaBusqueda(
+                        busquedaViewModel.listaMunicipios.toList()
+                    )
+                setRecyclerView(busquedas)
+            }
+        }
+    }
+
+    private fun setSearchButton() {
+        binding.searchButton.setOnClickListener {
+            busquedaViewModel.search(binding.campoBusqueda.text.toString())
+            val action = BusquedaFragmentDirections.actionBusquedaFragmentToNavHome()
+            findNavController().navigate(action)
+        }
+    }
+
+    private fun setRecyclerView(busquedas: List<Busqueda>) {
+        recyclerView = binding.historialBusquedas
+
+        recyclerView.adapter = BusquedaAdapter(
+            requireContext(), busquedas, busquedaViewModel
+        )
     }
 
     var locationListener: LocationListener = object : LocationListener {

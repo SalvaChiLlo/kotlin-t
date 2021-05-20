@@ -23,7 +23,7 @@ class BusquedaViewModel(
     application: Application,
     val sharedViewModel: SharedViewModel,
     viewLifecycleOwner: LifecycleOwner
-): AndroidViewModel(application) {
+) : AndroidViewModel(application) {
     var listaBusquedas = database.busquedaDAO().getAll()
     var listaInmuebles = database.inmuebleDAO().getAll()
     var listaMunicipios = listaInmuebles.map { Busqueda(it.municipio!!) }.toSet()
@@ -36,87 +36,21 @@ class BusquedaViewModel(
     }
 
     fun filtrarInmuebles() {
-        val tipoDeOperacion = if (sharedViewModel.operacionesOpciones.value!!.isEmpty()) {
-            OperacionCriteria(
-                setOf(
-                    Constantes.VENTA,
-                    Constantes.ALQUILER,
-                    Constantes.ALQUILER_HABITACION,
-                    Constantes.INTERCAMBIO_VIVIENDA
-                )
-            )
-        } else {
-            OperacionCriteria(sharedViewModel.operacionesOpciones.value!!)
-        }
+        val tipoDeOperacion = setOperacionCriteria()
 
-        val tipoDeInmueble = if (sharedViewModel.tiposOpciones.value!!.isEmpty()) {
-            TipoInmuebleCriteria(
-                setOf(
-                    Constantes.ATICO,
-                    Constantes.CASA_CHALET,
-                    Constantes.HABITACION,
-                    Constantes.PISO
-                )
-            )
-        } else {
-            TipoInmuebleCriteria(sharedViewModel.tiposOpciones.value!!)
-        }
+        val tipoDeInmueble = setTipoInmuebleCriteria()
 
         var precioMin = -1
         var precioMax = 99999999
-        val precio = AndCriteria(
-            PrecioMinimoCriteria(precioMin), PrecioMaximoCriteria(precioMax)
-        )
+        val precio = setPrecioCriteria(precioMin, precioMax)
 
-        val habitaciones = if (sharedViewModel.habitacionesOpciones.value!!.isEmpty()) {
-            NroHabitacionesCriteria(
-                setOf(
-                    Constantes.UNO,
-                    Constantes.DOS,
-                    Constantes.TRES,
-                    Constantes.CUATROoMAS
-                )
-            )
-        } else {
-            NroHabitacionesCriteria(sharedViewModel.habitacionesOpciones.value!!)
-        }
+        val habitaciones = setNroHabitacionesCriteria()
 
-        val banos = if (sharedViewModel.banosOpciones.value!!.isEmpty()) {
-            NroBanosCriteria(
-                setOf(
-                    Constantes.UNO,
-                    Constantes.DOS,
-                    Constantes.TRES,
-                    Constantes.CUATROoMAS
-                )
-            )
-        } else {
-            NroBanosCriteria(sharedViewModel.banosOpciones.value!!)
-        }
+        val banos = setNroBanosCriteria()
 
-        val estado = if (sharedViewModel.estadoOpciones.value!!.isEmpty()) {
-            EstadoCriteria(
-                setOf(
-                    Constantes.NUEVA_CONSTRUCCION,
-                    Constantes.BUEN_ESTADO,
-                    Constantes.REFORMAR
-                )
-            )
-        } else {
-            EstadoCriteria(sharedViewModel.estadoOpciones.value!!)
-        }
+        val estado = setEstadoCriteria()
 
-        val planta = if (sharedViewModel.plantaOpciones.value!!.isEmpty()) {
-            PlantaCriteria(
-                setOf(
-                    Constantes.PLANTA_BAJA,
-                    Constantes.PLANTA_INTERMEDIA,
-                    Constantes.PLANTA_ALTA
-                )
-            )
-        } else {
-            PlantaCriteria(sharedViewModel.plantaOpciones.value!!)
-        }
+        val planta = setPlantaCriteria()
 
         val busqueda = BusquedaCriteria(sharedViewModel.busquedaString)
 
@@ -145,5 +79,92 @@ class BusquedaViewModel(
 
         this.listaInmuebles = miBusqueda.meetCriteria(database.inmuebleDAO().getAll())
         sharedViewModel.setInmuebles(this.listaInmuebles)
+    }
+
+    private fun setPlantaCriteria() = if (sharedViewModel.plantaOpciones.value!!.isEmpty()) {
+        PlantaCriteria(
+            setOf(
+                Constantes.PLANTA_BAJA,
+                Constantes.PLANTA_INTERMEDIA,
+                Constantes.PLANTA_ALTA
+            )
+        )
+    } else {
+        PlantaCriteria(sharedViewModel.plantaOpciones.value!!)
+    }
+
+    private fun setEstadoCriteria() = if (sharedViewModel.estadoOpciones.value!!.isEmpty()) {
+        EstadoCriteria(
+            setOf(
+                Constantes.NUEVA_CONSTRUCCION,
+                Constantes.BUEN_ESTADO,
+                Constantes.REFORMAR
+            )
+        )
+    } else {
+        EstadoCriteria(sharedViewModel.estadoOpciones.value!!)
+    }
+
+    private fun setNroBanosCriteria() = if (sharedViewModel.banosOpciones.value!!.isEmpty()) {
+        NroBanosCriteria(
+            setOf(
+                Constantes.UNO,
+                Constantes.DOS,
+                Constantes.TRES,
+                Constantes.CUATROoMAS
+            )
+        )
+    } else {
+        NroBanosCriteria(sharedViewModel.banosOpciones.value!!)
+    }
+
+    private fun setNroHabitacionesCriteria() =
+        if (sharedViewModel.habitacionesOpciones.value!!.isEmpty()) {
+            NroHabitacionesCriteria(
+                setOf(
+                    Constantes.UNO,
+                    Constantes.DOS,
+                    Constantes.TRES,
+                    Constantes.CUATROoMAS
+                )
+            )
+        } else {
+            NroHabitacionesCriteria(sharedViewModel.habitacionesOpciones.value!!)
+        }
+
+    private fun setPrecioCriteria(
+        precioMin: Int,
+        precioMax: Int
+    ) = AndCriteria(
+        PrecioMinimoCriteria(precioMin), PrecioMaximoCriteria(precioMax)
+    )
+
+    private fun setTipoInmuebleCriteria() = if (sharedViewModel.tiposOpciones.value!!.isEmpty()) {
+        TipoInmuebleCriteria(
+            setOf(
+                Constantes.ATICO,
+                Constantes.CASA_CHALET,
+                Constantes.HABITACION,
+                Constantes.PISO
+            )
+        )
+    } else {
+        TipoInmuebleCriteria(sharedViewModel.tiposOpciones.value!!)
+    }
+
+    private fun setOperacionCriteria(): OperacionCriteria {
+        val tipoDeOperacion = if (sharedViewModel.operacionesOpciones.value!!.isEmpty()) {
+            OperacionCriteria(
+                setOf(
+                    Constantes.VENTA,
+                    Constantes.ALQUILER,
+                    Constantes.ALQUILER_HABITACION,
+                    Constantes.INTERCAMBIO_VIVIENDA
+                )
+            )
+        } else {
+            OperacionCriteria(sharedViewModel.operacionesOpciones.value!!)
+        }
+        return tipoDeOperacion
     }
 }
