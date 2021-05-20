@@ -80,6 +80,7 @@ class FiltrarFragment : Fragment() {
             )
             filtrarViewModel.filtrarInmuebles()
         }
+        binding.alquilerHabitacionChkb.visibility = View.GONE
         binding.alquilerHabitacionChkb.isChecked = model.operacionesOpciones.value!!.contains(
             Constantes.ALQUILER_HABITACION)
         binding.alquilerHabitacionChkb.setOnCheckedChangeListener { _, isChecked ->
