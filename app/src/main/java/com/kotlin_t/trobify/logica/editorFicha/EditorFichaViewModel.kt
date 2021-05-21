@@ -412,7 +412,7 @@ class EditorFichaViewModel(
             binding.editBanos.text.toString(), // Baños
             binding.editPlanta.text.toString(), // Planta
             binding.hasAscensor.isChecked, // Ascensor
-            binding.radioGroupEstado.checkedRadioButtonId, // Estado
+            binding.radioGroupEstado.checkedRadioButtonId, // Estado del Inmueble
             binding.editTitulo.text.toString(), // Titulo
             binding.editDireccion.text.toString(), // Direccion
             binding.editCP.text.toString(), // Codigo Postal
@@ -420,39 +420,22 @@ class EditorFichaViewModel(
         )
     }
 
-
-
-    inner class Memento(
-        private var operacion : Int,
-        private var tipoInmueble : Int,
-        private var precio: String,
-        private var superficie: String,
-        private var habitaciones : String,
-        private var baños : String,
-        private var planta : String,
-        private var ascensor : Boolean,
-        private var estado : Int,
-        private var titulo : String,
-        private var direccion : String,
-        private var cp : String,
-        private var descripcion : String
-    ) {
-
-        fun restore() {
-            binding.radioGroupOperacion.check(operacion)
-            binding.radioGroupTipoInmueble.check(tipoInmueble)
-            binding.editPrecio.setText(precio)
-            binding.editSuperficie.setText(superficie)
-            binding.editHabitaciones.setText(habitaciones)
-            binding.editBanos.setText(baños)
-            binding.editPlanta.setText(planta)
-            binding.hasAscensor.isChecked = ascensor
-            binding.radioGroupEstado.check(estado)
-            binding.editTitulo.setText(titulo)
-            binding.editDireccion.setText(direccion)
-            binding.editCP.setText(cp)
-            binding.editDescripcion.setText(descripcion)
-        }
+    fun restore(memento: Memento) {
+        binding.radioGroupOperacion.check(memento.getOperacion()) // Tipo de Operacion
+        binding.radioGroupTipoInmueble.check(memento.getTipoInmueble()) // Tipo de Inmueble
+        binding.editPrecio.setText(memento.getPrecio()) // Precio
+        binding.editSuperficie.setText(memento.getSuperficie()) // Superficie
+        binding.editHabitaciones.setText(memento.getHabitaciones()) // Habitaciones
+        binding.editBanos.setText(memento.getBaños()) // Baños
+        binding.editPlanta.setText(memento.getPlanta()) // Planta
+        binding.hasAscensor.isChecked = memento.getAscensor() // Ascensor
+        binding.radioGroupEstado.check(memento.getEstado()) // Estado del Inmueble
+        binding.editTitulo.setText(memento.getTitulo()) // Titulo
+        binding.editDireccion.setText(memento.getDireccion()) // Direccion
+        binding.editCP.setText(memento.getCP()) // Codigo Postal
+        binding.editDescripcion.setText(memento.getDescripcion()) // Descripcion
     }
+
+
 
 }
