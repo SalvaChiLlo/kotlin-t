@@ -75,9 +75,9 @@ class MisInmueblesAdapter(
     private fun setIconoEstado(inmueble: Inmueble, button: FloatingActionButton) {
         Log.e("HOLA", "${inmueble.publicado}")
         if (inmueble.publicado) {
-            button.setImageResource(R.drawable.ic_baseline_public_24)
-        } else {
             button.setImageResource(R.drawable.ic_baseline_public_off_24)
+        } else {
+            button.setImageResource(R.drawable.ic_baseline_public_24)
         }
     }
 
