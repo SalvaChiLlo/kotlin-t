@@ -13,47 +13,95 @@
         app:startDestination="@id/action_nav_home_to_ordenacionFragment">
         <action
             android:id="@+id/action_nav_home_to_filtrarFragment"
-            app:destination="@id/filtrarFragment" />
+            app:destination="@id/filtrarFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_home_to_ordenacionFragment"
-            app:destination="@id/ordenacionFragment" />
+            app:destination="@id/ordenacionFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_home_to_mapsFragment"
-            app:destination="@id/mapsFragment" />
+            app:destination="@id/mapsFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_home_to_busquedaFragment"
-            app:destination="@id/busquedaFragment" />
+            app:destination="@id/busquedaFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_home_to_loginFragment"
-            app:destination="@id/nav_login" />
+            app:destination="@id/nav_login"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_home_to_editorFichaFragment"
-            app:destination="@id/editorFichaFragment" />
+            app:destination="@id/editorFichaFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_home_self"
-            app:destination="@id/nav_home" />
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_home_to_misInmueblesFragment"
-            app:destination="@id/nav_mis_inmuebles" />
+            app:destination="@id/nav_mis_inmuebles"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_home_to_misInmueblesFragment2"
             app:destination="@id/nav_mis_inmuebles"
-            app:popUpTo="@id/nav_home" />
+            app:popUpTo="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_home_to_fichaFragment"
-            app:destination="@id/fichaFragment" />
+            app:destination="@id/fichaFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
 
     <fragment
         android:id="@+id/nav_favoritos"
         android:name="ListaFavoritosFragment"
-        android:label="Mis Favoritos" >
+        android:label="Mis Favoritos">
         <action
             android:id="@+id/action_nav_favoritos_to_recuperarFavoritosFragment"
-            app:destination="@id/recuperarFavoritosFragment" />
+            app:destination="@id/recuperarFavoritosFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_favoritos_to_fichaFragment"
-            app:destination="@id/fichaFragment" />
+            app:destination="@id/fichaFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/filtrarFragment"
@@ -61,7 +109,11 @@
         android:label="@string/filtrar_titulo">
         <action
             android:id="@+id/action_filtrarFragment_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
 
     <fragment
@@ -70,7 +122,11 @@
         android:label="@string/ordenar_titulo">
         <action
             android:id="@+id/action_ordenacionFragment_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/mapsFragment"
@@ -79,10 +135,18 @@
         tools:layout="@layout/fragment_maps">
         <action
             android:id="@+id/action_mapsFragment_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_mapsFragment_to_fichaFragment"
-            app:destination="@id/fichaFragment" />
+            app:destination="@id/fichaFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/busquedaFragment"
@@ -91,7 +155,11 @@
         tools:layout="@layout/fragment_busqueda" >
         <action
             android:id="@+id/action_busquedaFragment_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/editorFichaFragment"
@@ -102,15 +170,27 @@
             android:id="@+id/action_editorFichaFragment_to_nav_home"
             app:destination="@id/nav_home"
             app:popUpTo="@id/nav_home"
-            app:popUpToInclusive="true" />
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <argument
             android:name="inmuebleID"
             app:argType="integer"
-            android:defaultValue="-1" />
+            android:defaultValue="-1"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_editorFichaFragment_to_misInmueblesFragment"
             app:destination="@id/nav_mis_inmuebles"
-            app:popUpTo="@id/nav_mis_inmuebles" />
+            app:popUpTo="@id/nav_mis_inmuebles"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/nav_login"
@@ -119,10 +199,18 @@
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/action_loginFragment_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_loginFragment_to_registrarseFragment"
-            app:destination="@id/Registrarse" />
+            app:destination="@id/Registrarse"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/Registrarse"
@@ -130,7 +218,11 @@
         android:label="Crear Cuenta">
         <action
             android:id="@+id/action_registrarseFragment_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/nav_mis_inmuebles"
@@ -138,11 +230,19 @@
         android:label="MisInmueblesFragment" >
         <action
             android:id="@+id/action_misInmueblesFragment_to_editorFichaFragment"
-            app:destination="@id/editorFichaFragment" />
+            app:destination="@id/editorFichaFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <action
             android:id="@+id/action_nav_mis_inmuebles_to_nav_home"
             app:destination="@id/nav_home"
-            app:popUpTo="@id/nav_home" />
+            app:popUpTo="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/nav_mi_cuenta"
@@ -150,7 +250,11 @@
         android:label="Mi Cuenta" >
         <action
             android:id="@+id/action_nav_mi_cuenta_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/recuperarFavoritosFragment"
@@ -158,19 +262,31 @@
         android:label="RecuperarFavoritosFragment" >
         <action
             android:id="@+id/action_recuperarFavoritosFragment_to_fichaFragment"
-            app:destination="@id/fichaFragment" />
+            app:destination="@id/fichaFragment"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <fragment
         android:id="@+id/fichaFragment"
         android:name="com.kotlin_t.trobify.presentacion.ficha.FichaFragment"
-        android:label="fragment_ficha"
+        android:label="Inmueble"
         tools:layout="@layout/fragment_ficha" >
         <action
             android:id="@+id/action_fichaFragment_to_nav_home"
-            app:destination="@id/nav_home" />
+            app:destination="@id/nav_home"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
         <argument
             android:name="InmuebleID"
-            app:argType="integer" />
+            app:argType="integer"
+            app:enterAnim="@anim/fragment_open_enter"
+            app:exitAnim="@anim/fragment_open_exit"
+            app:popEnterAnim="@anim/fragment_open_enter"
+            app:popExitAnim="@anim/fragment_open_exit"/>
     </fragment>
     <!---Añadir acciones hacia atrás-->
 </navigation>

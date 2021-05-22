@@ -11,7 +11,7 @@
             android:title="@string/mi_cuenta" />
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/_844470_home_house_110332__1_"
+            android:icon="@drawable/home_icon_icons_com_73532"
             android:title="@string/menu_home" />
         <item
             android:id="@+id/nav_favoritos"
