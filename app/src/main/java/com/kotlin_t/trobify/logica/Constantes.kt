@@ -47,6 +47,53 @@ class Constantes {
                 "Menos Habitaciones"
             )
         }
+
+        fun formatoDniCorrecto(dni: String): Boolean {
+            if (dni.length != 9) return false
+            for (i in dni.indices) {
+                if (i == 8) {
+                    if (!Character.isLetter(dni[i])) {
+                        return false
+                    }
+                } else if (!Character.isDigit(dni[i])) {
+                    return false
+
+                }
+            }
+            return true
+        }
+
+        fun formatoNombreApellidosCorrecto(nombreApellidos: String): Boolean {
+            for (i in nombreApellidos.indices) {
+                if (!Character.isLetter(nombreApellidos[i]) && nombreApellidos[i].toInt() != 32) {
+                    return false;
+                }
+            }
+            return true
+        }
+        fun formatoTelefonoCorrecto(telefono: String): Boolean{
+            if(telefono.length != 9) return false
+            for (i in telefono.indices) {
+                if (!Character.isDigit(telefono[i])) {
+                    return false
+                }
+            }
+            return true
+        }
+
+        fun formatoContrasenaCorrecto(contrasena: String): Boolean{
+            return contrasena.length >= 8
+        }
+
+        fun formatoUsuarioCorrecto(usuario: String): Boolean {
+            for (i in usuario.indices) {
+                if (usuario[i].toInt() == 32) {
+                    return false
+                }
+            }
+            return true
+        }
+
         fun crearInmueble1(): Inmueble {
             return Inmueble(
                 "12345678E",
