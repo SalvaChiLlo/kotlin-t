@@ -1,8 +1,9 @@
 package com.kotlin_t.trobify
 
+import com.kotlin_t.trobify.persistencia.Usuario
 import org.junit.Test
-
-import org.junit.Assert.*
+import org.junit.jupiter.api.Assertions.*
+import org.junit.jupiter.api.BeforeEach
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -11,8 +12,8 @@ import org.junit.Assert.*
  */
 class ExampleUnitTest {
 
-    @Test
-    fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
-    }
+    private lateinit var usuario: Usuario
+
+    @Before
+    fun
 }
