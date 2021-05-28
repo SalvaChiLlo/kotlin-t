@@ -2,8 +2,7 @@ package com.kotlin_t.trobify
 
 import com.kotlin_t.trobify.persistencia.Usuario
 import org.junit.Test
-import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.BeforeEach
+
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -14,6 +13,4 @@ class ExampleUnitTest {
 
     private lateinit var usuario: Usuario
 
-    @Before
-    fun
 }

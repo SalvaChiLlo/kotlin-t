@@ -185,7 +185,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
             layout.error = fragment.getString(R.string.usuarioCogido)
             return false;
         }
-        if (!formatoUsuarioCorrecto(usuario)) {
+        if (!Constantes.formatoUsuarioCorrecto(usuario)) {
             layout.isErrorEnabled = true;
             layout.error = fragment.getString(R.string.usuarioIncorrecto)
             return false
@@ -195,14 +195,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         return true
     }
 
-    private fun formatoUsuarioCorrecto(usuario: String): Boolean {
-        for (i in usuario.indices) {
-            if (usuario[i].toInt() == 32) {
-                return false
-            }
-        }
-        return true
-    }
+
 
     fun dniCorrecto(dni: String, layout: TextInputLayout, fragment: Fragment): Boolean {
         if (dni.isEmpty()) {
@@ -216,7 +209,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
             return false;
         }
 
-        if (!formatoDniCorrecto(dni)) {
+        if (!Constantes.formatoDniCorrecto(dni)) {
             layout.isErrorEnabled = true;
             layout.error = fragment.getString(R.string.dniIncorrecto)
             return false;
@@ -225,20 +218,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         return true;
     }
 
-    private fun formatoDniCorrecto(dni: String): Boolean {
-        if (dni.length != 9) return false
-        for (i in dni.indices) {
-            if (i == 8) {
-                if (!Character.isLetter(dni[i])) {
-                    return false
-                }
-            } else if (!Character.isDigit(dni[i])) {
-                return false
 
-            }
-        }
-        return true
-    }
 
     fun nombreCorrecto(nombre: String, layout: TextInputLayout, fragment: Fragment): Boolean {
         if (nombre.isEmpty()) {
@@ -246,7 +226,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
             layout.error = fragment.getString(R.string.completaCampo)
             return false;
         }
-        if (!formatoNombreApellidosCorrecto(nombre)) {
+        if (!Constantes.formatoNombreApellidosCorrecto(nombre)) {
             layout.isErrorEnabled = true;
             layout.error = fragment.getString(R.string.nombreInvalido)
             return false;
@@ -256,14 +236,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         return true;
     }
 
-    private fun formatoNombreApellidosCorrecto(nombreApellidos: String): Boolean {
-        for (i in nombreApellidos.indices) {
-            if (!Character.isLetter(nombreApellidos[i]) && nombreApellidos[i].toInt() != 32) {
-                return false;
-            }
-        }
-        return true
-    }
+
 
     fun apellidosCorrectos(
         apellidos: String,
@@ -276,7 +249,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
             return false;
         }
 
-        if (!formatoNombreApellidosCorrecto(apellidos)) {
+        if (!Constantes.formatoNombreApellidosCorrecto(apellidos)) {
             layout.isErrorEnabled = true;
             layout.error = fragment.getString(R.string.apellidosInvalidos)
             return false;
@@ -294,7 +267,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
             return false;
         }
 
-        if (!formatoTelefonoCorrecto(telefono)) {
+        if (!Constantes.formatoTelefonoCorrecto(telefono)) {
             layout.isErrorEnabled = true;
             layout.error = fragment.getString(R.string.telefonoIncorrecto)
             return false;
@@ -303,15 +276,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         return true;
     }
 
-    private fun formatoTelefonoCorrecto(telefono: String): Boolean{
-        if(telefono.length != 9) return false
-        for (i in telefono.indices) {
-            if (!Character.isDigit(telefono[i])) {
-                return false
-            }
-        }
-        return true
-    }
+
 
     fun contrasenaCorrecta(contrasena: String, layout: TextInputLayout,
                          fragment: Fragment): Boolean {
@@ -320,7 +285,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
             layout.error = fragment.getString(R.string.completaCampo)
             return false;
         }
-        if (!formatoContrasenaCorrecto(contrasena)) {
+        if (!Constantes.formatoContrasenaCorrecto(contrasena)) {
             layout.isErrorEnabled = true;
             layout.error = fragment.getString(R.string.contrasenaCorta)
             return false;
@@ -329,9 +294,7 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         return true;
     }
 
-    private fun formatoContrasenaCorrecto(contrasena: String): Boolean{
-        return contrasena.length >= 8
-    }
+
 
     fun coincidenContrasenas(contrasena: String, contrasenaRepetida: String, layout: TextInputLayout,
                              fragment: Fragment): Boolean {

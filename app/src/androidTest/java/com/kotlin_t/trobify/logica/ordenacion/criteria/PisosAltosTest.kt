@@ -2,14 +2,12 @@ package com.kotlin_t.trobify.logica.ordenacion.criteria
 
 import com.kotlin_t.trobify.logica.Constantes
 import com.kotlin_t.trobify.persistencia.Inmueble
-import org.junit.Assert
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 
-import org.junit.Assert.*
-
-class PrecioMasBajoTest {
-    private val precioMasBajo = PrecioMasBajo()
+class PisosAltosTest{
+    private val pisosAltos = PisosAltos()
     private lateinit var inmueble1: Inmueble
     private lateinit var inmueble2: Inmueble
     private lateinit var inmueble3: Inmueble
@@ -26,17 +24,17 @@ class PrecioMasBajoTest {
         inmueble4 = Constantes.crearInmueble4()
         inmueble5 = Constantes.crearInmueble5()
         inmueble6 = Constantes.crearInmueble6()
-        lista1 = listOf(inmueble1, inmueble2, inmueble3, inmueble4, inmueble5, inmueble6)
-        lista2 = listOf(inmueble2, inmueble4, inmueble3, inmueble5, inmueble1, inmueble6)
+        lista1 = listOf(inmueble2, inmueble4, inmueble3, inmueble5, inmueble1, inmueble6)
+        lista2 = listOf(inmueble6, inmueble5, inmueble4, inmueble3, inmueble2, inmueble1)
     }
 
     @Test
-    fun testordenar() {
-        assertEquals(precioMasBajo.ordenar(lista1), lista2)
+    fun ordenar() {
+        assertEquals(pisosAltos.ordenar(lista1), lista2)
     }
 
     @Test
     fun testToString() {
-        assertEquals("Precio más Bajo", precioMasBajo.toString())
+        assertEquals("Pisos Altos", pisosAltos.toString())
     }
 }
