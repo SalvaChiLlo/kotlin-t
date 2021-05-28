@@ -100,7 +100,7 @@ class Constantes {
                 "España",
                 1.2,
                 1.2,
-                "buen estado",
+                BUEN_ESTADO,
                 true,
                 2,
                 "direccion",

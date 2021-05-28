@@ -18,6 +18,7 @@ class PlantaCriteriaTest {
     lateinit var listaInmuebles: List<Inmueble>
 
     lateinit var criteria: PlantaCriteria
+
     @Before
     fun setUp() {
         inmueble1 = Constantes.crearInmueble1() // 1
@@ -38,13 +39,43 @@ class PlantaCriteriaTest {
     }
 
     @Test
-    fun meetCriteria1() {
-        criteria = PlantaCriteria(setOf(Constantes.PLANTA_BAJA, Constantes.PLANTA_ALTA)) // <= 3 && >= 10
-        assertEquals(criteria.meetCriteria(listaInmuebles), listOf(inmueble1,inmueble2,inmueble3))
+    fun plantaBajayAlta() {
+        criteria =
+            PlantaCriteria(setOf(Constantes.PLANTA_BAJA, Constantes.PLANTA_ALTA)) // <= 3 && >= 10
+        assertEquals(criteria.meetCriteria(listaInmuebles), listOf(inmueble1, inmueble2, inmueble3))
     }
 
-    fun meetCriteria2() {
-        criteria = PlantaCriteria(setOf(Constantes.PLANTA_ALTA)) // <= 3 && >= 10
-        assertEquals(criteria.meetCriteria(listaInmuebles), listOf(inmueble1,inmueble2,inmueble3))
+    @Test
+    fun plantaAlta() {
+        criteria = PlantaCriteria(setOf(Constantes.PLANTA_ALTA)) // >= 10
+        assertEquals(criteria.meetCriteria(listaInmuebles), listOf<Inmueble>())
     }
+
+    @Test
+    fun plantaIntermedia() {
+        criteria = PlantaCriteria(setOf(Constantes.PLANTA_INTERMEDIA)) // > 3 && < 10
+        assertEquals(
+            criteria.meetCriteria(listaInmuebles), listOf<Inmueble>(
+                inmueble4,
+                inmueble5,
+                inmueble6
+            )
+        )
+    }
+
+    @Test
+    fun todasLasPlantas() {
+        criteria = PlantaCriteria(setOf(Constantes.PLANTA_INTERMEDIA, Constantes.PLANTA_ALTA, Constantes.PLANTA_BAJA)) // > 3 && < 10
+        assertEquals(
+            criteria.meetCriteria(listaInmuebles), listOf<Inmueble>(
+                inmueble1,
+                inmueble2,
+                inmueble3,
+                inmueble4,
+                inmueble5,
+                inmueble6
+            )
+        )
+    }
+
 }

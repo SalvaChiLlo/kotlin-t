@@ -38,21 +38,27 @@ class TipoInmuebleCriteriaTest {
     }
 
     @Test
-    fun meetCriteria1() {
+    fun tipoPiso() {
         criteria = TipoInmuebleCriteria(setOf(Constantes.PISO))
         assertEquals(criteria.meetCriteria(listaInmuebles), listOf(inmueble4))
     }
 
     @Test
-    fun meetCriteria2() {
+    fun tipoChalet() {
         criteria = TipoInmuebleCriteria(setOf(Constantes.CASA_CHALET))
         assertEquals(criteria.meetCriteria(listaInmuebles), listOf(inmueble2, inmueble6))
     }
 
     @Test
-    fun meetCriteria3() {
+    fun tipoAtico() {
         criteria = TipoInmuebleCriteria(setOf(Constantes.ATICO))
         assertEquals(criteria.meetCriteria(listaInmuebles), listOf(inmueble1, inmueble5))
+    }
+
+    @Test
+    fun tipoAticoyPiso() {
+        criteria = TipoInmuebleCriteria(setOf(Constantes.ATICO, Constantes.PISO))
+        assertEquals(criteria.meetCriteria(listaInmuebles), listOf(inmueble1, inmueble4 ,inmueble5))
     }
 
 }
