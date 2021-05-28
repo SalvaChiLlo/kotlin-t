@@ -227,22 +227,22 @@
     <fragment
         android:id="@+id/nav_mis_inmuebles"
         android:name="com.kotlin_t.trobify.presentacion.misInmuebles.MisInmueblesFragment"
-        android:label="MisInmueblesFragment" >
+        android:label="@string/mis_inmuebles">
         <action
             android:id="@+id/action_misInmueblesFragment_to_editorFichaFragment"
             app:destination="@id/editorFichaFragment"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_open_enter"
-            app:popExitAnim="@anim/fragment_open_exit"/>
+            app:popExitAnim="@anim/fragment_open_exit" />
         <action
             android:id="@+id/action_nav_mis_inmuebles_to_nav_home"
             app:destination="@id/nav_home"
-            app:popUpTo="@id/nav_home"
             app:enterAnim="@anim/fragment_open_enter"
             app:exitAnim="@anim/fragment_open_exit"
             app:popEnterAnim="@anim/fragment_open_enter"
-            app:popExitAnim="@anim/fragment_open_exit"/>
+            app:popExitAnim="@anim/fragment_open_exit"
+            app:popUpTo="@id/nav_home" />
     </fragment>
     <fragment
         android:id="@+id/nav_mi_cuenta"

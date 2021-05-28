@@ -39,12 +39,10 @@ class HomeItemAdapter(
 
 
     override fun onBindViewHolder(holder: HomeItemViewHolder, position: Int) {
-        var inmueble = dataset[position]
+        val inmueble = dataset[position]
         holder.imagen.setImageBitmap(inmueble.miniatura)
         holder.direccion.text = inmueble.direccion
-        var type: Int
-        if (inmueble.operacion == "alquiler") type = R.string.precioMes
-        else type = R.string.precio
+        val type = if (inmueble.operacion == "alquiler") R.string.precioMes else R.string.precio
         holder.precioMes.text = context.getString(type, dataset[position].precio)
         homeViewModel.setFavoriteIcon(inmueble, holder.favorito)
 

@@ -44,18 +44,14 @@ class HomeFragment : Fragment() {
                 setHasFixedSize(true)
             }
             val estrategia = sharedViewModel.estrategiaOrdenacion
-            sharedViewModel.inmuebles.observe(viewLifecycleOwner, Observer {
+            sharedViewModel.inmuebles.observe(viewLifecycleOwner, {
                 if (estrategia != null) {
-                    recyclerView.adapter = it?.let { it1 -> estrategia.ordenar(it1) }?.let { it2 ->
-                        HomeItemAdapter(requireContext(),
-                            it2, homeViewModel)
-                    }
-                }
-                else{
-                    recyclerView.adapter =
-                        it?.let { it1 -> HomeItemAdapter(requireContext(), it1, homeViewModel) }
+                    recyclerView.adapter = HomeItemAdapter(requireContext(), estrategia.ordenar(it!!), homeViewModel)
                 }
 
+                else {
+                    recyclerView.adapter = HomeItemAdapter(requireContext(), it!!, homeViewModel)
+                }
                 setAviso()
             })
         }
@@ -85,15 +81,17 @@ class HomeFragment : Fragment() {
         locationButton.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavHomeToMapsFragment())
         }
-        busquedaButton.setOnClickListener{
+        busquedaButton.setOnClickListener {
             findNavController().navigate(HomeFragmentDirections.actionNavHomeToBusquedaFragment())
         }
 
     }
+
     private fun setAviso() {
-        if(database.inmuebleDAO().getAll().isEmpty()) {
-            binding.aviso.text = "Espere... Cargando Inmuebles...\nEn unos segundos cargarán los inmuebles"
-        } else if(sharedViewModel.inmuebles.value!!.isEmpty()){
+        if (database.inmuebleDAO().getAll().isEmpty()) {
+            binding.aviso.text =
+                "Espere... Cargando Inmuebles...\nEn unos segundos cargarán los inmuebles"
+        } else if (sharedViewModel.inmuebles.value!!.isEmpty()) {
             binding.aviso.text = "No hay inmuebles para los\ncriterios de búsqueda seleccionados"
         } else {
             binding.aviso.text = ""
