@@ -25,7 +25,6 @@ class PrecioMasBajoTest {
 
     @Test
     fun ordenar() {
-        assertEquals()
     }
 
     @Test
