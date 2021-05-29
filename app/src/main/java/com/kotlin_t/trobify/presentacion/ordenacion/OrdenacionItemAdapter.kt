@@ -9,8 +9,6 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
-import com.kotlin_t.trobify.logica.ordenacion.criteria.*
-import com.kotlin_t.trobify.logica.SharedViewModel
 import com.kotlin_t.trobify.logica.ordenacion.OrdenacionViewModel
 
 class OrdenacionItemAdapter(

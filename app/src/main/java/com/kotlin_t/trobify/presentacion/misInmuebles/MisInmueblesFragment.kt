@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.MisInmueblesFragmentBinding
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.logica.misInmuebles.MisInmueblesViewModel
 import com.kotlin_t.trobify.logica.misInmuebles.MisInmueblesViewModelFactory
 
@@ -21,7 +21,7 @@ class MisInmueblesFragment : androidx.fragment.app.Fragment() {
     lateinit var binding: MisInmueblesFragmentBinding
     lateinit var misInmueblesViewModel: MisInmueblesViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var contextClass: ContextClass
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,10 +30,10 @@ class MisInmueblesFragment : androidx.fragment.app.Fragment() {
     ): View? {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.mis_inmuebles_fragment, container, false)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        contextClass = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
         val application = requireNotNull(this.activity).application
         val datasource = AppDatabase.getDatabase(application)
-        val viewModelFactory = MisInmueblesViewModelFactory(datasource, application, sharedViewModel)
+        val viewModelFactory = MisInmueblesViewModelFactory(datasource, application, contextClass)
         misInmueblesViewModel =
             ViewModelProvider(this, viewModelFactory).get(MisInmueblesViewModel::class.java)
         binding.viewModel = misInmueblesViewModel
@@ -45,7 +45,7 @@ class MisInmueblesFragment : androidx.fragment.app.Fragment() {
         recyclerView = binding.misInmueblesRecyclerView
 
         recyclerView.adapter = MisInmueblesAdapter(
-            requireContext(), misInmueblesViewModel.getMisInmuebles(), misInmueblesViewModel, misInmueblesViewModel.database, sharedViewModel
+            requireContext(), misInmueblesViewModel.getMisInmuebles(), misInmueblesViewModel, misInmueblesViewModel.database, contextClass
         )
 
         binding.anadirInmueble.setOnClickListener {

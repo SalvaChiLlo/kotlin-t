@@ -6,7 +6,7 @@ import org.junit.Test
 import org.junit.Assert.*
 import org.junit.Before
 
-class SharedViewModelTest {
+class ContextClassTest {
     @Test
     fun formatoUsuarioCorrecto() {
         assertTrue(Constantes.formatoUsuarioCorrecto("delaOssa"))

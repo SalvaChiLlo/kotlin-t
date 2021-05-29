@@ -11,11 +11,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.databinding.FragmentListaFavoritosBinding
 import com.kotlin_t.trobify.databinding.FragmentRecuperarFavoritosBinding
-import com.kotlin_t.trobify.logica.SharedViewModel
-import com.kotlin_t.trobify.logica.favoritos.ListaFavoritosViewModel
-import com.kotlin_t.trobify.logica.favoritos.ListaFavoritosViewModelFactory
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.logica.recuperarFavoritos.RecuperarFavoritosViewModel
 import com.kotlin_t.trobify.logica.recuperarFavoritos.RecuperarFavoritosViewModelFactory
 import com.kotlin_t.trobify.persistencia.Favorito
@@ -25,7 +22,7 @@ class RecuperarFavoritosFragment : Fragment() {
     private lateinit var binding: FragmentRecuperarFavoritosBinding
     private lateinit var recuperarFavoritosViewModel: RecuperarFavoritosViewModel
     private lateinit var recyclerView: RecyclerView
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var contextClass: ContextClass
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,10 +30,10 @@ class RecuperarFavoritosFragment : Fragment() {
     ): View? {
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_recuperar_favoritos, container, false)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        contextClass = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
         val application = requireNotNull(this.activity).application
         val datasource = AppDatabase.getDatabase(application)
-        val viewModelFactory = RecuperarFavoritosViewModelFactory(datasource, application, sharedViewModel)
+        val viewModelFactory = RecuperarFavoritosViewModelFactory(datasource, application, contextClass)
         recuperarFavoritosViewModel =
             ViewModelProvider(this, viewModelFactory).get(RecuperarFavoritosViewModel::class.java)
         binding.lifecycleOwner = this
@@ -44,10 +41,10 @@ class RecuperarFavoritosFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = binding.recuperarFavoritosRecyclerView
-        Log.e("RECUPERAR", sharedViewModel.favoritosEliminados.toList().toString())
+        Log.e("RECUPERAR", contextClass.favoritosEliminados.toList().toString())
         recyclerView.adapter = FavoritoAdapter(
             requireContext(),
-            sharedViewModel.favoritosEliminados.toList() as List<Favorito>, null,recuperarFavoritosViewModel, recuperarFavoritosViewModel.database, sharedViewModel, true
+            contextClass.favoritosEliminados.toList() as List<Favorito>, null,recuperarFavoritosViewModel, recuperarFavoritosViewModel.database, contextClass, true
         )
     }
 }

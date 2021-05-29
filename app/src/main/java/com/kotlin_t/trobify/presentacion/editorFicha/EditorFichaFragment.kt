@@ -30,12 +30,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.android.material.textfield.TextInputEditText
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentEditorFichaBinding
 import com.kotlin_t.trobify.logica.Constantes
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.logica.editorFicha.Cuidador
 import com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModel
 import com.kotlin_t.trobify.logica.editorFicha.EditorFichaViewModelFactory
@@ -47,7 +46,7 @@ class EditorFichaFragment : Fragment() {
     lateinit var editorFichaViewModel: EditorFichaViewModel
     lateinit var cuidador: Cuidador
     lateinit var datasource: AppDatabase
-    lateinit var sharedModel: SharedViewModel
+    lateinit var sharedModel: com.kotlin_t.trobify.logica.ContextClass
     lateinit var imagesRecyclerView: RecyclerView
     lateinit var locationManager: LocationManager
     lateinit var buttonsOperation : RadioGroup
@@ -68,7 +67,7 @@ class EditorFichaFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_editor_ficha, container, false)
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
-        sharedModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedModel = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
 
         val viewModelFactory = EditorFichaViewModelFactory(datasource, application, sharedModel, binding, requireContext())
         editorFichaViewModel =

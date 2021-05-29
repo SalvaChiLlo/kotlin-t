@@ -13,7 +13,7 @@ import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.OrdenacionFragmentBinding
 import com.kotlin_t.trobify.logica.Constantes
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.logica.ordenacion.OrdenacionViewModel
 import com.kotlin_t.trobify.logica.ordenacion.OrdenacionViewModelFactory
 
@@ -21,7 +21,7 @@ class OrdenacionFragment : Fragment() {
     private lateinit var binding: OrdenacionFragmentBinding
     private lateinit var ordenacionViewModel: OrdenacionViewModel
     private lateinit var ordenacionViewModelFactory: OrdenacionViewModelFactory
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var contextClass: ContextClass
     private lateinit var database: AppDatabase
     private lateinit var application: Application
 
@@ -32,8 +32,8 @@ class OrdenacionFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.ordenacion_fragment, container, false)
         application = requireNotNull(this.activity).application
         database = AppDatabase.getDatabase(application)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        ordenacionViewModelFactory = OrdenacionViewModelFactory(database, application, sharedViewModel)
+        contextClass = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
+        ordenacionViewModelFactory = OrdenacionViewModelFactory(database, application, contextClass)
         ordenacionViewModel = ViewModelProvider(this, ordenacionViewModelFactory).get(OrdenacionViewModel::class.java)
         binding.ordenacionRecyclerview.adapter = OrdenacionItemAdapter(ordenacionViewModel, Constantes.loadCriterios(),this)
         binding.apply {

@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleOwner
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Constantes
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.logica.filtrar.criteria.Busqueda.BusquedaCriteria
 import com.kotlin_t.trobify.logica.filtrar.criteria.Estado.EstadoCriteria
 import com.kotlin_t.trobify.logica.filtrar.criteria.NroBanos.NroBanosCriteria
@@ -21,7 +21,7 @@ import com.kotlin_t.trobify.persistencia.Busqueda
 class BusquedaViewModel(
     val database: AppDatabase,
     application: Application,
-    val sharedViewModel: SharedViewModel,
+    val contextClass: ContextClass,
     viewLifecycleOwner: LifecycleOwner
 ) : AndroidViewModel(application) {
     var listaBusquedas = database.busquedaDAO().getAll()
@@ -31,7 +31,7 @@ class BusquedaViewModel(
 
     fun search(busqueda: String) {
         database.busquedaDAO().insertAll(Busqueda(busqueda))
-        sharedViewModel.busquedaString = busqueda
+        contextClass.busquedaString = busqueda
         filtrarInmuebles()
     }
 
@@ -52,7 +52,7 @@ class BusquedaViewModel(
 
         val planta = setPlantaCriteria()
 
-        val busqueda = BusquedaCriteria(sharedViewModel.busquedaString)
+        val busqueda = BusquedaCriteria(contextClass.busquedaString)
 
         val miBusqueda = AndCriteria(
             tipoDeOperacion,
@@ -78,10 +78,10 @@ class BusquedaViewModel(
         )
 
         this.listaInmuebles = miBusqueda.meetCriteria(database.inmuebleDAO().getAll())
-        sharedViewModel.setInmuebles(this.listaInmuebles)
+        contextClass.setInmuebles(this.listaInmuebles)
     }
 
-    private fun setPlantaCriteria() = if (sharedViewModel.plantaOpciones.value!!.isEmpty()) {
+    private fun setPlantaCriteria() = if (contextClass.plantaOpciones.value!!.isEmpty()) {
         PlantaCriteria(
             setOf(
                 Constantes.PLANTA_BAJA,
@@ -90,10 +90,10 @@ class BusquedaViewModel(
             )
         )
     } else {
-        PlantaCriteria(sharedViewModel.plantaOpciones.value!!)
+        PlantaCriteria(contextClass.plantaOpciones.value!!)
     }
 
-    private fun setEstadoCriteria() = if (sharedViewModel.estadoOpciones.value!!.isEmpty()) {
+    private fun setEstadoCriteria() = if (contextClass.estadoOpciones.value!!.isEmpty()) {
         EstadoCriteria(
             setOf(
                 Constantes.NUEVA_CONSTRUCCION,
@@ -102,10 +102,10 @@ class BusquedaViewModel(
             )
         )
     } else {
-        EstadoCriteria(sharedViewModel.estadoOpciones.value!!)
+        EstadoCriteria(contextClass.estadoOpciones.value!!)
     }
 
-    private fun setNroBanosCriteria() = if (sharedViewModel.banosOpciones.value!!.isEmpty()) {
+    private fun setNroBanosCriteria() = if (contextClass.banosOpciones.value!!.isEmpty()) {
         NroBanosCriteria(
             setOf(
                 Constantes.UNO,
@@ -115,11 +115,11 @@ class BusquedaViewModel(
             )
         )
     } else {
-        NroBanosCriteria(sharedViewModel.banosOpciones.value!!)
+        NroBanosCriteria(contextClass.banosOpciones.value!!)
     }
 
     private fun setNroHabitacionesCriteria() =
-        if (sharedViewModel.habitacionesOpciones.value!!.isEmpty()) {
+        if (contextClass.habitacionesOpciones.value!!.isEmpty()) {
             NroHabitacionesCriteria(
                 setOf(
                     Constantes.UNO,
@@ -129,7 +129,7 @@ class BusquedaViewModel(
                 )
             )
         } else {
-            NroHabitacionesCriteria(sharedViewModel.habitacionesOpciones.value!!)
+            NroHabitacionesCriteria(contextClass.habitacionesOpciones.value!!)
         }
 
     private fun setPrecioCriteria(
@@ -139,7 +139,7 @@ class BusquedaViewModel(
         PrecioMinimoCriteria(precioMin), PrecioMaximoCriteria(precioMax)
     )
 
-    private fun setTipoInmuebleCriteria() = if (sharedViewModel.tiposOpciones.value!!.isEmpty()) {
+    private fun setTipoInmuebleCriteria() = if (contextClass.tiposOpciones.value!!.isEmpty()) {
         TipoInmuebleCriteria(
             setOf(
                 Constantes.ATICO,
@@ -149,11 +149,11 @@ class BusquedaViewModel(
             )
         )
     } else {
-        TipoInmuebleCriteria(sharedViewModel.tiposOpciones.value!!)
+        TipoInmuebleCriteria(contextClass.tiposOpciones.value!!)
     }
 
     private fun setOperacionCriteria(): OperacionCriteria {
-        val tipoDeOperacion = if (sharedViewModel.operacionesOpciones.value!!.isEmpty()) {
+        val tipoDeOperacion = if (contextClass.operacionesOpciones.value!!.isEmpty()) {
             OperacionCriteria(
                 setOf(
                     Constantes.VENTA,
@@ -163,7 +163,7 @@ class BusquedaViewModel(
                 )
             )
         } else {
-            OperacionCriteria(sharedViewModel.operacionesOpciones.value!!)
+            OperacionCriteria(contextClass.operacionesOpciones.value!!)
         }
         return tipoDeOperacion
     }

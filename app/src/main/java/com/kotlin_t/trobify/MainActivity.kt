@@ -26,7 +26,7 @@ import com.google.android.material.navigation.NavigationView
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.database.PopulateDB
 import com.kotlin_t.trobify.persistencia.Usuario
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.persistencia.Foto
 import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 
@@ -34,7 +34,7 @@ import com.kotlin_t.trobify.presentacion.home.HomeFragmentDirections
 class MainActivity : AppCompatActivity(){
 
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var contextClass: ContextClass
 
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navView: NavigationView
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        sharedViewModel = ViewModelProvider(this).get(SharedViewModel::class.java)
+        contextClass = ViewModelProvider(this).get(ContextClass::class.java)
 
         // Inicializar Variables
         drawerLayout = findViewById(R.id.drawer_layout)
@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity(){
     }
 
     private fun inicializarSharedViewModel() {
-        val model = ViewModelProvider(this).get(SharedViewModel::class.java)
+        val model = ViewModelProvider(this).get(ContextClass::class.java)
         model.preciosOpciones.value!!.set(
             0,
             AppDatabase.getDatabase(this).inmuebleDAO().getMinPrecio()
@@ -142,7 +142,7 @@ class MainActivity : AppCompatActivity(){
 
         }
 
-        sharedViewModel.usuarioActual.observe(this, usuarioObserver)
+        contextClass.usuarioActual.observe(this, usuarioObserver)
 
     }
 
@@ -221,20 +221,20 @@ class MainActivity : AppCompatActivity(){
             if (database.usuarioDAO().getAll().isEmpty() || database.inmuebleDAO().getAll()
                     .isEmpty()
             ) {
-                PopulateDB(database, this, sharedViewModel).populate()
+                PopulateDB(database, this, contextClass).populate()
 
                 this@MainActivity.runOnUiThread {
-                    sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
+                    contextClass.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
                 }
 
                 for(i in 1..20) {
-                    PopulateDB(database, this, sharedViewModel).createInmueble(i)
+                    PopulateDB(database, this, contextClass).createInmueble(i)
                     val ultimoInmueble = database.inmuebleDAO().getAllPublicAndNoPublic().last()
                     database.fotoDAO()
                         .insertAll(Foto(ultimoInmueble.inmuebleId, ultimoInmueble.miniatura!!, true))
                 }
                 this@MainActivity.runOnUiThread {
-                    sharedViewModel.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
+                    contextClass.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()
                 }
             }
         }.start()
@@ -250,8 +250,8 @@ class MainActivity : AppCompatActivity(){
             .setMessage("¿Estás Seguro de cerrar la Sesión?")
             .setPositiveButton("Si", DialogInterface.OnClickListener( fun(dialog : DialogInterface, _: Int){
                 database.sesionActualDAO().deleteSesion()
-                sharedViewModel.favoritosEliminados.clear()
-                sharedViewModel.updateCurrentUser(null)
+                contextClass.favoritosEliminados.clear()
+                contextClass.updateCurrentUser(null)
                 headerView.findViewById<ImageView>(R.id.nav_header_picture).setImageResource(R.drawable.anonymous_user)
                 findNavController(R.id.nav_host_fragment).navigate(HomeFragmentDirections.actionNavHomeSelf())
                 dialog.cancel()

@@ -8,14 +8,12 @@ import android.location.Geocoder
 import android.util.Log
 import android.widget.RadioButton
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.android.material.textfield.TextInputEditText
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentEditorFichaBinding
 import com.kotlin_t.trobify.logica.Constantes
-import com.kotlin_t.trobify.logica.SharedViewModel
 import com.kotlin_t.trobify.persistencia.Foto
 import com.kotlin_t.trobify.persistencia.Inmueble
 import com.kotlin_t.trobify.presentacion.editorFicha.EditorFichaFragment
@@ -24,7 +22,7 @@ import java.util.*
 class EditorFichaViewModel(
     val database: AppDatabase,
     application: Application,
-    val sharedViewModel: SharedViewModel,
+    val sharedViewModel: com.kotlin_t.trobify.logica.ContextClass,
     val binding: FragmentEditorFichaBinding,
     val context: Context
 

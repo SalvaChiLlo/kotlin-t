@@ -26,7 +26,7 @@ import com.google.android.material.textfield.TextInputLayout
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentEditarPerfilBinding
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.persistencia.SesionActual
 import com.kotlin_t.trobify.persistencia.Usuario
 import java.time.LocalDateTime
@@ -34,7 +34,7 @@ import java.time.LocalDateTime
 class EditarPerfilFragment : Fragment() {
     private lateinit var binding: FragmentEditarPerfilBinding
     private lateinit var database: AppDatabase
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var contextClass: ContextClass
     private lateinit var usuarioActual: Usuario
     private val fragment: EditarPerfilFragment = this
     private val REQUEST_CODE = 100
@@ -55,8 +55,8 @@ class EditarPerfilFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_editar_perfil, container, false)
         val application = requireNotNull(this.activity).application
         database = AppDatabase.getDatabase(application)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
-        usuarioActual = sharedViewModel.usuarioActual.value!!
+        contextClass = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
+        usuarioActual = contextClass.usuarioActual.value!!
         contraseñaDesencriptada = usuarioActual.contrasena
         return binding.root
     }
@@ -116,7 +116,7 @@ class EditarPerfilFragment : Fragment() {
                 database.usuarioDAO().delete(usuarioActual)
                 database.usuarioDAO().insertAll(usuarioNuevo)
             }
-            sharedViewModel.usuarioActual.value = usuarioNuevo
+            contextClass.usuarioActual.value = usuarioNuevo
             usuarioActual = usuarioNuevo
             binding.aplicarCambios.visibility = View.GONE
             database.sesionActualDAO().deleteSesion()
@@ -193,7 +193,7 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.usuarioCorrecto(p0.toString(), textInputLayoutGenerico!!, fragment)
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = contextClass.usuarioCorrecto(p0.toString(), textInputLayoutGenerico!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -225,7 +225,7 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.dniCorrecto(p0.toString(), textInputLayoutGenerico!!, fragment)
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = contextClass.dniCorrecto(p0.toString(), textInputLayoutGenerico!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -257,7 +257,7 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.apellidosCorrectos(p0.toString(), textInputLayoutGenerico!!, fragment)
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = contextClass.apellidosCorrectos(p0.toString(), textInputLayoutGenerico!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -293,7 +293,7 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.apellidosCorrectos(p0.toString(), textInputLayoutGenerico!!, fragment)
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = contextClass.apellidosCorrectos(p0.toString(), textInputLayoutGenerico!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -325,7 +325,7 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.telefonoCorrecto(p0.toString(), textInputLayoutGenerico!!, fragment)
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = contextClass.telefonoCorrecto(p0.toString(), textInputLayoutGenerico!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -362,8 +362,8 @@ class EditarPerfilFragment : Fragment() {
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                         contraseñaDesencriptada = p0.toString()
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.contrasenaCorrecta(contraseñaDesencriptada, textInputLayoutContrasena!!, fragment)
-                                && sharedViewModel.coincidenContrasenas(contraseñaDesencriptada, textInputEditTextRepetirContrasena!!.text.toString(), textInputLayoutRepetirContrasena!!, fragment)
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = contextClass.contrasenaCorrecta(contraseñaDesencriptada, textInputLayoutContrasena!!, fragment)
+                                && contextClass.coincidenContrasenas(contraseñaDesencriptada, textInputEditTextRepetirContrasena!!.text.toString(), textInputLayoutRepetirContrasena!!, fragment)
 
                     }
 
@@ -384,8 +384,8 @@ class EditarPerfilFragment : Fragment() {
                     }
 
                     override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = sharedViewModel.contrasenaCorrecta(contraseñaDesencriptada, textInputLayoutContrasena!!, fragment)
-                                && sharedViewModel.coincidenContrasenas(contraseñaDesencriptada, textInputEditTextRepetirContrasena.text.toString(), textInputLayoutRepetirContrasena!!, fragment)
+                        dialogCreado.getButton(AlertDialog.BUTTON_POSITIVE).isEnabled = contextClass.contrasenaCorrecta(contraseñaDesencriptada, textInputLayoutContrasena!!, fragment)
+                                && contextClass.coincidenContrasenas(contraseñaDesencriptada, textInputEditTextRepetirContrasena.text.toString(), textInputLayoutRepetirContrasena!!, fragment)
                     }
 
                     override fun afterTextChanged(p0: Editable?) {
@@ -458,7 +458,7 @@ class EditarPerfilFragment : Fragment() {
     }
 
     private fun eliminarUsuario() {
-        sharedViewModel.usuarioActual.value = null
+        contextClass.usuarioActual.value = null
         database.usuarioDAO().deleteById(usuarioActual.dni)
         findNavController().navigate(EditarPerfilFragmentDirections.actionNavMiCuentaToNavHome())
 

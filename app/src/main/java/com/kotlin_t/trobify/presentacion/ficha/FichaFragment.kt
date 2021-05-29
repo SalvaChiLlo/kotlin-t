@@ -1,8 +1,6 @@
 package com.kotlin_t.trobify.presentacion.ficha
 
 import OnSwipeTouchListener
-import ahmed.easyslider.EasySlider
-import ahmed.easyslider.SliderItem
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
@@ -29,8 +27,7 @@ import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.ficha.FichaViewModel
 import com.kotlin_t.trobify.logica.ficha.FichaViewModelFactory
 import com.kotlin_t.trobify.persistencia.Favorito
-import com.kotlin_t.trobify.logica.SharedViewModel
-import com.kotlin_t.trobify.persistencia.Foto
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.presentacion.mapa.CustomInfoWindowForGoogleMap
 import java.util.*
 import kotlin.properties.Delegates
@@ -41,7 +38,7 @@ class FichaFragment : Fragment() {
     private lateinit var map: GoogleMap
     private lateinit var fichaViewModel: FichaViewModel
     lateinit var datasource: AppDatabase
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var contextClass: ContextClass
 
     private val callback = OnMapReadyCallback { googleMap ->
 
@@ -60,7 +57,7 @@ class FichaFragment : Fragment() {
     ): View? {
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        contextClass = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
         val viewModelFactory =  FichaViewModelFactory(datasource, application)
         fichaViewModel = ViewModelProvider(this, viewModelFactory).get(FichaViewModel::class.java)
         arguments?.let {
@@ -239,7 +236,7 @@ class FichaFragment : Fragment() {
 
     private fun setFavouriteIcon(favoritoIMG: ImageView) {
         var fav:Int
-        val dni = if(sharedViewModel.usuarioActual.value != null) sharedViewModel.usuarioActual.value!!.dni else "-1"
+        val dni = if(contextClass.usuarioActual.value != null) contextClass.usuarioActual.value!!.dni else "-1"
         val favorito = datasource.favoritoDAO().findByIdandDni(inmuebleId, dni)
 
         if(favorito != null)

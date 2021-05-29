@@ -3,13 +3,10 @@ package com.kotlin_t.trobify.logica.ordenacion
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.persistencia.Inmueble
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.logica.ordenacion.criteria.*
 
-class OrdenacionViewModel(database: AppDatabase, application: Application, private val model: SharedViewModel, ) : AndroidViewModel(application) {
-    private var inmuebles: List<Inmueble> = database.inmuebleDAO().getAll()
-
+class OrdenacionViewModel(database: AppDatabase, application: Application, private val model: ContextClass, ) : AndroidViewModel(application) {
     fun elegirEstrategia(estrategia: String){
         when(estrategia) {
             "Precio más Alto" -> model.estrategiaOrdenacion = PrecioMasAlto()
@@ -23,6 +20,7 @@ class OrdenacionViewModel(database: AppDatabase, application: Application, priva
             "Más Habitaciones" -> model.estrategiaOrdenacion = MasHabitaciones()
             "Menos Habitaciones" -> model.estrategiaOrdenacion = MenosHabitaciones()
         }
+        model.ejecutarEstrategia(model.inmuebles.value!!)
     }
 
     fun eliminarEstrategia(){

@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.kotlin_t.trobify.R
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +27,7 @@ private const val ARG_PARAM2 = "param2"
  */
 class LoginFragment : Fragment() {
 
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val contextClass: ContextClass by activityViewModels()
     private lateinit var usernameField : EditText
     private lateinit var passwordField : EditText
     private lateinit var loginButton : Button
@@ -103,7 +103,7 @@ class LoginFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     fun checkLoginCredentials(username: String, password: String, view: View) {
 
-        var usuario = sharedViewModel.getUserFromCredentials(username, password)
+        var usuario = contextClass.getUserFromCredentials(username, password)
 
         if(usuario == null) {
 
@@ -111,8 +111,8 @@ class LoginFragment : Fragment() {
 
         } else {
 
-            sharedViewModel.updateCurrentUser(usuario)
-            sharedViewModel.insertarSesionActual(username)
+            contextClass.updateCurrentUser(usuario)
+            contextClass.insertarSesionActual(username)
             findNavController().navigate(R.id.action_loginFragment_to_nav_home, null)
 
         }

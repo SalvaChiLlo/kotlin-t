@@ -6,13 +6,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentEditorFichaBinding
-import com.kotlin_t.trobify.logica.SharedViewModel
 import java.lang.IllegalArgumentException
 
 class EditorFichaViewModelFactory(
     private val database: AppDatabase,
     private val application: Application,
-    private val sharedModel: SharedViewModel,
+    private val sharedModel: com.kotlin_t.trobify.logica.ContextClass,
     private var binding: FragmentEditorFichaBinding,
     private val context: Context
 

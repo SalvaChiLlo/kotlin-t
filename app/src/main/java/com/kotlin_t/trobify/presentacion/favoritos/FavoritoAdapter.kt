@@ -12,7 +12,6 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.logica.SharedViewModel
 import com.kotlin_t.trobify.logica.favoritos.ListaFavoritosViewModel
 import com.kotlin_t.trobify.logica.recuperarFavoritos.RecuperarFavoritosViewModel
 import com.kotlin_t.trobify.persistencia.Favorito
@@ -25,7 +24,7 @@ class FavoritoAdapter(
     val favoritosViewModel: ListaFavoritosViewModel?,
     val recuperarFavoritosViewModel: RecuperarFavoritosViewModel?,
     val database: AppDatabase,
-    val sharedViewModel: SharedViewModel,
+    val sharedViewModel: com.kotlin_t.trobify.logica.ContextClass,
     val recuperarFavorito: Boolean
 
 ) :

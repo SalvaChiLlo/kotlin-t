@@ -17,12 +17,12 @@ import com.google.android.gms.maps.model.*
 import com.google.maps.android.ui.IconGenerator
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.persistencia.Inmueble
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 
 class MapsFragment : Fragment() {
 
     private lateinit var map: GoogleMap
-    private val sharedViewModel: SharedViewModel by activityViewModels()
+    private val contextClass: ContextClass by activityViewModels()
     private val zoomLevel = 10f
     private var markers: MutableList<Marker> = ArrayList()
 
@@ -86,7 +86,7 @@ class MapsFragment : Fragment() {
     fun setMarkers(map: GoogleMap) {
 
         // Obtener lista de inmuebles
-        val listaInmuebles: List<Inmueble>? = sharedViewModel.inmuebles.value
+        val listaInmuebles: List<Inmueble>? = contextClass.inmuebles.value
         if (listaInmuebles != null) {
 
 
@@ -103,7 +103,7 @@ class MapsFragment : Fragment() {
             // Crear un marcador en el mapa por cada inmueble
             for (inmueble in listaInmuebles) {
 
-                tipoInmueble = sharedViewModel.getTipoInmueble(inmueble.inmuebleId)
+                tipoInmueble = contextClass.getTipoInmueble(inmueble.inmuebleId)
 
                 if(tipoInmueble == -1) { // Es Propio
                     iconGenerator.setStyle(IconGenerator.STYLE_GREEN)
@@ -137,7 +137,7 @@ class MapsFragment : Fragment() {
         map.setOnInfoWindowClickListener { marker ->
 
             val localizacion = marker.position
-            val inmuebleId = sharedViewModel.getInmuebleIdFromLatLng(localizacion)
+            val inmuebleId = contextClass.getInmuebleIdFromLatLng(localizacion)
 
             // Abrir la ficha del inmueble
             findNavController().navigate(

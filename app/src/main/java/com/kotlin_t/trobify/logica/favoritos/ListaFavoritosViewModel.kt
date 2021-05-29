@@ -6,14 +6,13 @@ import android.widget.ImageView
 import androidx.lifecycle.AndroidViewModel
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.persistencia.Favorito
-import com.kotlin_t.trobify.persistencia.Inmueble
 
-class ListaFavoritosViewModel(val database: AppDatabase, application: Application, val sharedViewModel: SharedViewModel) :
+class ListaFavoritosViewModel(val database: AppDatabase, application: Application, val contextClass: ContextClass) :
     AndroidViewModel(application) {
     fun getInmueblesFavoritos(): List<Favorito> {
-        val dni = if(sharedViewModel.usuarioActual.value != null) sharedViewModel.usuarioActual.value!!.dni else "-1"
+        val dni = if(contextClass.usuarioActual.value != null) contextClass.usuarioActual.value!!.dni else "-1"
         val listaFavoritos = database.favoritoDAO().findByDNI(dni)
         return listaFavoritos
     }
@@ -31,10 +30,10 @@ class ListaFavoritosViewModel(val database: AppDatabase, application: Applicatio
         val search = database.favoritoDAO().findByIdandDni(favorito.inmuebleId, favorito.dni.toString())
         if (search == null) {
             database.favoritoDAO().insertAll(favorito)
-            Log.e("FAvoritos", "${sharedViewModel.favoritosEliminados.remove(favorito)}")
+            Log.e("FAvoritos", "${contextClass.favoritosEliminados.remove(favorito)}")
         } else {
             database.favoritoDAO().delete(favorito)
-            Log.e("FAvoritos", "${sharedViewModel.favoritosEliminados.add(favorito)}")
+            Log.e("FAvoritos", "${contextClass.favoritosEliminados.add(favorito)}")
         }
         checkIfFavorito(favorito, imageView)
     }
