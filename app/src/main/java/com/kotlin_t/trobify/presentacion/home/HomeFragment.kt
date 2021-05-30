@@ -5,7 +5,6 @@ import android.view.*
 import android.widget.ImageView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,13 +13,13 @@ import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.databinding.FragmentHomeBinding
 import com.kotlin_t.trobify.logica.home.HomeViewModel
 import com.kotlin_t.trobify.logica.home.HomeViewModelFactory
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeViewModel: HomeViewModel
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var contextClass: ContextClass
     private lateinit var database: AppDatabase
 
     override fun onCreateView(
@@ -29,12 +28,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        contextClass = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
         val application = requireNotNull(this.activity).application
         database = AppDatabase.getDatabase(application)
-        val viewModelFactory = HomeViewModelFactory(database, application, sharedViewModel)
+        val viewModelFactory = HomeViewModelFactory(database, application, contextClass)
         homeViewModel = ViewModelProvider(this, viewModelFactory).get(HomeViewModel::class.java)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        contextClass = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
 
         binding.apply {
             viewModel = homeViewModel
@@ -43,19 +42,12 @@ class HomeFragment : Fragment() {
                 layoutManager = LinearLayoutManager(context)
                 setHasFixedSize(true)
             }
-            val estrategia = sharedViewModel.estrategiaOrdenacion
-            sharedViewModel.inmuebles.observe(viewLifecycleOwner, {
-                if (estrategia != null) {
-                    recyclerView.adapter = HomeItemAdapter(requireContext(), estrategia.ordenar(it!!), homeViewModel)
-                }
-
-                else {
-                    recyclerView.adapter = HomeItemAdapter(requireContext(), it!!, homeViewModel)
-                }
+            contextClass.inmuebles.observe(viewLifecycleOwner, {
+                recyclerView.adapter = HomeItemAdapter(requireContext(), contextClass.inmuebles.value!!, homeViewModel)
                 setAviso()
             })
         }
-        sharedViewModel.recuperarSesionActual()
+        contextClass.recuperarSesionActual()
         return binding.root
     }
 
@@ -91,7 +83,7 @@ class HomeFragment : Fragment() {
         if (database.inmuebleDAO().getAll().isEmpty()) {
             binding.aviso.text =
                 "Espere... Cargando Inmuebles...\nEn unos segundos cargarán los inmuebles"
-        } else if (sharedViewModel.inmuebles.value!!.isEmpty()) {
+        } else if (contextClass.inmuebles.value!!.isEmpty()) {
             binding.aviso.text = "No hay inmuebles para los\ncriterios de búsqueda seleccionados"
         } else {
             binding.aviso.text = ""

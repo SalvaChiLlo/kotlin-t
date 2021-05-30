@@ -14,7 +14,7 @@ import com.kotlin_t.trobify.databinding.FragmentFiltrarBinding
 import com.kotlin_t.trobify.logica.filtrar.FiltrarViewModel
 import com.kotlin_t.trobify.logica.filtrar.FiltrarViewModelFactory
 import com.kotlin_t.trobify.logica.Constantes
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import java.text.NumberFormat
 import java.util.*
 
@@ -22,7 +22,7 @@ class FiltrarFragment : Fragment() {
     lateinit var binding: FragmentFiltrarBinding
     lateinit var filtrarViewModel: FiltrarViewModel
     lateinit var datasource: AppDatabase
-    lateinit var model: SharedViewModel
+    lateinit var model: ContextClass
 
 
     override fun onCreateView(
@@ -34,7 +34,7 @@ class FiltrarFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_filtrar, container, false)
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
-        model = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        model = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
         val viewModelFactory = FiltrarViewModelFactory(datasource, application, model)
         filtrarViewModel =
             ViewModelProvider(this, viewModelFactory).get(FiltrarViewModel::class.java)

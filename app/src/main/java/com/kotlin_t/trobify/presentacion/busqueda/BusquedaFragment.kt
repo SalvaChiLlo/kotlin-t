@@ -18,14 +18,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentBusquedaBinding
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.logica.busqueda.BusquedaViewModel
 import com.kotlin_t.trobify.logica.busqueda.BusquedaViewModelFactory
 import com.kotlin_t.trobify.logica.filtrar.FiltrarViewModel
 import com.kotlin_t.trobify.logica.filtrar.criteria.Busqueda.BusquedaCriteria
 import com.kotlin_t.trobify.persistencia.Busqueda
-import com.kotlin_t.trobify.persistencia.BusquedaDAO
-import com.kotlin_t.trobify.persistencia.BusquedaDAO_Impl
 import java.util.*
 
 class BusquedaFragment : Fragment() {
@@ -35,7 +33,7 @@ class BusquedaFragment : Fragment() {
     lateinit var filtrarViewModel: FiltrarViewModel
 
     lateinit var datasource: AppDatabase
-    lateinit var sharedModel: SharedViewModel
+    lateinit var sharedModel: com.kotlin_t.trobify.logica.ContextClass
 
     lateinit var locationManager: LocationManager
 
@@ -49,7 +47,7 @@ class BusquedaFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_busqueda, container, false)
         val application = requireNotNull(this.activity).application
         datasource = AppDatabase.getDatabase(application)
-        sharedModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        sharedModel = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
         val viewModelFactory =
             BusquedaViewModelFactory(datasource, application, sharedModel, viewLifecycleOwner)
         busquedaViewModel =

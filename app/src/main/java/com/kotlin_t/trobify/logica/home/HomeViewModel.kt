@@ -9,9 +9,9 @@ import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.persistencia.Favorito
 import com.kotlin_t.trobify.persistencia.Inmueble
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 
-class HomeViewModel(val database: AppDatabase, application: Application, val sharedViewModel: SharedViewModel): AndroidViewModel(application) {
+class HomeViewModel(val database: AppDatabase, application: Application, val contextClass: ContextClass): AndroidViewModel(application) {
     private val inmuebleDatabase = database.inmuebleDAO()
     private val favoritoDatabase = database.favoritoDAO()
 
@@ -27,7 +27,7 @@ class HomeViewModel(val database: AppDatabase, application: Application, val sha
 
     fun setFavoriteIcon(inmueble: Inmueble, favoritoIMG: ImageView){
         var fav:Int
-        val dni = if(sharedViewModel.usuarioActual.value != null) sharedViewModel.usuarioActual.value!!.dni else "-1"
+        val dni = if(contextClass.usuarioActual.value != null) contextClass.usuarioActual.value!!.dni else "-1"
         val favorito = favoritoDatabase.findByIdandDni(inmueble.inmuebleId, dni)
         if(favorito != null)fav = R.drawable.ic_baseline_favorite_24
         else fav = R.drawable.ic_baseline_favorite_border_24

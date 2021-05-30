@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.logica.SharedViewModel
 import com.kotlin_t.trobify.logica.misInmuebles.MisInmueblesViewModel
 import com.kotlin_t.trobify.persistencia.Inmueble
 
@@ -21,7 +20,7 @@ class MisInmueblesAdapter(
     private val dataset: List<Inmueble>,
     private val viewModel: MisInmueblesViewModel,
     private val database: AppDatabase,
-    private val sharedViewModel: SharedViewModel
+    private val sharedViewModel: com.kotlin_t.trobify.logica.ContextClass
 ) :
     RecyclerView.Adapter<MisInmueblesAdapter.MisInmueblesViewHolder>() {
     class MisInmueblesViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

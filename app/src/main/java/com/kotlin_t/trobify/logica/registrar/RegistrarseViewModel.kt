@@ -12,14 +12,14 @@ import com.kotlin_t.trobify.R
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentRegistrarseBinding
 import com.kotlin_t.trobify.persistencia.Usuario
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.presentacion.registrar.RegistrarseFragment
 import com.kotlin_t.trobify.presentacion.registrar.RegistrarseFragmentDirections
 
 class RegistrarseViewModel(
     val database: AppDatabase,
     application: Application,
-    val sharedViewModel: SharedViewModel,
+    val contextClass: ContextClass,
     val binding: FragmentRegistrarseBinding,
     val fragment: RegistrarseFragment
 ) : AndroidViewModel(application) {
@@ -46,15 +46,15 @@ class RegistrarseViewModel(
         val nombre = binding.inputNombre.text.toString()
         val apellidos = binding.inputApellidos.text.toString()
         val telefono = binding.inputTelefono.text.toString()
-        if (sharedViewModel.usuarioCorrecto(usuario, binding.usuario, fragment) && sharedViewModel.contrasenaCorrecta(contrasena, binding.contrasena, fragment)
-            && sharedViewModel.coincidenContrasenas(contrasena, repetirContrasena, binding.repetirContrasena, fragment) && sharedViewModel.dniCorrecto(dni, binding.dni, fragment)
-            && sharedViewModel.nombreCorrecto(nombre, binding.nombre, fragment) && sharedViewModel.apellidosCorrectos(apellidos, binding.apellidos, fragment)
-            && sharedViewModel.telefonoCorrecto(telefono, binding.telefono, fragment)
+        if (contextClass.usuarioCorrecto(usuario, binding.usuario, fragment) && contextClass.contrasenaCorrecta(contrasena, binding.contrasena, fragment)
+            && contextClass.coincidenContrasenas(contrasena, repetirContrasena, binding.repetirContrasena, fragment) && contextClass.dniCorrecto(dni, binding.dni, fragment)
+            && contextClass.nombreCorrecto(nombre, binding.nombre, fragment) && contextClass.apellidosCorrectos(apellidos, binding.apellidos, fragment)
+            && contextClass.telefonoCorrecto(telefono, binding.telefono, fragment)
         ) {
             val user = Usuario(dni, usuario, contrasena, nombre, apellidos, telefono, avatar)
             database.usuarioDAO().insertAll(user)
-            sharedViewModel.updateCurrentUser(user)
-            sharedViewModel.insertarSesionActual(usuario)
+            contextClass.updateCurrentUser(user)
+            contextClass.insertarSesionActual(usuario)
             fragment.findNavController()
                 .navigate(RegistrarseFragmentDirections.actionRegistrarseFragmentToNavHome())
             Toast.makeText(fragment.context, "Usuario registrado correctamente", Toast.LENGTH_LONG)

@@ -4,17 +4,17 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.kotlin_t.trobify.database.AppDatabase
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import java.lang.IllegalArgumentException
 
 class OrdenacionViewModelFactory(
     private val database: AppDatabase,
     private val application: Application,
-    private val sharedViewModel: SharedViewModel,
+    private val contextClass: ContextClass,
 ) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(OrdenacionViewModel::class.java)) {
-            return OrdenacionViewModel(database, application, sharedViewModel) as T
+            return OrdenacionViewModel(database, application, contextClass) as T
         }
         throw IllegalArgumentException("Unknown view model")
     }

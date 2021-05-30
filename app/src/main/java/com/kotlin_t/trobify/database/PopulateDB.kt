@@ -9,7 +9,6 @@ import com.kotlin_t.trobify.persistencia.Foto
 import com.kotlin_t.trobify.persistencia.Inmueble
 import com.kotlin_t.trobify.persistencia.Usuario
 import com.kotlin_t.trobify.logica.Constantes
-import com.kotlin_t.trobify.logica.SharedViewModel
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
@@ -21,7 +20,7 @@ import kotlin.random.Random
 class PopulateDB(
     val database: AppDatabase,
     val context: Context,
-    val sharedViewModel: SharedViewModel
+    val sharedViewModel: com.kotlin_t.trobify.logica.ContextClass
 ) {
     fun populate() {
         //         Crear Usuarios

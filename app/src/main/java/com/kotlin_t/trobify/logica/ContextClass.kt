@@ -19,7 +19,7 @@ import com.kotlin_t.trobify.logica.ordenacion.EstrategiaOrdenacion
 import com.kotlin_t.trobify.persistencia.Favorito
 import java.time.LocalDateTime
 
-class SharedViewModel(@NonNull application: Application) : AndroidViewModel(application) {
+class ContextClass(@NonNull application: Application) : AndroidViewModel(application) {
     var database = AppDatabase.getDatabase(application)
 
     ///////////////////////////////////////////////
@@ -80,6 +80,10 @@ class SharedViewModel(@NonNull application: Application) : AndroidViewModel(appl
         estadoOpciones.value = mutableSetOf<String>()
         plantaOpciones.value = mutableSetOf<String>()
         usuarioActual.value = null
+    }
+
+    fun ejecutarEstrategia(inmuebles: List<Inmueble>){
+        this.inmuebles.value = estrategiaOrdenacion!!.ordenar(inmuebles).toMutableList()
     }
 
     fun setInmuebles(inmuebles: List<Inmueble>) {

@@ -5,7 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.logica.Constantes
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 import com.kotlin_t.trobify.logica.filtrar.criteria.Busqueda.BusquedaCriteria
 import com.kotlin_t.trobify.logica.filtrar.criteria.Estado.EstadoCriteria
 import com.kotlin_t.trobify.logica.filtrar.criteria.NroBanos.NroBanosCriteria
@@ -20,7 +20,7 @@ import com.kotlin_t.trobify.logica.filtrar.criteria.TipoInmueble.TipoInmuebleCri
 class FiltrarViewModel(
     val database: AppDatabase,
     application: Application,
-    val model: SharedViewModel
+    val model: ContextClass
 ) :
     AndroidViewModel(application) {
     private var listaInmuebles = database.inmuebleDAO().getAll()

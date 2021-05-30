@@ -19,11 +19,11 @@ import com.kotlin_t.trobify.database.AppDatabase
 import com.kotlin_t.trobify.databinding.FragmentRegistrarseBinding
 import com.kotlin_t.trobify.logica.registrar.RegistrarseViewModel
 import com.kotlin_t.trobify.logica.registrar.RegistrarseViewModelFactory
-import com.kotlin_t.trobify.logica.SharedViewModel
+import com.kotlin_t.trobify.logica.ContextClass
 
 class RegistrarseFragment : Fragment() {
     private lateinit var binding: FragmentRegistrarseBinding
-    private lateinit var sharedViewModel: SharedViewModel
+    private lateinit var contextClass: ContextClass
     private lateinit var registrarseViewModel: RegistrarseViewModel
     private val fragment: RegistrarseFragment = this
     private val REQUEST_CODE = 100;
@@ -38,9 +38,9 @@ class RegistrarseFragment : Fragment() {
             DataBindingUtil.inflate(inflater, R.layout.fragment_registrarse, container, false);
         val application = requireNotNull(this.activity).application
         val datasource = AppDatabase.getDatabase(application)
-        sharedViewModel = ViewModelProvider(requireActivity()).get(SharedViewModel::class.java)
+        contextClass = ViewModelProvider(requireActivity()).get(ContextClass::class.java)
         val viewModelFactory =
-            RegistrarseViewModelFactory(datasource, application, sharedViewModel, binding, this)
+            RegistrarseViewModelFactory(datasource, application, contextClass, binding, this)
         registrarseViewModel =
             ViewModelProvider(this, viewModelFactory).get(RegistrarseViewModel::class.java)
 
@@ -58,7 +58,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-               sharedViewModel.usuarioCorrecto(p0.toString(), binding.usuario, fragment)
+               contextClass.usuarioCorrecto(p0.toString(), binding.usuario, fragment)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -73,7 +73,7 @@ class RegistrarseFragment : Fragment() {
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 contrasena = p0.toString()
-                sharedViewModel.contrasenaCorrecta(contrasena, binding.contrasena, fragment)
+                contextClass.contrasenaCorrecta(contrasena, binding.contrasena, fragment)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -87,7 +87,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                sharedViewModel.coincidenContrasenas(contrasena, p0.toString(), binding.repetirContrasena, fragment)
+                contextClass.coincidenContrasenas(contrasena, p0.toString(), binding.repetirContrasena, fragment)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -101,7 +101,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                sharedViewModel.dniCorrecto(p0.toString(), binding.dni, fragment)
+                contextClass.dniCorrecto(p0.toString(), binding.dni, fragment)
             }
 
             override fun afterTextChanged(p0: Editable?) {
@@ -115,7 +115,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                sharedViewModel.nombreCorrecto(p0.toString(), binding.nombre, fragment)
+                contextClass.nombreCorrecto(p0.toString(), binding.nombre, fragment)
             }
 
 
@@ -130,7 +130,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                sharedViewModel.apellidosCorrectos(p0.toString(), binding.apellidos, fragment)
+                contextClass.apellidosCorrectos(p0.toString(), binding.apellidos, fragment)
             }
 
 
@@ -145,7 +145,7 @@ class RegistrarseFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                sharedViewModel.telefonoCorrecto(p0.toString(), binding.telefono, fragment)
+                contextClass.telefonoCorrecto(p0.toString(), binding.telefono, fragment)
             }
 
 
