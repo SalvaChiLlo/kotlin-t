@@ -254,7 +254,7 @@ class EditorFichaFragment : Fragment() {
         binding.hasAscensor.isChecked = inmueble.tieneAscensor!!
 
         editorFichaViewModel.imagesList.value?.addAll(
-            datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId)
+            datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId!!)
         )
         editorFichaViewModel.imagesList.value = editorFichaViewModel.imagesList.value
 
@@ -262,7 +262,6 @@ class EditorFichaFragment : Fragment() {
             imagesRecyclerView.adapter = ImageAdapter(requireContext(), it.toList(),editorFichaViewModel)
         })
 
-        Log.e("WEEEEE", datasource.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId).map{it.inmuebleId}.toString())
     }
 
     private fun terminarEdicionCreacion() {
@@ -332,7 +331,6 @@ class EditorFichaFragment : Fragment() {
         }
 
         editorFichaViewModel.imagesList.value = editorFichaViewModel.imagesList.value
-        editorFichaViewModel.imagesList.value?.toString()?.let { Log.e("QWERTY", it) }
         imagesRecyclerView.adapter = ImageAdapter(requireContext(), editorFichaViewModel.imagesList.value!!.toList(),editorFichaViewModel)
     }
 

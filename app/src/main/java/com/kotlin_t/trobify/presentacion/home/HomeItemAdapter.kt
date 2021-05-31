@@ -48,7 +48,7 @@ class HomeItemAdapter(
 
         holder.imagen.setOnClickListener {
             Log.e("Home", inmueble.inmuebleId.toString())
-            val action = HomeFragmentDirections.actionNavHomeToFichaFragment(inmueble.inmuebleId)
+            val action = HomeFragmentDirections.actionNavHomeToFichaFragment(inmueble.inmuebleId!!)
             holder.itemView.findNavController().navigate(action)
         }
 

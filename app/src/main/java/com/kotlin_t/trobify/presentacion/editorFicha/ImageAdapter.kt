@@ -42,20 +42,16 @@ class ImageAdapter(
             editorFichaViewModel.imagesList.value?.forEach {
                 hasMain = it.main
             }
-            Log.e("EEEE", hasMain.toString())
             if(!hasMain && !editorFichaViewModel.imagesList.value!!.isEmpty()) {
                 editorFichaViewModel.imagesList.value?.first()?.main = true
                 editorFichaViewModel.imagesList.value = editorFichaViewModel.imagesList.value
-                Log.e("AAAA", editorFichaViewModel.imagesList.value?.first()?.main.toString())
             }
         }
         setMainIcon(dataset[position], holder)
 
         holder.mainFoto.setOnClickListener {
-            Log.e("PPPP", editorFichaViewModel.imagesList.value?.map { it.main }.toString())
             editorFichaViewModel.imagesList.value?.forEach {
                 it.main = false
-                Log.e("DDDDD", it.main.toString())
             }
             editorFichaViewModel.imagesList.value = editorFichaViewModel.imagesList.value
             dataset[position].main = true

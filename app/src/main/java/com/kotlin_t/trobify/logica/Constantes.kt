@@ -96,6 +96,7 @@ class Constantes {
 
         fun crearInmueble1(): Inmueble {
             return Inmueble(
+                null,
                 "12345678E",
                 "direccion",
                 true,
@@ -128,6 +129,7 @@ class Constantes {
 
         fun crearInmueble2(): Inmueble {
             return Inmueble(
+                null,
                 "12345678E",
                 "direccion",
                 true,
@@ -159,6 +161,7 @@ class Constantes {
         }
         fun crearInmueble3(): Inmueble {
             return Inmueble(
+                null,
                 "12345678E",
                 "direccion",
                 true,
@@ -190,6 +193,7 @@ class Constantes {
         }
         fun crearInmueble4(): Inmueble {
             return Inmueble(
+                null,
                 "12345678E",
                 "direccion",
                 true,
@@ -221,6 +225,7 @@ class Constantes {
         }
         fun crearInmueble5(): Inmueble {
             return Inmueble(
+                null,
                 "12345678E",
                 "direccion",
                 true,
@@ -252,6 +257,7 @@ class Constantes {
         }
         fun crearInmueble6(): Inmueble {
             return Inmueble(
+                null,
                 "12345678E",
                 "direccion",
                 true,

@@ -69,11 +69,10 @@ class EditorFichaViewModel(
         if (inmueble != null) {
             inmuebleID = inmueble!!.inmuebleId
         } else {
-            inmuebleID = database.inmuebleDAO().getAllPublicAndNoPublic().last().inmuebleId + 1
+            inmuebleID = database.inmuebleDAO().getAllPublicAndNoPublic().last().inmuebleId!! + 1
         }
 
         geocoder = Geocoder(context, Locale.getDefault())
-        Log.e("EEEEEEE", inmuebleID.toString())
 
     }
 
@@ -315,10 +314,12 @@ class EditorFichaViewModel(
     }
 
     private fun guardarImagenesDelInmueble() {
+        Log.e("AAAA", inmuebleID.toString())
         imagesList.value?.forEach {
             if (database.fotoDAO().findById(it.fotoId.toString()) != null) {
                 database.fotoDAO().delete(it)
             }
+            Log.e("EEEEE", it.inmuebleId.toString())
             database.fotoDAO().insertAll(it)
         }
         imagesList.value = imagesList.value
@@ -363,6 +364,7 @@ class EditorFichaViewModel(
 
     private fun crearInmueble() {
         val inmueble = Inmueble(
+            inmuebleID!!,
             dniPropietario,
             direccion,
             nuevoDesarrollo,
