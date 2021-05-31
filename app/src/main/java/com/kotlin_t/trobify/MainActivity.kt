@@ -231,7 +231,7 @@ class MainActivity : AppCompatActivity(){
                     PopulateDB(database, this, contextClass).createInmueble(i)
                     val ultimoInmueble = database.inmuebleDAO().getAllPublicAndNoPublic().last()
                     database.fotoDAO()
-                        .insertAll(Foto(ultimoInmueble.inmuebleId, ultimoInmueble.miniatura!!, true))
+                        .insertAll(Foto(ultimoInmueble.inmuebleId!!, ultimoInmueble.miniatura!!, true))
                 }
                 this@MainActivity.runOnUiThread {
                     contextClass.inmuebles.value = database.inmuebleDAO().getAll().toMutableList()

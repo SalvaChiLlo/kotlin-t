@@ -59,7 +59,7 @@ class FavoritoAdapter(
         var action: NavDirections
         if (recuperarFavorito) {
             action =
-                RecuperarFavoritosFragmentDirections.actionRecuperarFavoritosFragmentToFichaFragment(inmueble.inmuebleId)
+                RecuperarFavoritosFragmentDirections.actionRecuperarFavoritosFragmentToFichaFragment(inmueble.inmuebleId!!)
             holder.recuperar.visibility = View.VISIBLE
             holder.favorito.visibility = View.GONE
             holder.recuperar.setOnClickListener {
@@ -68,7 +68,7 @@ class FavoritoAdapter(
             }
 
         } else {
-            action = ListaFavoritosFragmentDirections.actionNavFavoritosToFichaFragment(inmueble.inmuebleId)
+            action = ListaFavoritosFragmentDirections.actionNavFavoritosToFichaFragment(inmueble.inmuebleId!!)
 
             holder.recuperar.visibility = View.GONE
             holder.favorito.visibility = View.VISIBLE

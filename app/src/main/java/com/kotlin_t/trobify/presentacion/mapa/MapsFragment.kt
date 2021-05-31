@@ -103,7 +103,7 @@ class MapsFragment : Fragment() {
             // Crear un marcador en el mapa por cada inmueble
             for (inmueble in listaInmuebles) {
 
-                tipoInmueble = contextClass.getTipoInmueble(inmueble.inmuebleId)
+                tipoInmueble = contextClass.getTipoInmueble(inmueble.inmuebleId!!)
 
                 if(tipoInmueble == -1) { // Es Propio
                     iconGenerator.setStyle(IconGenerator.STYLE_GREEN)

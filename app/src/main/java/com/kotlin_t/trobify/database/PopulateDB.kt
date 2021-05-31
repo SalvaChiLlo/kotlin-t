@@ -55,13 +55,13 @@ class PopulateDB(
             createInmueble(i)
             val ultimoInmueble = database.inmuebleDAO().getAllPublicAndNoPublic().last()
             database.fotoDAO()
-                .insertAll(Foto(ultimoInmueble.inmuebleId, ultimoInmueble.miniatura!!, true))
+                .insertAll(Foto(ultimoInmueble.inmuebleId!!, ultimoInmueble.miniatura!!, true))
         }
 
         val listaInmuebles = database.inmuebleDAO().getAllPublicAndNoPublic()
         // Crear Favoritos
         for (i in 0..6) {
-            database.favoritoDAO().insertAll(Favorito(listaInmuebles[i].inmuebleId, "-1"))
+            database.favoritoDAO().insertAll(Favorito(listaInmuebles[i].inmuebleId!!, "-1"))
         }
     }
 
@@ -257,6 +257,7 @@ class PopulateDB(
 
         database.inmuebleDAO().insertAll(
             Inmueble(
+                null,
                 "12345678E",
                 direccion,
                 i % 2 == 0,

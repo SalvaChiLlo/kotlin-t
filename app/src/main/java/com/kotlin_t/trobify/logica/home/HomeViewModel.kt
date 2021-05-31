@@ -28,7 +28,7 @@ class HomeViewModel(val database: AppDatabase, application: Application, val con
     fun setFavoriteIcon(inmueble: Inmueble, favoritoIMG: ImageView){
         var fav:Int
         val dni = if(contextClass.usuarioActual.value != null) contextClass.usuarioActual.value!!.dni else "-1"
-        val favorito = favoritoDatabase.findByIdandDni(inmueble.inmuebleId, dni)
+        val favorito = favoritoDatabase.findByIdandDni(inmueble.inmuebleId!!, dni)
         if(favorito != null)fav = R.drawable.ic_baseline_favorite_24
         else fav = R.drawable.ic_baseline_favorite_border_24
         favoritoIMG.setImageResource(fav)
@@ -38,7 +38,7 @@ class HomeViewModel(val database: AppDatabase, application: Application, val con
                 fav = R.drawable.ic_baseline_favorite_border_24
             }
             else{
-                favoritoDatabase.insertAll(Favorito(inmueble.inmuebleId, dni))
+                favoritoDatabase.insertAll(Favorito(inmueble.inmuebleId!!, dni))
                 fav = R.drawable.ic_baseline_favorite_24
             }
             favoritoIMG.setImageResource(fav)

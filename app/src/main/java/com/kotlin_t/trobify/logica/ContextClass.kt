@@ -104,7 +104,7 @@ class ContextClass(@NonNull application: Application) : AndroidViewModel(applica
             inmuebles.value!!.find { it.latitud == latitud && it.longitud == longitud }
 
         if (inmueble != null) {
-            return inmueble.inmuebleId
+            return inmueble.inmuebleId!!
         }
 
         return -1

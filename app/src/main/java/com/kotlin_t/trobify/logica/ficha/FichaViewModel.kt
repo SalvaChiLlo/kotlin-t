@@ -30,7 +30,7 @@ class FichaViewModel(private val database: AppDatabase,
 
     fun getPhotos() : List<Foto> {
         if(inmueble != null) {
-            return database.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId)
+            return database.fotoDAO().getAllFromInmuebleID(inmueble.inmuebleId!!)
         }
         else return listOf()
     }

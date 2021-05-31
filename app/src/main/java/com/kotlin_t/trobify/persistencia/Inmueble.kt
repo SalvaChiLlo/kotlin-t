@@ -18,6 +18,7 @@ import androidx.room.PrimaryKey
     indices = arrayOf(Index(value = ["dniPropietario", "inmuebleId"], unique = true))
 )
 data class Inmueble(
+    @PrimaryKey(autoGenerate = true) var inmuebleId: Int? = 0,
     var dniPropietario: String,
     var direccion: String?,
     var nuevoDesarrollo: Boolean?,
@@ -45,7 +46,4 @@ data class Inmueble(
     var descripcion: String?,
     var codigoPostal: Int,
     var publicado: Boolean
-) {
-    @PrimaryKey(autoGenerate = true) var inmuebleId: Int = 0
-}
-
+)

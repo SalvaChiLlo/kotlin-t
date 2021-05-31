@@ -63,7 +63,6 @@ class FichaFragment : Fragment() {
         arguments?.let {
             inmuebleId = it.getInt("InmuebleID")!!
         }
-        Log.e("Ficha", inmuebleId.toString())
         fichaViewModel.setHouse(inmuebleId)
 
         return inflater.inflate(R.layout.fragment_ficha, container, false)
@@ -251,7 +250,7 @@ class FichaFragment : Fragment() {
             else{
                 fichaViewModel.favoritoDatabase.insertAll(
                     Favorito(
-                        fichaViewModel.inmueble.inmuebleId,
+                        fichaViewModel.inmueble.inmuebleId!!,
                         dni
                     )
                 )
