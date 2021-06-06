@@ -47,7 +47,6 @@ class FichaFragment : Fragment() {
         map.setInfoWindowAdapter(CustomInfoWindowForGoogleMap(requireContext()))
 
         setMarkers(map)
-        //setMarkersListeners(map)
         setZoom(map)
     }
 
@@ -261,11 +260,10 @@ class FichaFragment : Fragment() {
     }
 
     fun setMarkers(map: GoogleMap) {
-        val localizacion = LatLng(
+        map.addMarker(MarkerOptions().position(LatLng(
             fichaViewModel.inmueble.latitud!!,
             fichaViewModel.inmueble.longitud!!
-        )
-        map.addMarker(MarkerOptions().position(localizacion))
+        )))
 
         map.setOnMarkerClickListener { marker ->
             mapClickHandler()
