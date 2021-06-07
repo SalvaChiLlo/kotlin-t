@@ -90,7 +90,6 @@ class EditorFichaFragment : Fragment() {
         setUbicacionButtonAction()
         setUndoAction()
         setListeners()
-        cuidador.createSnapshot()
     }
 
     private fun setUndoAction() {

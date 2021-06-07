@@ -4,7 +4,11 @@ import java.util.*
 
 class Cuidador(val originator: EditorFichaViewModel) {
 
-    var history : Stack<Memento> = Stack()
+    var history : Stack<EditorFichaViewModel.Memento> = Stack()
+
+    init {
+        createSnapshot()
+    }
 
     fun createSnapshot() {
         history.push(originator.createMemento())
